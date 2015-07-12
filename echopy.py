@@ -1,10 +1,9 @@
 import os
 import echopy_app
 import echopy_doc
-import echopy_nest as myApp
-import nestpy_app
-import nestpy_lib as nest
-import nestpy_settings as settings
+#import echopy_nest as myApp
+import smartthings_lib as st
+import smartthings_settings as settings
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
 
 
@@ -24,22 +23,32 @@ def apicalls():
 		sessionId = myApp.data_handler(data)
 		return sessionId + "\n"
 
-@app.route("/alexa/auth/<path:path>",methods = ['GET'])
-def auth(path):
+@app.route("/alexa/auth/<path:userId>/<path:clientId>/<path:clientSecret>",methods = ['GET'])
+def auth(userId,clientId,clientSecret):
 
-	auth_uri = nest.nestAuth(path)
+	auth_uri = st.smartThingsAuth(userId,clientId,clientSecret)
 	return redirect(auth_uri)
 
-@app.route("/alexa/oauth2",methods = ['GET'])
-def authcode():
-	user = request.args.get('state')
+@app.route("/alexa/oauth2/<path:userId>",methods = ['GET'])
+def authcode(userId):
+
 	code = request.args.get('code')
 
-	if nest.nestToken(user,code):
+	if st.smartThingsToken(userId,code):
 
-		print nest.nestData.getUser(user).getToken()
+		print st.stData.getUser(userId).getClientInfo().token
 
 	return redirect("/alexa")
+
+
+@app.route("/alexa/test/<path:userId>")
+def test(userId):
+	return str(st.stData.getUser(userId).getClientInfo().token) + "<br>" +  str(st.stData.getUser(userId).getClientInfo().url)
+
+@app.route("/alexa/switch/<path:userId>/<path:deviceId>/<path:state>")
+def switch(userId, deviceId, state):
+
+	return str(st.switch(userId, deviceId, state))
 
 
 
@@ -52,6 +61,6 @@ def run_echopy_app():
 
 
 if __name__ == "__main__":
-	nest.nestDataStoreInit()
-	myApp.data_init()
+	st.smartThingsDataStoreInit()
+	#myApp.data_init()
 	run_echopy_app()
