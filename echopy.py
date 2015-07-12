@@ -1,7 +1,7 @@
 import os
 import echopy_app
 import echopy_doc
-#import echopy_nest as myApp
+import echopy_smartthings as myApp
 import smartthings_lib as st
 import smartthings_settings as settings
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
@@ -62,5 +62,5 @@ def run_echopy_app():
 
 if __name__ == "__main__":
 	st.smartThingsDataStoreInit()
-	#myApp.data_init()
+	myApp.data_init()
 	run_echopy_app()

@@ -120,6 +120,46 @@ def getSwitchState(clientInfo, deviceId):
 
 	return response['switch']
 
+def set_mode(userId,modeId):
+	'''
+	This is used to chnage current mode
+	'''
+	global stData
+	currentClient = stData.getUser(userId)
+	clientInfo = currentClient.getClientInfo()
+
+	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
+	
+	mode_header = {
+		"Authorization": clientInfo.token_type + " " + clientInfo.token
+	}
+
+	#get list of modes
+	modes = requests.get(mode_uri, headers=mode_header).json()
+	print modes
+
+
+	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
+	if len(selectedMode) > 1:
+		return 'Error - Many Modes Match Mode Selected'
+
+	selectedMode = selectedMode[0]
+
+	mode_json = {
+		"mode":selectedMode
+	}
+
+	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
+	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
+	if debug: print "Switch Response: " + str(response.json())
+
+	return modeId if response.json()['error'] == 0 else "ERROR - See Logs"
+
+def isValidStUser(userId):
+	global stData
+	return stData.isValidUser(userId)
+
+
 
 
 
