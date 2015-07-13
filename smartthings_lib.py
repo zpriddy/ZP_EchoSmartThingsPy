@@ -22,6 +22,7 @@ import json
 import requests
 import pickle
 import smartthings_settings as settings
+import sampleUtterances_generator as sampleGen
 import os.path
 
 from urllib import quote
@@ -186,6 +187,30 @@ def st_switch(userId, switchId, state):
 
 	return switch(userId,selectedSwitch,state)
 
+
+def getSamples(userId):
+	global stData
+	currentClient = stData.getUser(userId)
+	clientInfo = currentClient.getClientInfo()
+
+	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
+	
+	mode_header = {
+		"Authorization": clientInfo.token_type + " " + clientInfo.token
+	}
+
+	#get list of modes
+	modeList = requests.get(mode_uri, headers=mode_header).json()
+
+	switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+	switch_header = {
+		"Authorization": clientInfo.token_type + " " + clientInfo.token
+	}
+
+	switchList = requests.get(switch_uri, headers=switch_header).json()
+
+
+	return sampleGen.gen_all(modeList,switchList)
 
 
 

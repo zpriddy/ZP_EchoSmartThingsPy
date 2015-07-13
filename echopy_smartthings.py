@@ -104,7 +104,7 @@ def intent_request(session, user, request):
 			switchId = request['intent']['slots']['switch']['value']
 			switchState = request['intent']['slots']['state']['value']
 
-			result = st.set_mode(user.getUserId(), mode)
+			result = st.st_switch(user.getUserId(), switchId, switchState)
 
 			output_speech = "Telling " + switchId + " to turn " + result
 			output_type = "PlainText"
@@ -121,7 +121,7 @@ def intent_request(session, user, request):
 				else:
 					return response
 
-			elif state == result.lower():
+			elif switchState == result.lower():
 				return response
 			else:
 				st_doc.generateError(result, "Switch")

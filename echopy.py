@@ -40,6 +40,11 @@ def authcode(userId):
 
 	return redirect("/alexa")
 
+@app.route("/alexa/samples/<path:userId>")
+def samples(userId):
+	samples = st.getSamples(userId)
+	return samples
+
 
 @app.route("/alexa/test/<path:userId>")
 def test(userId):
