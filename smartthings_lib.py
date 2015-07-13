@@ -103,7 +103,7 @@ def switch(userId,deviceId,state):
 	response = requests.post(switch_uri, headers=switch_header, json=switch_json)
 	if debug: print "Switch Response: " + str(response.json())
 
-	return state if response.json()['error'] == 0 else "ERROR - See Logs"
+	return state if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
 def getSwitchState(clientInfo, deviceId):
 	switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
@@ -136,12 +136,14 @@ def set_mode(userId,modeId):
 
 	#get list of modes
 	modes = requests.get(mode_uri, headers=mode_header).json()
-	print modes
+	if debug: print modes
 
 
 	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
 	if len(selectedMode) > 1:
-		return 'Error - Many Modes Match Mode Selected'
+		return "Too many modes matched the mode name I heard: " + modeId
+	if len(selectedMode) < 1:
+		return "No modes matched the mode name I heard: " + modeId
 
 	selectedMode = selectedMode[0]
 
@@ -151,16 +153,47 @@ def set_mode(userId,modeId):
 
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
-	if debug: print "Switch Response: " + str(response.json())
 
-	return modeId if response.json()['error'] == 0 else "ERROR - See Logs"
+	if debug: print "Mode Response: " + str(response.json())
+
+	return modeId if response.json()['error'] == 0 else "Unknown Error. See Logs"
+
+
+def st_switch(userId, switchId, state):
+	'''
+	This is used to chnage the state of a switch from SmartThings. State = "ON" or "OFF" ot "TOGGLE"
+	'''
+	global stData
+	currentClient = stData.getUser(userId)
+	clientInfo = currentClient.getClientInfo()
+
+	switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+	switch_header = {
+		"Authorization": clientInfo.token_type + " " + clientInfo.token
+	}
+
+	switches = requests.get(switch_uri, headers=switch_header).json()
+	if debug: print "Switchs: " + str(switches)
+
+	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+
+	if len(selectedSwitch) > 1:
+		return "Too many switches matched the switch name I heard: " + switchId
+	if len(selectedSwitch) < 1:
+		return "No switches matched the switch name I heard: " + switchId
+
+	selectedSwitch = selectedSwitch[0]
+
+	return switch(userId,selectedSwitch,state)
+
+
+
+
+
 
 def isValidStUser(userId):
 	global stData
 	return stData.isValidUser(userId)
-
-
-
 
 
 

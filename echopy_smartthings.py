@@ -1,6 +1,7 @@
 import os
 import echopy_app
 import echopy_doc
+import smartthings_doc as st_doc
 import smartthings_lib as st
 import smartthings_settings as settings
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
@@ -92,10 +93,38 @@ def intent_request(session, user, request):
 
 			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
-			st.set_mode(user.getUserId(), mode)
+			result = st.set_mode(user.getUserId(), mode)
 
-			return response
+			if mode == result:
+				return response
+			else:
+				st_doc.generateError(result, "Setting Mode")
 
+		elif request['intent']['name'] ==  "STSwitch":
+			switchId = request['intent']['slots']['switch']['value']
+			switchState = request['intent']['slots']['state']['value']
+
+			result = st.set_mode(user.getUserId(), mode)
+
+			output_speech = "Telling " + switchId + " to turn " + result
+			output_type = "PlainText"
+
+			card_type = "Simple"
+			card_title = "SmartThings Control - Switch"
+			card_content = "Telling " + switchId + " to turn " + result
+
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+			if switchState == 'toggle':
+				if result.lower() != 'on' and result.lower() != 'off':
+					return st_doc.generateError(result, "Switch")
+				else:
+					return response
+
+			elif state == result.lower():
+				return response
+			else:
+				st_doc.generateError(result, "Switch")
 
 		else:
 			return launch_request(session, user, request) ##Just do the same thing as launch request

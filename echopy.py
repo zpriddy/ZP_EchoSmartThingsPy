@@ -48,7 +48,7 @@ def test(userId):
 @app.route("/alexa/switch/<path:userId>/<path:deviceId>/<path:state>")
 def switch(userId, deviceId, state):
 
-	return str(st.switch(userId, deviceId, state))
+	return str(st.st_switch(userId, deviceId, state))
 
 
 

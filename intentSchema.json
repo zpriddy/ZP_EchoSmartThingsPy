@@ -1,23 +1,24 @@
 {
   "intents": [
     {
-      "intent": "HelpIntent",
-      "slots": []
-    },
-    {
-      "intent": "NestCoolDownIntent",
-      "slots": []
-    },
-    {
-      "intent": "NestWarmUpIntent",
-      "slots": []
-    },
-    {
-      "intent": "NestSetTempIntent",
+      "intent": "STSetMode",
       "slots": [
         {
-          "name": "temp",
-          "type": "NUMBER"
+          "name": "mode",
+          "type": "LITERAL"
+        }
+      ]
+    },
+    {
+      "intent": "STSwitch",
+      "slots": [
+        {
+          "name": "switch",
+          "type": "LITERAL"
+        },
+        {
+          "name": "state",
+          "type": "LITERAL"
         }
       ]
     }

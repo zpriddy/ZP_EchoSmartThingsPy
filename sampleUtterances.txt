@@ -1,79 +1,77 @@
-NestSetTempIntent set nest to {sixty eight|temp}
-NestSetTempIntent set nest to {eighty one|temp} degress
-NestSetTempIntent have nest cool to {sixty eight|temp}
-NestSetTempIntent have nest cool to {sixty eight|temp} degrees
-NestSetTempIntent set temperature to {seventy four|temp} 
-NestSetTempIntent set temperature to {eighty one|temp} degrees
-NestSetTempIntent set cool to {sixty one|temp} 
-NestSetTempIntent set cool to {seventy one|temp} degrees
-NestSetTempIntent set to {sixty one|temp} 
-NestSetTempIntent set to {eighty one|temp} degrees
-NestSetTempIntent set {sixty one|temp} 
-NestSetTempIntent set {eighty one|temp} degrees
-NestSetTempIntent set thermostat to {sixty one|temp} 
-NestSetTempIntent set thermostat to {eighty one|temp} degrees
-NestSetTempIntent nest to {sixty eight|temp}
-NestSetTempIntent nest to {eighty one|temp} degress
-NestSetTempIntent nest cool to {sixty eight|temp}
-NestSetTempIntent nest cool to {sixty eight|temp} degrees
-NestSetTempIntent temperature to {seventy four|temp} 
-NestSetTempIntent temperature to {eighty one|temp} degrees
+STSetMode set mode to {away|mode}
+STSetMode set mode to {home|mode}
+STSetMode set mode to {sleeping|mode}
+STSetMode set mode to {night|mode}
+STSetMode set mode to {test mode|mode}
 
-NestCoolDownIntent turn the temperature down
-NestCoolDownIntent temperature down
-NestCoolDownIntent I'm too warm
-NestCoolDownIntent too warm
-NestCoolDownIntent react to burn 
-NestCoolDownIntent I'm burning up
-NestCoolDownIntent burning up
-NestCoolDownIntent i'm too hot
-NestCoolDownIntent too hot
-NestCoolDownIntent cool down
-NestCoolDownIntent cool the house down
-NestCoolDownIntent turn the thermostat down
-NestCoolDownIntent thermostat down
-NestCoolDownIntent the house is on fire
-NestCoolDownIntent hot as hell
-NestCoolDownIntent hot as hell's fiery pits 
-NestCoolDownIntent hot as the fiery pits of hell  
-NestCoolDownIntent it's hot as the fiery pits of hell  
-NestCoolDownIntent it's hot as hell
-NestCoolDownIntent it's hot as hell's fiery pits 
-NestCoolDownIntent it is as hot as the fiery pits of hell  
-NestCoolDownIntent it is hot as hell
-NestCoolDownIntent burned
+STSetMode set mode to {away|mode} mode
+STSetMode set mode to {home|mode} mode
+STSetMode set mode to {sleeping|mode} mode
+STSetMode set mode to {night|mode} mode
 
-NestWarmUpIntent turn the temperature up
-NestWarmUpIntent temperature up
-NestWarmUpIntent I am too cold
-NestWarmUpIntent I'm too cold
-NestWarmUpIntent it is too cool
-NestWarmUpIntent it is too cold
-NestWarmUpIntent it is freezing
-NestWarmUpIntent it's freezing
-NestWarmUpIntent it is chilly
-NestWarmUpIntent it's chilly
-NestWarmUpIntent it is like ice
-NestWarmUpIntent it's like ice
-NestWarmUpIntent warm up the house
-NestWarmUpIntent it is nippy
-NestWarmUpIntent it's nippy
-NestWarmUpIntent my nipples are like diamonds 
-NestWarmUpIntent my nipples are as hard as diamonds
+STSetMode change mode to {away|mode}
+STSetMode change mode to {home|mode}
+STSetMode change mode to {sleeping|mode}
+STSetMode change mode to {night|mode}
 
-HelpIntent help
-HelpIntent help me
-HelpIntent what can I ask you
-HelpIntent get help
-HelpIntent to help
-HelpIntent to help me
-HelpIntent what commands can I ask
-HelpIntent what commands can I say
-HelpIntent what can I do
-HelpIntent what can I use this for
-HelpIntent what questions can I ask
-HelpIntent what can you do
-HelpIntent what do you do
-HelpIntent how do I use you
-HelpIntent how can I use you
-HelpIntent what can you tell me
+STSetMode acitvate {away|mode} mode
+STSetMode acitvate {home|mode} mode
+STSetMode acitvate {sleeping|mode} mode
+STSetMode acitvate {night|mode} mode
+
+
+STSwitch switch {kitchen lights|switch} {off|state}
+STSwitch switch {inside lights|switch} {off|state}
+STSwitch switch {bedroom fan|switch} {off|state}
+
+STSwitch switch {kitchen lights|switch} {on|state}
+STSwitch switch {inside lights|switch} {on|state}
+STSwitch switch {bedroom fan|switch} {on|state}
+
+STSwitch switch {kitchen lights|switch} {toggle|state}
+STSwitch switch {inside lights|switch} {toggle|state}
+STSwitch switch {bedroom fan|switch} {toggle|state}
+
+
+
+STSwitch tell switch {bedroom fan|switch} to {off|state}
+STSwitch tell switch {inside lights|switch} to {off|state}
+STSwitch tell switch {kitchen lights|switch} to {off|state}
+
+STSwitch tell switch {bedroom fan|switch} to {on|state}
+STSwitch tell switch {inside lights|switch} to {on|state}
+STSwitch tell switch {kitchen lights|switch} to {on|state}
+
+STSwitch tell switch {bedroom fan|switch} to {toggle|state}
+STSwitch tell switch {inside lights|switch} to {toggle|state}
+STSwitch tell switch {kitchen lights|switch} to {toggle|state}
+
+
+
+STSwitch set {bedroom fan|switch} switch {off|state}
+STSwitch set {inside lights|switch} switch {off|state}
+STSwitch set {kitchen lights|switch} switch {off|state}
+
+STSwitch set {bedroom fan|switch} switch {on|state}
+STSwitch set {inside lights|switch} switch {on|state}
+STSwitch set {kitchen lights|switch} switch {on|state}
+
+STSwitch set {bedroom fan|switch} switch {toggle|state}
+STSwitch set {inside lights|switch} switch {toggle|state}
+STSwitch set {kitchen lights|switch} switch {toggle|state}
+
+
+
+
+STSwitch set switch {bedroom fan|switch} {off|state}
+STSwitch set switch {inside lights|switch} {off|state}
+STSwitch set switch {kitchen lights|switch} {off|state}
+
+STSwitch set switch {bedroom fan|switch} {on|state}
+STSwitch set switch {inside lights|switch} {on|state}
+STSwitch set switch {kitchen lights|switch} {on|state}
+
+STSwitch set switch {bedroom fan|switch} {toggle|state}
+STSwitch set switch {inside lights|switch} {toggle|state}
+STSwitch set switch {kitchen lights|switch} {toggle|state}
+
