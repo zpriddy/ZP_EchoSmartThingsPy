@@ -127,7 +127,16 @@ def intent_request(session, user, request):
 				st_doc.generateError(result, "Switch")
 
 		else:
-			return launch_request(session, user, request) ##Just do the same thing as launch request
+			output_speech = "Smart Things app did not understand your request. Please say it again."
+			output_type = "PlainText"
+
+			card_type = "Simple"
+			card_title = "SmartThings Control - Welcome"
+			card_content = "Welcome to SmartThings Control App. Please say a command."
+
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':False}
+
+			return response
 
 
 
