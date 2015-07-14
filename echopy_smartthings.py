@@ -81,52 +81,63 @@ def intent_request(session, user, request):
 		return response
 
 	else:
+		try:
+			if request['intent']['name'] ==  "STSetMode":
+				mode = request['intent']['slots']['mode']['value']
+				output_speech = "Setting Smart Things to " + mode + " mode"
+				output_type = "PlainText"
 
-		if request['intent']['name'] ==  "STSetMode":
-			mode = request['intent']['slots']['mode']['value']
-			output_speech = "Setting Smart Things to " + mode + " mode"
-			output_type = "PlainText"
+				card_type = "Simple"
+				card_title = "SmartThings Control - Setting Mode"
+				card_content = "Setting Smart Things to " + mode + " mode"
 
-			card_type = "Simple"
-			card_title = "SmartThings Control - Setting Mode"
-			card_content = "Setting Smart Things to " + mode + " mode"
+				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
-			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+				result = st.set_mode(user.getUserId(), mode)
 
-			result = st.set_mode(user.getUserId(), mode)
-
-			if mode == result:
-				return response
-			else:
-				st_doc.generateError(result, "Setting Mode")
-
-		elif request['intent']['name'] ==  "STSwitch":
-			switchId = request['intent']['slots']['switch']['value']
-			switchState = request['intent']['slots']['state']['value']
-
-			result = st.st_switch(user.getUserId(), switchId, switchState)
-
-			output_speech = "Telling " + switchId + " to turn " + result
-			output_type = "PlainText"
-
-			card_type = "Simple"
-			card_title = "SmartThings Control - Switch"
-			card_content = "Telling " + switchId + " to turn " + result
-
-			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
-
-			if switchState == 'toggle':
-				if result.lower() != 'on' and result.lower() != 'off':
-					return st_doc.generateError(result, "Switch")
-				else:
+				if mode == result:
 					return response
+				else:
+					st_doc.generateError(result, "Setting Mode")
 
-			elif switchState == result.lower():
-				return response
+			elif request['intent']['name'] ==  "STSwitch":
+				switchId = request['intent']['slots']['switch']['value']
+				switchState = request['intent']['slots']['state']['value']
+
+				result = st.st_switch(user.getUserId(), switchId, switchState)
+
+				output_speech = "Telling " + switchId + " to turn " + result
+				output_type = "PlainText"
+
+				card_type = "Simple"
+				card_title = "SmartThings Control - Switch"
+				card_content = "Telling " + switchId + " to turn " + result
+
+				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+				if switchState == 'toggle':
+					if result.lower() != 'on' and result.lower() != 'off':
+						return st_doc.generateError(result, "Switch")
+					else:
+						return response
+
+				elif switchState == result.lower():
+					return response
+				else:
+					st_doc.generateError(result, "Switch")
+
 			else:
-				st_doc.generateError(result, "Switch")
+				output_speech = "Smart Things app did not understand your request. Please say it again."
+				output_type = "PlainText"
 
-		else:
+				card_type = "Simple"
+				card_title = "SmartThings Control - Welcome"
+				card_content = "Welcome to SmartThings Control App. Please say a command."
+
+				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':False}
+
+				return response
+		except:
 			output_speech = "Smart Things app did not understand your request. Please say it again."
 			output_type = "PlainText"
 
