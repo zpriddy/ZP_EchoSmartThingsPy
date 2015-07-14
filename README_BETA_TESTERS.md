@@ -39,7 +39,7 @@ Click the **'Save'** button and then **'Publish -> For Me'**.
 
 At this time you will have to go to your Echo and say 'Alexa, Talk to Smart Things' (Replace Smart Things with what the Invocation Name you set). It should say that you are an unautherized Nest user and to check the card in your Echo App. Open the Echo app and look at the card there. It should give you what your UserID is.. 'amzn1.account.XXXXXXXXXXXXXXXXXX' ( This may be easier to get from your computer by going to https://echo.amazon.com)
 
-Go to https://alexa.zpriddy /alexa/auth/<UserID\>/<SmartThings OAuth ClientID\>/<SmartThings OAuth ClientSecret\>
+Go to https://alexa.zpriddy.com/alexa/auth/<UserID\>/<SmartThings OAuth ClientID\>/<SmartThings OAuth ClientSecret\>
 
 This should allow you to authorize it to control SmartThings. Login to your SmartThings account and Authorize it.. It should bring you back to the root Alexa page. 
 
@@ -47,7 +47,7 @@ This should allow you to authorize it to control SmartThings. Login to your Smar
 
 At this time the App will be able to generate a custom list of sample utterances to give you better support in controling your devices. 
 
-To get this list go to: https://alexa.zpriddy /alexa/samples/<UserID\>
+To get this list go to: https://alexa.zpriddy.com/alexa/samples/<UserID\>
 
 Copy the text that is displayed and go back into your Amazon Developer Account. 
 
