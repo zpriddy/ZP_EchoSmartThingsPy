@@ -66,7 +66,7 @@ def launch_request(session, user, request):
 
 def intent_request(session, user, request):
 	print "intent_request"
-
+	if debug: print json.dumps(request,sort_keys=True,indent=4)
 	if not st.isValidStUser(user.getUserId()):
 		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help"
 		output_type = "PlainText"
