@@ -70,8 +70,7 @@ main_page='''
 </div>
  </div>
 
-This is the EchoPy API for Amazon Echo <br> 
-All resuests should be made to https://server/EchoPyAPI/
+
 '''
 
 auth_page='''

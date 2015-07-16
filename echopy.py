@@ -67,6 +67,7 @@ def samples():
 			alexaId=request.form['AlexaID']
 			userId = myApp.getUserIdFromAlexaId(alexaId)
 			samples = st.getSamples(userId)
+			myApp.genNewAlexaId(userId,100)
 			return echopy_doc.samples_results.replace('RESULTS',samples.replace('\n','&#13;&#10;'))
 		except:
 			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED")
