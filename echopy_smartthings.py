@@ -75,7 +75,7 @@ def launch_request(session, user, request):
 
 		card_type = "Simple"
 		card_title = "SmartThings Control"
-		card_content = "Current user is not a valid SmartThings user. Please authenticate user with userId: " + alexaId + " to SmartThings as instructed in the README"
+		card_content = "Current user is not a valid SmartThings user. Please authenticate user with Alexa ID: " + alexaId + " to SmartThings as instructed in the README"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
@@ -104,7 +104,7 @@ def intent_request(session, user, request):
 
 		card_type = "Simple"
 		card_title = "SmartThings Control"
-		card_content = "Current user is not a valid SmartThings user. Please authenticate user with userId: " + alexaId + " to SmartThings as instructed in the README"
+		card_content = "Current user is not a valid SmartThings user. Please authenticate user with Alexa ID: " + alexaId + " to SmartThings as instructed in the README"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
@@ -165,7 +165,7 @@ def intent_request(session, user, request):
 
 				card_type = "Simple"
 				card_title = "SmartThings Control"
-				card_content = "New samples have been requested. Please authenticate user with userId: " + alexaId + " to https://alexa.zpriddy.com/alexa/samples"
+				card_content = "New samples have been requested. Please authenticate user with Alexa ID: " + alexaId + " to https://alexa.zpriddy.com/alexa/samples"
 
 				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
