@@ -63,8 +63,8 @@ main_page='''
 		  </div>
 		  <div class="panel-body">
 
-		<a class="btn btn-success" href="href="https://alexa.zpriddy.com/alexa/auth" role="button">SmartThings Alexa Auth</a>
-		<a class="btn btn-info" href="href="https://alexa.zpriddy.com/alexa/samples" role="button">SmartThings Alexa Smaples</a>
+		<a class="btn btn-success" href=https://alexa.zpriddy.com/alexa/auth" role="button">SmartThings Alexa Auth</a>
+		<a class="btn btn-info" href=https://alexa.zpriddy.com/alexa/samples" role="button">SmartThings Alexa Smaples</a>
 		</div>
 	</div>
 </div>
