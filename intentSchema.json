@@ -10,6 +10,10 @@
       ]
     },
     {
+      "intent": "STSamples",
+      "slots": [ ]
+    },
+    {
       "intent": "STSwitch",
       "slots": [
         {

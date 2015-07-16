@@ -28,7 +28,7 @@ import os.path
 from urllib import quote
 
 debug = settings.debug
-loadSettings = False
+loadSettings = True
 picklefile = 'smartthings_settings.pickle'
 
 def smartThingsDataStoreInit():
