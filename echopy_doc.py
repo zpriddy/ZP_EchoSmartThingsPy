@@ -76,7 +76,7 @@ main_page='''
 
 		  To setup your Alexa to talk to SmartThings please go to my Github linked below and follow the README instructions. There are three other files that you will need in order to complete the process (Thats why I link to Github).
 
-		<a class="btn btn-warning" href="https://github.com/zpriddy/EchoST-Beta" role="button">Git Hub</a>
+		<a class="btn btn-warning" href="https://github.com/zpriddy/ZP-Echo-ST-Beta" role="button">Git Hub</a>
 
 		
 		</div>
