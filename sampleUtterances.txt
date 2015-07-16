@@ -75,3 +75,9 @@ STSwitch set switch {bedroom fan|switch} {toggle|state}
 STSwitch set switch {inside lights|switch} {toggle|state}
 STSwitch set switch {kitchen lights|switch} {toggle|state}
 
+STSamples give me new samples
+STSamples show me samples
+STSamples give me samples
+STSamples show me new samples
+
+

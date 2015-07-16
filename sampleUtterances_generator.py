@@ -21,9 +21,16 @@ def gen_switches(switchList):
 		output += "<br>"
 	return output
 
+def gen_defaults():
+	output = ""
+	for sample in sud.default_samples:
+		output += sample + "<br>"
+	return output
+
 def gen_all(modeList, switchList):
 	output = ""
 	output += gen_modes(modeList)
 	output += gen_switches(switchList)
+	output += gen_defaults()
 	return output
 

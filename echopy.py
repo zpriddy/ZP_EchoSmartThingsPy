@@ -9,6 +9,10 @@ from flask import Flask, render_template, Response, send_from_directory, request
 
 app = Flask(__name__)
 
+@app.route("/")
+def home():
+	return echopy_doc.main_page
+
 
 @app.route("/alexa/")
 def main():
@@ -23,28 +27,49 @@ def apicalls():
 		sessionId = myApp.data_handler(data)
 		return sessionId + "\n"
 
-@app.route("/alexa/auth/<path:userId>/<path:clientId>/<path:clientSecret>",methods = ['GET'])
-def auth(userId,clientId,clientSecret):
+@app.route("/alexa/auth",methods = ['GET','POST'])
+def auth():
+	if request.method == 'GET':
+		return echopy_doc.auth_page
 
-	auth_uri = st.smartThingsAuth(userId,clientId,clientSecret)
-	return redirect(auth_uri)
+	if request.method == 'POST':
+		alexaId=request.form['AlexaID']
+		clientId=request.form['SmartThingsClientID']
+		clientSecret=request.form['SmartThingsClientSecret']
+		#userId = myApp.getUserIdFromAlexaId(alexaId)
 
-@app.route("/alexa/oauth2/<path:userId>",methods = ['GET'])
-def authcode(userId):
+		auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret)
+		return redirect(auth_uri)
+
+
+@app.route("/alexa/oauth2/<path:alexaId>",methods = ['GET'])
+def authcode(alexaId):
 
 	code = request.args.get('code')
+	userId = myApp.getUserIdFromAlexaId(alexaId)
 
-	if st.smartThingsToken(userId,code):
+	if st.smartThingsToken(alexaId, userId,code):
 
 		print st.stData.getUser(userId).getClientInfo().token
 
+		myApp.genNewAlexaId(userId,100)
+
 	return redirect("/alexa")
 
-@app.route("/alexa/samples/<path:userId>")
-def samples(userId):
-	samples = st.getSamples(userId)
-	return samples
 
+@app.route("/alexa/samples",methods = ['GET','POST'])
+def samples():
+	if request.method == 'GET':
+		return echopy_doc.samples_page
+
+	if request.method == 'POST':
+		try:
+			alexaId=request.form['AlexaID']
+			userId = myApp.getUserIdFromAlexaId(alexaId)
+			samples = st.getSamples(userId)
+			return echopy_doc.samples_results.replace('RESULTS',samples.replace('\n','&#13;&#10;'))
+		except:
+			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED")
 
 @app.route("/alexa/test/<path:userId>")
 def test(userId):

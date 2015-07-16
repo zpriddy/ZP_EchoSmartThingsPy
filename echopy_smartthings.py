@@ -4,6 +4,8 @@ import echopy_doc
 import smartthings_doc as st_doc
 import smartthings_lib as st
 import smartthings_settings as settings
+import random
+import string
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
 
 
@@ -11,6 +13,17 @@ appVersion = 1.0
 
 debug = settings.debug
 
+
+def STAlexaAuth(alexaId, clientId, clientSecret):
+	global MyDataStore
+	userId = MyDataStore.getAlexaUser(alexaId.upper())
+
+	auth_uri = st.smartThingsAuth(alexaId, userId, clientId, clientSecret)
+
+	return auth_uri
+
+
+#smartThingsToken(userId,code):
 
 def data_init():
 	global MyDataStore
@@ -23,6 +36,9 @@ def data_handler(rawdata):
 	currentUser = MyDataStore.getUser(rawdata['session'])
 	currentRequest = rawdata['request']
 	response = request_handler(currentSession, currentUser, currentRequest)
+
+	print "**********"
+	print currentUser.getUserId()
 
 
 	if debug: print json.dumps({"version":appVersion,"response":response},sort_keys=True,indent=4)
@@ -41,12 +57,14 @@ def request_handler(session, user, request):
 
 def launch_request(session, user, request):
 	if not st.isValidStUser(user.getUserId()):
-		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help"
+		genNewAlexaId(user.getUserId(),10)
+		alexaId = getAlexaIdFormUserID(user.getUserId())
+		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
 		output_type = "PlainText"
 
 		card_type = "Simple"
 		card_title = "SmartThings Control"
-		card_content = "Current user is not a valid SmartThings user. Please authenticate user with userId: " + user.getUserId() + " to SmartThings as instructed in the README"
+		card_content = "Current user is not a valid SmartThings user. Please authenticate user with userId: " + alexaId + " to SmartThings as instructed in the README"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
@@ -68,12 +86,14 @@ def intent_request(session, user, request):
 	print "intent_request"
 	if debug: print json.dumps(request,sort_keys=True,indent=4)
 	if not st.isValidStUser(user.getUserId()):
-		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help"
+		genNewAlexaId(user.getUserId(),10)
+		alexaId = getAlexaIdFormUserID(user.getUserId())
+		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
 		output_type = "PlainText"
 
 		card_type = "Simple"
 		card_title = "SmartThings Control"
-		card_content = "Current user is not a valid SmartThings user. Please authenticate user with userId: " + user.getUserId() + " to SmartThings as instructed in the README"
+		card_content = "Current user is not a valid SmartThings user. Please authenticate user with userId: " + alexaId + " to SmartThings as instructed in the README"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
@@ -126,6 +146,21 @@ def intent_request(session, user, request):
 				else:
 					st_doc.generateError(result, "Switch")
 
+			elif request['intent']['name'] ==  "STSamples":
+				genNewAlexaId(user.getUserId(),10)
+				alexaId = getAlexaIdFormUserID(user.getUserId())
+				output_speech = "Requesting new samples. New Alexa ID has been generated. Please see the Echo App."
+				output_type = "PlainText"
+
+				card_type = "Simple"
+				card_title = "SmartThings Control"
+				card_content = "New samples have been requested. Please authenticate user with userId: " + alexaId + " to https://alexa.zpriddy.com/alexa/samples"
+
+				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+
+				return response
+
 			else:
 				output_speech = "Smart Things app did not understand your request. Please say it again."
 				output_type = "PlainText"
@@ -151,7 +186,20 @@ def intent_request(session, user, request):
 
 
 
+def alexaIdGenerator(N):
+	return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(N))
 
+def getUserIdFromAlexaId(alexaId):
+	global MyDataStore
+	return MyDataStore.getAlexaUser(alexaId)
+
+def genNewAlexaId(userId,size):
+	global MyDataStore
+	MyDataStore.genNewAlexaId(userId,size)
+
+def getAlexaIdFormUserID(userId):
+	global MyDataStore
+	return MyDataStore.getAlexaId(userId)
 
 class Session:
 	def __init__(self,sessionData):
@@ -173,6 +221,7 @@ class DataStore:
 	def __init__(self):
 		self.sessions = {}
 		self.users = {}
+		self.alexaIds = {}
 
 	def getSession(self,session):
 		if session['new'] is True or session['sessionId'] not in self.sessions:
@@ -184,6 +233,32 @@ class DataStore:
 		userId = session['user']['userId']
 		if userId not in self.users:
 			self.users[userId] = User(userId)
+			alexaId = alexaIdGenerator(100)
+			while alexaId in self.alexaIds.values():
+				alexaId = alexaIdGenerator(100)
+			self.alexaIds[userId] = alexaId
+			print "**********"
+			print alexaId
+			print self.alexaIds
 
 		return self.users[userId]
+
+	def getAlexaUser(self,alexaId):
+		userId = [a for a, alexa in self.alexaIds.items() if alexa == alexaId][0]
+		print "**********" 
+		print userId
+		return userId
+
+	def getAlexaId(self, userId):
+		return self.alexaIds[userId]
+
+	def genNewAlexaId(self,userId, size):
+		alexaId = alexaIdGenerator(size)
+		while alexaId in self.alexaIds.values():
+			alexaId = alexaIdGenerator(size)
+		self.alexaIds[userId] = alexaId
+		print "**********"
+		print alexaId
+		print self.alexaIds
+
 

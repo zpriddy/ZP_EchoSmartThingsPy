@@ -1,4 +1,9 @@
-
+default_samples = [
+	'STSamples give me new samples',
+	'STSamples show me samples',
+	'STSamples give me samples',
+	'STSamples show me new samples'
+	]
 
 mode_samples = [
 	'STSetMode set mode to {ZPMODEALEXA|mode}',

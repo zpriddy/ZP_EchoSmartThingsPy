@@ -28,7 +28,7 @@ import os.path
 from urllib import quote
 
 debug = settings.debug
-loadSettings = True
+loadSettings = False
 picklefile = 'smartthings_settings.pickle'
 
 def smartThingsDataStoreInit():
@@ -42,27 +42,28 @@ def smartThingsDataStoreInit():
 		stData = STDataStore()
 
 
-def smartThingsAuth(userId, clientId, clientSecret):
+def smartThingsAuth(altId, userId, clientId, clientSecret):
 	global stData
+	currentClientUserId = userId
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
 	clientInfo.clientId = clientId
 	clientInfo.clientSecret = clientSecret
 
-	if debug: print 'ST Auth: ' + userId
-	auth_uri = settings.auth_uri_1.replace('CLIENTID',clientId).replace('CALLBACK',quote(settings.callback_url + userId))
+	if debug: print 'ST Auth: ' + currentClientUserId
+	auth_uri = settings.auth_uri_1.replace('CLIENTID',clientId).replace('CALLBACK',quote(settings.callback_url + altId))
 	if debug: print 'Auth URL: ' + auth_uri
 
 	return auth_uri
 
 
-def smartThingsToken(userId, authCode):
+def smartThingsToken(altId, userId, authCode):
 	global stData
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
 
 	if debug: print 'ST Token: ' + userId
-	token_uri = settings.auth_uri_2.replace('CODE',authCode).replace('CLIENTID',clientInfo.clientId).replace('CLIENTSECRET',clientInfo.clientSecret).replace('CALLBACK',quote(settings.callback_url + userId))
+	token_uri = settings.auth_uri_2.replace('CODE',authCode).replace('CLIENTID',clientInfo.clientId).replace('CLIENTSECRET',clientInfo.clientSecret).replace('CALLBACK',quote(settings.callback_url + altId))
 	if debug: print 'Token URL: ' + token_uri
 	response = requests.get(token_uri).json()
 	clientInfo.setFromOauth(response)
