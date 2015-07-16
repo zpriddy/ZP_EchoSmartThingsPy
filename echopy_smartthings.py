@@ -4,6 +4,7 @@ import echopy_doc
 import smartthings_doc as st_doc
 import smartthings_lib as st
 import smartthings_settings as settings
+import date_check as dc
 import random
 import string
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
@@ -36,7 +37,14 @@ def data_handler(rawdata):
 	currentSession = MyDataStore.getSession(rawdata['session'])
 	currentUser = MyDataStore.getUser(rawdata['session'])
 	currentRequest = rawdata['request']
-	response = request_handler(currentSession, currentUser, currentRequest)
+
+	timestamp = currentRequest['timestamp']
+
+	if dc.datecheck(timestamp,5):
+		response = request_handler(currentSession, currentUser, currentRequest)
+	else:
+		response = AlexaInvalidDate()
+
 
 	print "**********"
 	print currentUser.getUserId()
@@ -54,6 +62,8 @@ def request_handler(session, user, request):
 		return launch_request(session, user, request)
 	elif requestType == "IntentRequest":
 		return intent_request(session, user, request)
+	else:
+		return AlexaDidNotUnderstand()
 
 
 def launch_request(session, user, request):
@@ -174,16 +184,7 @@ def intent_request(session, user, request):
 
 				return response
 		except:
-			output_speech = "Smart Things app did not understand your request. Please say it again."
-			output_type = "PlainText"
-
-			card_type = "Simple"
-			card_title = "SmartThings Control - Welcome"
-			card_content = "Welcome to SmartThings Control App. Please say a command."
-
-			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':False}
-
-			return response
+			return AlexaDidNotUnderstand()
 
 
 
@@ -201,6 +202,31 @@ def genNewAlexaId(userId,size):
 def getAlexaIdFormUserID(userId):
 	global MyDataStore
 	return MyDataStore.getAlexaId(userId)
+
+
+def AlexaDidNotUnderstand():
+	output_speech = "Smart Things app did not understand your request. Please say it again."
+	output_type = "PlainText"
+
+	card_type = "Simple"
+	card_title = "SmartThings Control - Welcome"
+	card_content = "Welcome to SmartThings Control App. Please say a command."
+
+	response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':False}
+
+	return response
+
+def AlexaInvalidDate():
+	output_speech = "The date and or time of the request does not match the durrent date."
+	output_type = "PlainText"
+
+	card_type = "Simple"
+	card_title = "SmartThings Control - Error"
+	card_content = "The date and or time of the request does not match the durrent date."
+
+	response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+	return response
 
 class Session:
 	def __init__(self,sessionData):
