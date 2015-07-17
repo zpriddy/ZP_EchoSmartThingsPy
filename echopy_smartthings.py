@@ -266,9 +266,9 @@ class DataStore:
 		return self.users[userId]
 
 	def getAlexaUser(self,alexaId):
-		print alexaId
-		print self.alexaIds
+
 		userId = [a for a, alexa in self.alexaIds.items() if alexa == alexaId][0]
+		return userId
 
 
 	def getAlexaId(self, userId):
