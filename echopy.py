@@ -66,7 +66,9 @@ def samples():
 	if request.method == 'POST':
 		try:
 			alexaId=request.form['AlexaID']
+			print alexaId
 			userId = myApp.getUserIdFromAlexaId(alexaId)
+			print userId
 			samples = st.getSamples(userId)
 			myApp.genNewAlexaId(userId,100)
 			return echopy_doc.samples_results.replace('RESULTS',samples.replace('\n','&#13;&#10;'))
