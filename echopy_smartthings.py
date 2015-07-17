@@ -39,10 +39,14 @@ def data_handler(rawdata):
 
 	timestamp = currentRequest['timestamp']
 
+
 	if dc.datecheck(timestamp,5):
 		response = request_handler(currentSession, currentUser, currentRequest)
 	else:
 		response = AlexaInvalidDate()
+
+	if response is None:
+		response = AlexaDidNotUnderstand()
 
 
 	if debug: print json.dumps({"version":appVersion,"response":response},sort_keys=True,indent=4)
