@@ -4,6 +4,7 @@ import echopy_doc
 import echopy_smartthings as myApp
 import smartthings_lib as st
 import smartthings_settings as settings
+import logger
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
 
 
@@ -93,5 +94,6 @@ def run_echopy_app():
 
 if __name__ == "__main__":
 	st.smartThingsDataStoreInit()
+	logger.init_logging()
 	myApp.data_init()
 	run_echopy_app()

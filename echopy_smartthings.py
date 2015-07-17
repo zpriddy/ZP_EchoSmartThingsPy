@@ -6,6 +6,7 @@ import smartthings_lib as st
 import smartthings_settings as settings
 import date_check as dc
 import random
+import logger
 import string
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
 
@@ -23,8 +24,6 @@ def STAlexaAuth(alexaId, clientId, clientSecret):
 
 	return auth_uri
 
-
-#smartThingsToken(userId,code):
 
 def data_init():
 	global MyDataStore
@@ -46,11 +45,8 @@ def data_handler(rawdata):
 		response = AlexaInvalidDate()
 
 
-	print "**********"
-	print currentUser.getUserId()
-
-
 	if debug: print json.dumps({"version":appVersion,"response":response},sort_keys=True,indent=4)
+	logger.write_log(str(json.dumps({"version":appVersion,"response":response},sort_keys=True,indent=4)))
 
 	return json.dumps({"version":appVersion,"response":response},indent=2,sort_keys=True)
 
@@ -96,6 +92,7 @@ def launch_request(session, user, request):
 def intent_request(session, user, request):
 	print "intent_request"
 	if debug: print json.dumps(request,sort_keys=True,indent=4)
+	logger.write_log(str(json.dumps(request,sort_keys=True,indent=4)))
 	if not st.isValidStUser(user.getUserId()):
 		genNewAlexaId(user.getUserId(),10)
 		alexaId = getAlexaIdFormUserID(user.getUserId())
@@ -264,17 +261,13 @@ class DataStore:
 			while alexaId in self.alexaIds.values():
 				alexaId = alexaIdGenerator(100)
 			self.alexaIds[userId] = alexaId
-			print "**********"
-			print alexaId
-			print self.alexaIds
+
 
 		return self.users[userId]
 
 	def getAlexaUser(self,alexaId):
 		userId = [a for a, alexa in self.alexaIds.items() if alexa == alexaId][0]
-		print "**********" 
-		print userId
-		return userId
+
 
 	def getAlexaId(self, userId):
 		return self.alexaIds[userId]
@@ -284,8 +277,6 @@ class DataStore:
 		while alexaId in self.alexaIds.values():
 			alexaId = alexaIdGenerator(size)
 		self.alexaIds[userId] = alexaId
-		print "**********"
-		print alexaId
-		print self.alexaIds
+
 
 

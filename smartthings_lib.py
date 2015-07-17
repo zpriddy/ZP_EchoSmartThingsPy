@@ -23,12 +23,13 @@ import requests
 import pickle
 import smartthings_settings as settings
 import sampleUtterances_generator as sampleGen
+import logger
 import os.path
 
 from urllib import quote
 
 debug = settings.debug
-loadSettings = True
+loadSettings = settings.smartthings_load_pickle
 picklefile = 'smartthings_settings.pickle'
 
 def smartThingsDataStoreInit():
@@ -51,8 +52,10 @@ def smartThingsAuth(altId, userId, clientId, clientSecret):
 	clientInfo.clientSecret = clientSecret
 
 	if debug: print 'ST Auth: ' + currentClientUserId
+	logger.write_log('ST Auth: ' + currentClientUserId)
 	auth_uri = settings.auth_uri_1.replace('CLIENTID',clientId).replace('CALLBACK',quote(settings.callback_url + altId))
 	if debug: print 'Auth URL: ' + auth_uri
+	logger.write_log('Auth URL: ' + auth_uri)
 
 	return auth_uri
 
@@ -63,19 +66,24 @@ def smartThingsToken(altId, userId, authCode):
 	clientInfo = currentClient.getClientInfo()
 
 	if debug: print 'ST Token: ' + userId
+	logger.write_log('ST Token: ' + userId)
 	token_uri = settings.auth_uri_2.replace('CODE',authCode).replace('CLIENTID',clientInfo.clientId).replace('CLIENTSECRET',clientInfo.clientSecret).replace('CALLBACK',quote(settings.callback_url + altId))
 	if debug: print 'Token URL: ' + token_uri
+	logger.write_log('Token URL: ' + token_uri)
 	response = requests.get(token_uri).json()
 	clientInfo.setFromOauth(response)
 	if debug: print "Response: " + str(response)
+	logger.write_log("Response: " + str(response))
 
 	#Get Endpoints
 	endpoints_params = {
 		"access_token": clientInfo.token
 	}
 	if debug: print "Endpoints URL: " + str(clientInfo.api)
+	logger.write_log("Endpoints URL: " + str(clientInfo.api))
 	response = requests.get(clientInfo.api, params=endpoints_params).json()[0]['url']
 	if debug: print "Endpoints: " + str(response)
+	logger.write_log("Endpoints: " + str(response))
 	clientInfo.url = response
 
 	pickle.dump(stData,open(picklefile,"wb"))
@@ -104,6 +112,7 @@ def switch(userId,deviceId,state):
 
 	response = requests.post(switch_uri, headers=switch_header, json=switch_json)
 	if debug: print "Switch Response: " + str(response.json())
+	logger.write_log("Switch Response: " + str(response.json()))
 
 	return state if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
@@ -119,6 +128,7 @@ def getSwitchState(clientInfo, deviceId):
 	response = requests.get(switch_uri, headers=switch_header, json=switch_json).json()
 	print response
 	if debug: print "Switch Response: " + str(response)
+	logger.write_log("Switch Response: " + str(response))
 
 	return response['switch']
 
@@ -139,6 +149,7 @@ def set_mode(userId,modeId):
 	#get list of modes
 	modes = requests.get(mode_uri, headers=mode_header).json()
 	if debug: print modes
+	logger.write_log(userId + " - Modes: " +  str(modes))
 
 
 	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
@@ -157,6 +168,7 @@ def set_mode(userId,modeId):
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 
 	if debug: print "Mode Response: " + str(response.json())
+	logger.write_log("Mode Response: " + str(response.json()))
 
 	return modeId if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
@@ -176,6 +188,7 @@ def st_switch(userId, switchId, state):
 
 	switches = requests.get(switch_uri, headers=switch_header).json()
 	if debug: print "Switchs: " + str(switches)
+	logger.write_log(userId + ' - Switches: ' + str(switches))
 
 	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
 
