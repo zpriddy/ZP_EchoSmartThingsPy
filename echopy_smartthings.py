@@ -32,7 +32,7 @@ def data_init():
 
 def data_handler(rawdata):
 	global MyDataStore
-	print rawdata
+	logger.write_log(str(json.dumps(rawdata,sort_keys=True,indent=4)))
 	currentSession = MyDataStore.getSession(rawdata['session'])
 	currentUser = MyDataStore.getUser(rawdata['session'])
 	currentRequest = rawdata['request']
