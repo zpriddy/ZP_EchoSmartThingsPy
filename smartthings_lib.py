@@ -45,7 +45,7 @@ def smartThingsDataStoreInit():
 		stData = STDataStore()
 
 	if initUserData:
-		#initAllSwitches()
+		initAllSwitches()
 		initAllModes()
 
 
@@ -146,7 +146,7 @@ def set_mode(userId,modeId):
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
 
-	modes = currentClient.modes
+	modes = clientInfo.modes
 
 	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
 
@@ -193,7 +193,7 @@ def st_switch(userId, switchId, state):
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
 
-	switches = currentClient.switches
+	switches = clientInfo.switches
 
 	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
 
@@ -414,14 +414,6 @@ class STClientInfo(object):
 		print self._api
 		print self._client_id
 		self._api = self._api.replace('CLIENTID',str(self._client_id))
-
-
-
-
-
-
-	
-
 
 
 
