@@ -46,7 +46,7 @@ def smartThingsDataStoreInit():
 
 	if initUserData:
 		initAllSwitches()
-		#initAllModes()
+		initAllModes()
 
 
 def smartThingsAuth(altId, userId, clientId, clientSecret):
@@ -146,19 +146,25 @@ def set_mode(userId,modeId):
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
 
-	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
-	
-	mode_header = {
-		"Authorization": clientInfo.token_type + " " + clientInfo.token
-	}
-
-	#get list of modes
-	modes = requests.get(mode_uri, headers=mode_header).json()
-	if debug: print modes
-	logger.write_log(userId + " - Modes: " +  str(modes))
-
+	modes = currentClient.modes
 
 	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
+
+	if len(selectedMode) < 1:
+		mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
+		
+		mode_header = {
+			"Authorization": clientInfo.token_type + " " + clientInfo.token
+		}
+
+		#get list of modes
+		modes = requests.get(mode_uri, headers=mode_header).json()
+		if debug: print modes
+		logger.write_log(userId + " - Modes: " +  str(modes))
+
+
+		selectedMode = [a for a in modes if a.lower() == modeId.lower()]
+
 	if len(selectedMode) > 1:
 		return "Too many modes matched the mode name I heard: " + modeId
 	if len(selectedMode) < 1:
@@ -187,16 +193,22 @@ def st_switch(userId, switchId, state):
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
 
-	switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
-	switch_header = {
-		"Authorization": clientInfo.token_type + " " + clientInfo.token
-	}
-
-	switches = requests.get(switch_uri, headers=switch_header).json()
-	if debug: print "Switchs: " + str(switches)
-	logger.write_log(userId + ' - Switches: ' + str(switches))
+	switches = currentClient.switches
 
 	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+
+	if len(selectedSwitch) < 1:
+
+		switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+		switch_header = {
+			"Authorization": clientInfo.token_type + " " + clientInfo.token
+		}
+
+		switches = requests.get(switch_uri, headers=switch_header).json()
+		if debug: print "Switchs: " + str(switches)
+		logger.write_log(userId + ' - Switches: ' + str(switches))
+
+		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
 
 	if len(selectedSwitch) > 1:
 		return "Too many switches matched the switch name I heard: " + switchId
@@ -247,11 +259,8 @@ def initAllSwitches():
 
 	for user in all_users:
 		try:
-			print user
 			currentClient = stData.getUser(user)
 			clientInfo = currentClient.getClientInfo()
-			print clientInfo.api_location
-			print clientInfo.url
 
 			switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
 			switch_header = {
@@ -261,33 +270,36 @@ def initAllSwitches():
 			clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
 
 			print clientInfo.switches
-			
+
 		except:
 			pass
 
-	#pickle.dump(stData,open(picklefile,"wb"))
+	pickle.dump(stData,open(picklefile,"wb"))
 
 def initAllModes():
 	global stData
 	all_users = stData.getAllUsers()
 
 	for user in all_users:
+		try:
+			currentClient = stData.getUser(user)
+			clientInfo = currentClient.getClientInfo()
 
-		currentClient = stData.getUser(user)
-		clientInfo = currentClient.getClientInfo()
+			mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
+		
+			mode_header = {
+				"Authorization": clientInfo.token_type + " " + clientInfo.token
+			}
 
-		mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
-	
-		mode_header = {
-			"Authorization": clientInfo.token_type + " " + clientInfo.token
-		}
+			#get list of modes
+			clientInfo.modes = requests.get(mode_uri, headers=mode_header).json()
 
-		#get list of modes
-		clientInfo.modes = requests.get(mode_uri, headers=mode_header).json()
+			print clientInfo.modes
 
-		print clientInfo.modes
+		except:
+			pass
 
-	#pickle.dump(stData,open(picklefile,"wb"))
+	pickle.dump(stData,open(picklefile,"wb"))
 
 
 
