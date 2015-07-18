@@ -246,6 +246,7 @@ def initAllSwitches():
 	all_users = stData.getAllUsers()
 
 	for user in all_users:
+		print user
 		currentClient = stData.getUser(user)
 		clientInfo = currentClient.getClientInfo()
 
