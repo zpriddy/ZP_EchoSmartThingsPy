@@ -45,7 +45,7 @@ def smartThingsDataStoreInit():
 		stData = STDataStore()
 
 	if initUserData:
-		initAllSwitches()
+		#initAllSwitches()
 		initAllModes()
 
 
@@ -288,6 +288,7 @@ def initAllModes():
 			clientInfo = currentClient.getClientInfo()
 
 			mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
+			print mode_uri
 		
 			mode_header = {
 				"Authorization": clientInfo.token_type + " " + clientInfo.token
