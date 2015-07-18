@@ -149,12 +149,10 @@ def set_mode(userId,modeId):
 	modes = clientInfo.modes
 
 	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
-	print "************"
-	print selectedMode
+
 
 	if len(selectedMode) < 1:
-		print "************ GRABBING MODES"
-		print selectedMode
+
 		mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
 		
 		mode_header = {
@@ -175,10 +173,9 @@ def set_mode(userId,modeId):
 	if len(selectedMode) < 1:
 		return "No modes matched the mode name I heard: " + modeId
 
-	print "************"
-	print selectedMode
 
-	selectedMode = selectedMode[0]
+
+	selectedMode = selectedMode
 
 	mode_json = {
 		"mode":selectedMode
