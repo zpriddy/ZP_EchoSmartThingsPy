@@ -176,9 +176,9 @@ def set_mode(userId,modeId):
 		return "No modes matched the mode name I heard: " + modeId
 
 	print "************"
-	print str(selectedMode)
+	print str(selectedMode[0])
 
-	selectedMode = selectedMode
+	selectedMode = selectedMode[0]
 
 	mode_json = {
 		"mode":selectedMode
