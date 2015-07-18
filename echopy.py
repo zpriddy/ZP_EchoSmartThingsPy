@@ -73,14 +73,6 @@ def samples():
 		except:
 			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED")
 
-@app.route("/alexa/test/<path:userId>")
-def test(userId):
-	return str(st.stData.getUser(userId).getClientInfo().token) + "<br>" +  str(st.stData.getUser(userId).getClientInfo().url)
-
-@app.route("/alexa/switch/<path:userId>/<path:deviceId>/<path:state>")
-def switch(userId, deviceId, state):
-
-	return str(st.st_switch(userId, deviceId, state))
 
 
 
