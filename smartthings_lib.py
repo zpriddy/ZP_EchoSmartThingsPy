@@ -184,6 +184,7 @@ def set_mode(userId,modeId):
 		"mode":selectedMode
 	}
 
+	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 
