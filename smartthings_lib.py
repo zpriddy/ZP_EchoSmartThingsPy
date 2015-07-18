@@ -30,6 +30,7 @@ from urllib import quote
 
 debug = settings.debug
 loadSettings = settings.smartthings_load_pickle
+initUserData = settings.init_user_data
 picklefile = 'smartthings_settings.pickle'
 
 
@@ -42,6 +43,10 @@ def smartThingsDataStoreInit():
 		stData = pickle.load(open(picklefile,'rb'))
 	else:
 		stData = STDataStore()
+
+	if initUserData:
+		initAllSwitches():
+		initAllModes():
 
 
 def smartThingsAuth(altId, userId, clientId, clientSecret):
