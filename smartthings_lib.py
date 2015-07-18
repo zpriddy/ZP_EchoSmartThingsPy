@@ -158,7 +158,8 @@ def set_mode(userId,modeId):
 		}
 
 		#get list of modes
-		modes = requests.get(mode_uri, headers=mode_header).json()
+		clientInfo.modes = requests.get(mode_uri, headers=mode_header).json()
+		modes = clientInfo.modes
 		if debug: print modes
 		logger.write_log(userId + " - Modes: " +  str(modes))
 
@@ -204,7 +205,8 @@ def st_switch(userId, switchId, state):
 			"Authorization": clientInfo.token_type + " " + clientInfo.token
 		}
 
-		switches = requests.get(switch_uri, headers=switch_header).json()
+		clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
+		switches = clientInfo.switches
 		if debug: print "Switchs: " + str(switches)
 		logger.write_log(userId + ' - Switches: ' + str(switches))
 
