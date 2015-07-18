@@ -282,6 +282,8 @@ def initAllModes():
 
 	for user in all_users:
 		try:
+			print "Trying Mode: "
+			print user
 			currentClient = stData.getUser(user)
 			clientInfo = currentClient.getClientInfo()
 
