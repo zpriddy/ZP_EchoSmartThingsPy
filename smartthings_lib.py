@@ -282,8 +282,6 @@ def initAllModes():
 
 	for user in all_users:
 		try:
-			print "Trying Mode: "
-			print user
 			currentClient = stData.getUser(user)
 			clientInfo = currentClient.getClientInfo()
 
@@ -406,7 +404,7 @@ class STClientInfo(object):
 
 	@modes.setter
 	def modes(self, value):
-		self.modes = value 
+		self._modes = value 
 
 	def setFromOauth(self, oauthResponse):
 		self._access_token = oauthResponse['access_token']
