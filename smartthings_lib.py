@@ -250,6 +250,7 @@ def initAllSwitches():
 		currentClient = stData.getUser(user)
 		clientInfo = currentClient.getClientInfo()
 		print clientInfo.api_location
+		print clientInfo.url
 
 		switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
 		switch_header = {
