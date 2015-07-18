@@ -183,6 +183,9 @@ def set_mode(userId,modeId):
 	mode_json = {
 		"mode":selectedMode
 	}
+	mode_header = {
+			"Authorization": clientInfo.token_type + " " + clientInfo.token
+		}
 
 	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
 	print '---------'
