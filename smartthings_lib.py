@@ -411,6 +411,7 @@ class STDataStore(object):
 		self.stUsers = {}
 
 	def getAllUsers(self):
+		print self.stUsers
 		return self.stUsers
 
 	def addUser(self, userId, stUser):
