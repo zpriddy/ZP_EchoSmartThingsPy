@@ -46,7 +46,7 @@ def smartThingsDataStoreInit():
 
 	if initUserData:
 		initAllSwitches()
-		initAllModes()
+		#initAllModes()
 
 
 def smartThingsAuth(altId, userId, clientId, clientSecret):
@@ -249,6 +249,7 @@ def initAllSwitches():
 		print user
 		currentClient = stData.getUser(user)
 		clientInfo = currentClient.getClientInfo()
+		print clientInfo.api_location
 
 		switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
 		switch_header = {
