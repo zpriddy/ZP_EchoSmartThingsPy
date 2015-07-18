@@ -32,6 +32,7 @@ debug = settings.debug
 loadSettings = settings.smartthings_load_pickle
 picklefile = 'smartthings_settings.pickle'
 
+
 def smartThingsDataStoreInit():
 	global stData
 
@@ -235,6 +236,50 @@ def isValidStUser(userId):
 	return stData.isValidUser(userId)
 
 
+def initAllSwitches():
+	global stData
+	all_users = stData.getAllUsers()
+
+	for user in all_users:
+		currentClient = stData.getUser(userId)
+		clientInfo = currentClient.getClientInfo()
+
+		switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+		switch_header = {
+			"Authorization": clientInfo.token_type + " " + clientInfo.token
+		}
+
+		clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
+
+		print clientInfo.switches
+
+	#pickle.dump(stData,open(picklefile,"wb"))
+
+def initAllModes():
+	global stData
+	all_users = stData.getAllUsers()
+
+	for user in all_users:
+		currentClient = stData.getUser(userId)
+		clientInfo = currentClient.getClientInfo()
+
+		mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
+	
+		mode_header = {
+			"Authorization": clientInfo.token_type + " " + clientInfo.token
+		}
+
+		#get list of modes
+		clientInfo.modes = requests.get(mode_uri, headers=mode_header).json()
+
+		print clientInfo.modes
+
+	#pickle.dump(stData,open(picklefile,"wb"))
+
+
+
+
+
 
 
 
@@ -267,6 +312,8 @@ class STClientInfo(object):
 		self._token_type = None 
 		self._scope = None
 		self._url = None 
+		self._switches = {}
+		self._modes = {}
 
 	@property
 	def token(self):
@@ -315,7 +362,23 @@ class STClientInfo(object):
 
 	@clientSecret.setter
 	def clientSecret(self, value):
-		self._client_secret = value 
+		self._client_secret = value
+
+	@property
+	def switches(self):
+		return self._switches
+
+	@switches.setter
+	def switches(self, value):
+		self._switches = value
+
+	@property
+	def modes(self):
+		return self._modes
+
+	@modes.setter
+	def modes(self, value):
+		self.modes = value 
 
 	def setFromOauth(self, oauthResponse):
 		self._access_token = oauthResponse['access_token']
@@ -341,6 +404,9 @@ class STClientInfo(object):
 class STDataStore(object):
 	def __init__(self):
 		self.stUsers = {}
+
+	def getAllUsers(self):
+		return self.stUsers
 
 	def addUser(self, userId, stUser):
 		if not self.isValidUser(userId):
