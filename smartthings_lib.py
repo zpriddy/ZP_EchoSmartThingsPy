@@ -246,7 +246,7 @@ def initAllSwitches():
 	all_users = stData.getAllUsers()
 
 	for user in all_users:
-		currentClient = stData.getUser(userId)
+		currentClient = stData.getUser(user)
 		clientInfo = currentClient.getClientInfo()
 
 		switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
@@ -265,7 +265,7 @@ def initAllModes():
 	all_users = stData.getAllUsers()
 
 	for user in all_users:
-		currentClient = stData.getUser(userId)
+		currentClient = stData.getUser(user)
 		clientInfo = currentClient.getClientInfo()
 
 		mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
