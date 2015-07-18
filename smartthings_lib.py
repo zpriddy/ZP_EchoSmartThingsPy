@@ -45,8 +45,8 @@ def smartThingsDataStoreInit():
 		stData = STDataStore()
 
 	if initUserData:
-		initAllSwitches():
-		initAllModes():
+		initAllSwitches()
+		initAllModes()
 
 
 def smartThingsAuth(altId, userId, clientId, clientSecret):
