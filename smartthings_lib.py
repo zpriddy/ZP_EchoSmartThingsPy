@@ -246,20 +246,24 @@ def initAllSwitches():
 	all_users = stData.getAllUsers()
 
 	for user in all_users:
-		print user
-		currentClient = stData.getUser(user)
-		clientInfo = currentClient.getClientInfo()
-		print clientInfo.api_location
-		print clientInfo.url
+		try:
+			print user
+			currentClient = stData.getUser(user)
+			clientInfo = currentClient.getClientInfo()
+			print clientInfo.api_location
+			print clientInfo.url
 
-		switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
-		switch_header = {
-			"Authorization": clientInfo.token_type + " " + clientInfo.token
-		}
+			switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+			switch_header = {
+				"Authorization": clientInfo.token_type + " " + clientInfo.token
+			}
 
-		clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
+			clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
 
-		print clientInfo.switches
+			print clientInfo.switches
+			
+		except:
+			pass
 
 	#pickle.dump(stData,open(picklefile,"wb"))
 
@@ -268,6 +272,7 @@ def initAllModes():
 	all_users = stData.getAllUsers()
 
 	for user in all_users:
+
 		currentClient = stData.getUser(user)
 		clientInfo = currentClient.getClientInfo()
 
