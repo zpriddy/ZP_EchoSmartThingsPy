@@ -91,7 +91,8 @@ def smartThingsToken(altId, userId, authCode):
 	}
 	if debug: print "Endpoints URL: " + str(clientInfo.api)
 	logger.write_log("Endpoints URL: " + str(clientInfo.api))
-	response = requests.get(clientInfo.api, params=endpoints_params).json()[0]['url']
+	response = requests.get(clientInfo.api, params=endpoints_params).json()  #[0]['url']
+	print response['url']
 	if debug: print "Endpoints: " + str(response)
 	logger.write_log("Endpoints: " + str(response))
 	clientInfo.url = response
