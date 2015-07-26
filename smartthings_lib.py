@@ -42,9 +42,10 @@ def smartThingsDataStoreInit():
 	if loadSettings and os.path.isfile(picklefile):
 		stData = pickle.load(open(picklefile,'rb'))
 		#del stData.stUsers['amzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
+		del stData.stUsers['amzn1.account.AFYKGJZMQQYB22A3CKLX4CTB4LRA']
 		#print stData.stUsers
 		#print "Deleted Bruce"
-		#pickle.dump(stData,open(picklefile,"wb"))
+		pickle.dump(stData,open(picklefile,"wb"))
 
 	else:
 		stData = STDataStore()
@@ -83,6 +84,7 @@ def smartThingsToken(altId, userId, authCode):
 	if debug: print 'Token URL: ' + token_uri
 	logger.write_log('Token URL: ' + token_uri)
 	response = requests.get(token_uri).json()
+	print response
 	clientInfo.setFromOauth(response)
 	if debug: print "Response: " + str(response)
 	logger.write_log("Response: " + str(response))
