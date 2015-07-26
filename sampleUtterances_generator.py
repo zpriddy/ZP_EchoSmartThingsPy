@@ -25,7 +25,7 @@ def gen_phrases(phraseList):
 	output = ""
 	for phrase in phraseList:
 		for sample in sud.phrase_samples:
-			output += sample.replace('ZPPHRASEALEXA',phrase.lower()).replace('(','').replace(')','') + "<br>"
+			output += sample.replace('ZPPHRASEALEXA',phrase.lower()).replace('(','').replace(')','').replace('!','') + "<br>"
 		output += "<br>"
 	return output
 

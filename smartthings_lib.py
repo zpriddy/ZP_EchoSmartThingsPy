@@ -228,7 +228,7 @@ def set_phrase(userId,phraseId):
 		}
 
 		#get list of phrases
-		clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json()
+		clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json().replace('!','')
 		phrases = clientInfo.phrases
 		if debug: print phrases
 		logger.write_log(userId + " - Phrases: " +  str(phrases))
@@ -378,7 +378,7 @@ def initAllPhrases():
 				"Authorization": clientInfo.token_type + " " + clientInfo.token
 			}
 
-			clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json()
+			clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json().replace('!','')
 
 			print clientInfo.phrases
 
