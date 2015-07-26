@@ -41,9 +41,9 @@ def smartThingsDataStoreInit():
 
 	if loadSettings and os.path.isfile(picklefile):
 		stData = pickle.load(open(picklefile,'rb'))
-		#del stData.stUsers['amzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
-		#print stData.stUsers
-		#print "Deleted Bruce"
+		del stData.stUsers['amzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
+		print stData.stUsers
+		print "Deleted Bruce"
 	else:
 		stData = STDataStore()
 
@@ -94,7 +94,7 @@ def smartThingsToken(altId, userId, authCode):
 	response = requests.get(clientInfo.api, params=endpoints_params).json()  #[0]['url']
 	print "Response: "
 	print response
-	print response[0]
+	reponse = response[0]['url']
 	if debug: print "Endpoints: " + str(response)
 	logger.write_log("Endpoints: " + str(response))
 	clientInfo.url = response
