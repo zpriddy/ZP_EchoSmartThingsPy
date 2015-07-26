@@ -132,7 +132,7 @@ def intent_request(session, user, request):
 				else:
 					st_doc.generateError(result, "Setting Mode")
 
-			elif request['intent']['name'] ==  "STphrase":
+			elif request['intent']['name'] ==  "STPhrase":
 				phrase = request['intent']['slots']['phrase']['value']
 				output_speech = "Setting Smart Things to say " + phrase 
 				output_type = "PlainText"
