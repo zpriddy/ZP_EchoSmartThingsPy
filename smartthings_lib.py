@@ -51,8 +51,8 @@ def smartThingsDataStoreInit():
 		stData = STDataStore()
 
 	if initUserData:
-		#initAllSwitches()
-		#initAllModes()
+		initAllSwitches()
+		initAllModes()
 		initAllPhrases()
 
 
@@ -516,6 +516,14 @@ class STClientInfo(object):
 	@modes.setter
 	def modes(self, value):
 		self._modes = value 
+
+	@property
+	def phrases(self):
+		return self._phrases
+
+	@phrases.setter
+	def phrases(self, value):
+			self._phrases = value
 
 	def setFromOauth(self, oauthResponse):
 		self._access_token = oauthResponse['access_token']
