@@ -214,8 +214,10 @@ def set_phrase(userId,phraseId):
 	clientInfo = currentClient.getClientInfo()
 
 	phrases = clientInfo.phrases
+	print phrases
 
 	selectedPhrase = [a for a in phrases if a.lower() == phraseId.lower()]
+	print selectedPhrase
 
 
 	if len(selectedPhrase) < 1:
