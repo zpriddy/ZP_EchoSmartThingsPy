@@ -318,7 +318,7 @@ def getSamples(userId):
 
 	phraseList = requests.get(phrase_uri, headers=phrase_header).json()
 
-
+	print "ABOUT TO GENERATE NEW SAMPLES"
 	return sampleGen.gen_all(modeList,switchList, phraseList)
 
 
