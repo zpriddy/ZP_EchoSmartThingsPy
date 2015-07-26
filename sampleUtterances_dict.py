@@ -1,8 +1,5 @@
 default_samples = [
-	'STSamples give me new samples',
-	'STSamples show me samples',
-	'STSamples give me samples',
-	'STSamples show me new samples'
+	'STSamples generate new alexa id',
 	]
 
 mode_samples = [

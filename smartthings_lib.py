@@ -44,6 +44,8 @@ def smartThingsDataStoreInit():
 		#del stData.stUsers['amzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
 		#print stData.stUsers
 		#print "Deleted Bruce"
+		#pickle.dump(stData,open(picklefile,"wb"))
+
 	else:
 		stData = STDataStore()
 
