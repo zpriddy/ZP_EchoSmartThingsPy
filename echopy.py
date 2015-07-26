@@ -19,6 +19,10 @@ def home():
 def main():
 	return echopy_doc.main_page
 
+@app.route("/nest/")
+def main():
+	return echopy_doc.nest_oage
+
 
 @app.route("/alexa/EchoPyAPI",methods = ['GET','POST'])
 def apicalls():
