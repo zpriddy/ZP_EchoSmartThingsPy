@@ -41,10 +41,6 @@ def smartThingsDataStoreInit():
 
 	if loadSettings and os.path.isfile(picklefile):
 		stData = pickle.load(open(picklefile,'rb'))
-		#del stData.stUsers['amzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
-		#ZACHdel stData.stUsers['amzn1.account.AFYKGJZMQQYB22A3CKLX4CTB4LRA']
-		#print stData.stUsers
-		#print "Deleted Bruce"
 		pickle.dump(stData,open(picklefile,"wb"))
 
 	else:
@@ -221,17 +217,13 @@ def set_phrase(userId,phraseId):
 
 
 	if len(selectedPhrase) < 1:
-		print "Getting new phrases"
 		phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
 		phrase_header = {
 			"Authorization": clientInfo.token_type + " " + clientInfo.token
 		}
 
 		request = requests.get(phrase_uri, headers=phrase_header).json()
-		print request
 		clientInfo.phrases = request
-		print "Done with request"
-		print clientInfo.phrases
 		phrases = clientInfo.phrases
 		if debug: print phrases
 		logger.write_log(userId + " - Phrases: " +  str(phrases))
@@ -245,7 +237,6 @@ def set_phrase(userId,phraseId):
 		return "No phrase matched the phrase name I heard: " + phraseId
 
 	selectedPhrase = selectedPhrase[0]
-	print selectedPhrase
 
 	phrase_json = {
 		"phrase":selectedPhrase
