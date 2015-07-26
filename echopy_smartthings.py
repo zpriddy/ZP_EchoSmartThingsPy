@@ -134,12 +134,12 @@ def intent_request(session, user, request):
 
 			elif request['intent']['name'] ==  "STPhrase":
 				phrase = request['intent']['slots']['phrase']['value']
-				output_speech = "Setting Smart Things to say " + phrase 
+				output_speech = "Telling Smart Things to say " + phrase 
 				output_type = "PlainText"
 
 				card_type = "Simple"
 				card_title = "SmartThings Control - HelloHome"
-				card_content = "Setting Smart Things to say " + phrase 
+				card_content = "Telling Smart Things to say " + phrase 
 
 				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 

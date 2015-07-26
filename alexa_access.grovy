@@ -16,7 +16,7 @@ definition(
     name: "Alexa Access",
     namespace: "zpriddy",
     author: "zpriddy",
-    description: "API access for Dashing dashboards.",
+    description: "API access for Alexa.",
     category: "Convenience",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
     iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
@@ -38,7 +38,7 @@ preferences {
         input "switches", "capability.switch", title: "Which switches?", multiple: true, required: false
         input "temperatures", "capability.temperatureMeasurement", title: "Which temperature sensors?", multiple: true, required: false
         input "humidities", "capability.relativeHumidityMeasurement", title: "Which humidity sensors?", multiple: true, required: false
-		input "colors", "capability.colorControl", title: "Which Color Lights?", multiple: true, required: false
+        input "colors", "capability.colorControl", title: "Which Color Lights?", multiple: true, required: false
 
 
     }
@@ -85,6 +85,7 @@ mappings {
     }
     path("/phrase") {
         action: [
+            GET: "getPhrase",
             POST: "postPhrase"
         ]
     }
@@ -304,7 +305,7 @@ def getPower() {
 
     def result = [:]
     meters.each {
-    	it.poll()
+        it.poll()
         result[it.displayName] = [
             "value": it.currentValue("power"),
             "energy": it.currentValue("energy"),
@@ -323,7 +324,7 @@ def meterHandler(evt) {
 // Modes
 //
 def getMode() {
-	def result = [:]
+    def result = [:]
     def modeId = request.JSON?.modeId
     def widgetId = request.JSON?.widgetId
     if (widgetId) {
@@ -417,6 +418,24 @@ def motionHandler(evt) {
 //
 // Phrases
 //
+def getPhrase() {
+    def result = [:]
+//    def phraseId = request.JSON?.phraseId
+
+/*
+    location.helloHome.each {
+        result[it.name] = [
+            "name": it.name]
+            }
+*/          
+    result = location.helloHome?.getPhrases()*.label
+    log.debug result
+
+    log.debug "GETING PHRSES"
+    return result
+ 
+}
+
 def postPhrase() {
     def phrase = request.JSON?.phrase
     log.debug "postPhrase ${phrase}"
@@ -644,7 +663,7 @@ def postColor() {
     value.hue = (hue as Integer) /360*100
     value.level = null
     
-	log.debug value
+    log.debug value
     
     if (command && deviceId) {
         def whichColor = colors.find { it.displayName == deviceId }
