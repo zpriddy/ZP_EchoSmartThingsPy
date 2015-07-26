@@ -10,6 +10,15 @@
       ]
     },
     {
+      "intent": "STPhrase",
+      "slots": [
+        {
+          "name": "phrase",
+          "type": "LITERAL"
+        }
+      ]
+    },
+    {
       "intent": "STSamples",
       "slots": [ ]
     },

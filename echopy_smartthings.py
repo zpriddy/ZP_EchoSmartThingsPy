@@ -132,6 +132,24 @@ def intent_request(session, user, request):
 				else:
 					st_doc.generateError(result, "Setting Mode")
 
+			elif request['intent']['name'] ==  "STphrase":
+				phrase = request['intent']['slots']['phrase']['value']
+				output_speech = "Setting Smart Things to say " + phrase 
+				output_type = "PlainText"
+
+				card_type = "Simple"
+				card_title = "SmartThings Control - HelloHome"
+				card_content = "Setting Smart Things to say " + phrase 
+
+				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+				result = st.set_phrase(user.getUserId(), phrase)
+
+				if phrase == result:
+					return response
+				else:
+					st_doc.generateError(result, "Setting Phrase")
+
 			elif request['intent']['name'] ==  "STSwitch":
 				switchId = request['intent']['slots']['switch']['value']
 				switchState = request['intent']['slots']['state']['value']
