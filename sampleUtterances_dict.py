@@ -31,3 +31,10 @@ switch_samples = [
 	'STSwitch set switch {ZPSWITCHALEXA|switch} {toggle|state}'
 	]
 
+phrase_samples = [
+	'STPhrase to say {ZPPHRASEALEXA|phrase}',
+	'STPhrase say {ZPPHRASEALEXA|phrase}',
+	'STPhrase to tell home {ZPPHRASEALEXA|phrase}',
+	'STPhrase to tell home to {ZPPHRASEALEXA|phrase}'
+]
+

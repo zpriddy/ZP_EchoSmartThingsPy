@@ -239,7 +239,7 @@ def set_phrase(userId,phraseId):
 	phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
 
 	response = requests.post(phrase_uri, headers=phrase_header, json=phrase_json)
-	response = requests.post(phrase_uri, headers=phrase_header, json=phrase_json)
+
 
 	if debug: print "Phrase Response: " + str(response.json())
 	logger.write_log("Phrase Response: " + str(response.json()))
@@ -303,8 +303,15 @@ def getSamples(userId):
 
 	switchList = requests.get(switch_uri, headers=switch_header).json()
 
+	phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
+	phrase_header = {
+		"Authorization": clientInfo.token_type + " " + clientInfo.token
+	}
 
-	return sampleGen.gen_all(modeList,switchList)
+	phraseList = requests.get(phrase_uri, headers=phrase_header).json()
+
+
+	return sampleGen.gen_all(modeList,switchList, phraseList)
 
 
 
