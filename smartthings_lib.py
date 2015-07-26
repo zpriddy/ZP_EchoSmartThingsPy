@@ -292,6 +292,7 @@ def st_switch(userId, switchId, state):
 
 def getSamples(userId):
 	global stData
+	print "ABOUT TO GENERATE NEW SAMPLES 1"
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
 
