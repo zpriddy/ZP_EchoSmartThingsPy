@@ -216,7 +216,7 @@ def set_phrase(userId,phraseId):
 	phrases = clientInfo.phrases
 	print phrases
 
-	selectedPhrase = [a for a in phrases if a.lower() == phraseId.lower()]
+	selectedPhrase = [a for a in phrases if a.lower().replace('!','') == phraseId.lower()]
 	print selectedPhrase
 
 
@@ -234,7 +234,7 @@ def set_phrase(userId,phraseId):
 		logger.write_log(userId + " - Phrases: " +  str(phrases))
 
 
-		selectedPhrase = [a for a in phrases if a.lower() == phraseId.lower()]
+		selectedPhrase = [a for a in phrases if a.lower().replace('!','') == phraseId.lower()]
 
 	if len(selectedPhrase) > 1:
 		return "Too many phrases matched the phrase name I heard: " + phraseId
