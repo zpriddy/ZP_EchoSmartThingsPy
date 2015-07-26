@@ -47,6 +47,7 @@ def smartThingsDataStoreInit():
 	if initUserData:
 		initAllSwitches()
 		initAllModes()
+		initAllPhrases()
 
 
 def smartThingsAuth(altId, userId, clientId, clientSecret):
@@ -285,6 +286,30 @@ def initAllSwitches():
 			clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
 
 			print clientInfo.switches
+
+		except:
+			pass
+
+	pickle.dump(stData,open(picklefile,"wb"))
+
+
+def initAllPhrases():
+	global stData
+	all_users = stData.getAllUsers()
+
+	for user in all_users:
+		try:
+			currentClient = stData.getUser(user)
+			clientInfo = currentClient.getClientInfo()
+
+			phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
+			phrase_header = {
+				"Authorization": clientInfo.token_type + " " + clientInfo.token
+			}
+
+			clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json()
+
+			print clientInfo.phrases
 
 		except:
 			pass
