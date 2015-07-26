@@ -312,6 +312,8 @@ def getSamples(userId):
 
 	switchList = requests.get(switch_uri, headers=switch_header).json()
 
+	print "ABOUT TO GENERATE NEW SAMPLES 2"
+
 	phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
 	phrase_header = {
 		"Authorization": clientInfo.token_type + " " + clientInfo.token
