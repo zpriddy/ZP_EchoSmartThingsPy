@@ -223,13 +223,13 @@ def set_phrase(userId,phraseId):
 	if len(selectedPhrase) < 1:
 		print "Getting new phrases"
 		phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
-		
 		phrase_header = {
 			"Authorization": clientInfo.token_type + " " + clientInfo.token
 		}
 
-		#get list of phrases
 		clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json().replace('!','')
+		print "Done with request"
+		print clientInfo.phrases
 		phrases = clientInfo.phrases
 		if debug: print phrases
 		logger.write_log(userId + " - Phrases: " +  str(phrases))
