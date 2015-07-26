@@ -45,8 +45,8 @@ def smartThingsDataStoreInit():
 		stData = STDataStore()
 
 	if initUserData:
-		initAllSwitches()
-		initAllModes()
+		#initAllSwitches()
+		#initAllModes()
 		initAllPhrases()
 
 
@@ -150,12 +150,9 @@ def set_mode(userId,modeId):
 	modes = clientInfo.modes
 
 	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
-	print "************"
-	print selectedMode
+
 
 	if len(selectedMode) < 1:
-		print "************ GRABBING MODES"
-		print selectedMode
 		mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
 		
 		mode_header = {
@@ -176,9 +173,6 @@ def set_mode(userId,modeId):
 	if len(selectedMode) < 1:
 		return "No modes matched the mode name I heard: " + modeId
 
-	print "************"
-	print str(selectedMode[0])
-
 	selectedMode = selectedMode[0]
 
 	mode_json = {
@@ -189,8 +183,7 @@ def set_mode(userId,modeId):
 		}
 
 	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
-	print '---------'
-	print mode_uri
+
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 
@@ -199,6 +192,59 @@ def set_mode(userId,modeId):
 
 	return modeId if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
+
+def set_phrase(userId,phraseId):
+	'''
+	This is used to chnage current phrase
+	'''
+	global stData
+	currentClient = stData.getUser(userId)
+	clientInfo = currentClient.getClientInfo()
+
+	phrases = clientInfo.phrases
+
+	selectedPhrase = [a for a in phrases if a.lower() == phraseId.lower()]
+
+
+	if len(selectedPhrase) < 1:
+		phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
+		
+		phrase_header = {
+			"Authorization": clientInfo.token_type + " " + clientInfo.token
+		}
+
+		#get list of phrases
+		clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json()
+		phrases = clientInfo.phrases
+		if debug: print phrases
+		logger.write_log(userId + " - Phrases: " +  str(phrases))
+
+
+		selectedPhrase = [a for a in phrases if a.lower() == phraseId.lower()]
+
+	if len(selectedPhrase) > 1:
+		return "Too many phrases matched the phrase name I heard: " + phraseId
+	if len(selectedPhrase) < 1:
+		return "No phrase matched the phrase name I heard: " + phraseId
+
+	selectedPhrase = selectedPhrase[0]
+
+	phrase_json = {
+		"phrase":selectedPhrase
+	}
+	phrase_header = {
+			"Authorization": clientInfo.token_type + " " + clientInfo.token
+		}
+
+	phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
+
+	response = requests.post(phrase_uri, headers=phrase_header, json=phrase_json)
+	response = requests.post(phrase_uri, headers=phrase_header, json=phrase_json)
+
+	if debug: print "Phrase Response: " + str(response.json())
+	logger.write_log("Phrase Response: " + str(response.json()))
+
+	return phraseId if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
 def st_switch(userId, switchId, state):
 	'''
