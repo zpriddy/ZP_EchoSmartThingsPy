@@ -42,7 +42,7 @@ def smartThingsDataStoreInit():
 	if loadSettings and os.path.isfile(picklefile):
 		stData = pickle.load(open(picklefile,'rb'))
 		#del stData.stUsers['amzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
-		del stData.stUsers['amzn1.account.AFYKGJZMQQYB22A3CKLX4CTB4LRA']
+		#ZACHdel stData.stUsers['amzn1.account.AFYKGJZMQQYB22A3CKLX4CTB4LRA']
 		#print stData.stUsers
 		#print "Deleted Bruce"
 		pickle.dump(stData,open(picklefile,"wb"))
@@ -207,6 +207,7 @@ def set_phrase(userId,phraseId):
 	'''
 	This is used to chnage current phrase
 	'''
+	print "NEW PHRASE"
 	global stData
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
@@ -238,6 +239,7 @@ def set_phrase(userId,phraseId):
 		return "No phrase matched the phrase name I heard: " + phraseId
 
 	selectedPhrase = selectedPhrase[0]
+	print selectedPhrase
 
 	phrase_json = {
 		"phrase":selectedPhrase
