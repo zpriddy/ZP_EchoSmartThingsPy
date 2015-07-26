@@ -221,6 +221,7 @@ def set_phrase(userId,phraseId):
 
 
 	if len(selectedPhrase) < 1:
+		print "Getting new phrases"
 		phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
 		
 		phrase_header = {
