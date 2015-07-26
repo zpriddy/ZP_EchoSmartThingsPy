@@ -228,7 +228,8 @@ def set_phrase(userId,phraseId):
 		}
 
 		request = requests.get(phrase_uri, headers=phrase_header).json()
-		clientInfo.phrases = requests
+		print request
+		clientInfo.phrases = request
 		print "Done with request"
 		print clientInfo.phrases
 		phrases = clientInfo.phrases
