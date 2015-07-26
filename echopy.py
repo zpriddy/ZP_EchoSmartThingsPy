@@ -20,7 +20,7 @@ def main():
 	return echopy_doc.main_page
 
 @app.route("/nest/")
-def main():
+def nest():
 	return echopy_doc.nest_oage
 
 
