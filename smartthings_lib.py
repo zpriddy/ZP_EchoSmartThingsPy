@@ -257,7 +257,7 @@ def set_phrase(userId,phraseId):
 	if debug: print "Phrase Response: " + str(response.json())
 	logger.write_log("Phrase Response: " + str(response.json()))
 
-	return phraseId if response.json()['error'] == 0 else "Unknown Error. See Logs"
+	#return phraseId if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
 def st_switch(userId, switchId, state):
 	'''
