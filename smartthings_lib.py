@@ -41,7 +41,7 @@ def smartThingsDataStoreInit():
 
 	if loadSettings and os.path.isfile(picklefile):
 		stData = pickle.load(open(picklefile,'rb'))
-		#del stData.stUsers['sbsVamzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
+		del stData.stUsers['amzn1.account.AHVHAI2CGQGGRTBNSUQ5RGYHUYVA']
 		print stData.stUsers
 		print "Deleted Bruce"
 	else:
