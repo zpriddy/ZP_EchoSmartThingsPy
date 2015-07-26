@@ -381,7 +381,7 @@ def initAllPhrases():
 				"Authorization": clientInfo.token_type + " " + clientInfo.token
 			}
 
-			clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json().replace('!','')
+			clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json()
 
 			print clientInfo.phrases
 
