@@ -208,6 +208,7 @@ def set_phrase(userId,phraseId):
 	This is used to chnage current phrase
 	'''
 	print "NEW PHRASE"
+	print phraseId
 	global stData
 	currentClient = stData.getUser(userId)
 	clientInfo = currentClient.getClientInfo()
