@@ -21,7 +21,7 @@ def main():
 
 @app.route("/nest/")
 def nest():
-	return echopy_doc.nest_oage
+	return echopy_doc.nest_page
 
 
 @app.route("/alexa/EchoPyAPI",methods = ['GET','POST'])
