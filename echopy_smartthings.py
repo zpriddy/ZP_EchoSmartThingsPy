@@ -9,6 +9,8 @@ import random
 import logger
 import string
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
+import pymongo
+from pymongo import MongoClient
 
 
 appVersion = 1.0
@@ -17,31 +19,45 @@ debug = settings.debug
 
 
 def STAlexaAuth(alexaId, clientId, clientSecret):
-	global MyDataStore
-	userId = MyDataStore.getAlexaUser(alexaId.upper())
+	global mongoST
+	clientInfo = mongoST.find_one({'alexaId':alexaId.upper()})
+	userId = clientInfo['st_amazonEchoID']
 
 	auth_uri = st.smartThingsAuth(alexaId, userId, clientId, clientSecret)
-
 	return auth_uri
 
 
 def data_init():
-	global MyDataStore
-	MyDataStore = DataStore()
+	global mongoST
+	mongoClient = MongoClient()
+	mongoClient = MongoClient('localhost', 27017)
+	mongoDB = mongoClient['AlexaSmartThingsDB']
+	mongoST = mongoDB['ST']
+
 
 
 def data_handler(rawdata):
-	global MyDataStore
+	global mongoST
 	logger.write_log(str(json.dumps(rawdata,sort_keys=True,indent=4)))
-	currentSession = MyDataStore.getSession(rawdata['session'])
-	currentUser = MyDataStore.getUser(rawdata['session'])
+# Session will come later
+#	currentSession = MyDataStore.getSession(rawdata['session'])
+#	currentUser = MyDataStore.getUser(rawdata['session'])
+	sessionId = rawdata['session']['sessionId']
+	userId = rawdata['session']['user']['userId']
 	currentRequest = rawdata['request']
+
+
+	if len([a for a in mongoST.find({'st_amazonEchoID':userId})]) == 0:
+		print "Need to add user into database"
+		currentUser = {'_id':userId,'st_amazonEchoID':userId,'authenticated':False}
+		mongoST.update({'st_amazonEchoID':userId},currentUser,True)
+
 
 	timestamp = currentRequest['timestamp']
 
 
 	if dc.datecheck(timestamp,5):
-		response = request_handler(currentSession, currentUser, currentRequest)
+		response = request_handler(sessionId, userId, currentRequest)
 	else:
 		response = AlexaInvalidDate()
 
@@ -55,21 +71,23 @@ def data_handler(rawdata):
 	return json.dumps({"version":appVersion,"response":response},indent=2,sort_keys=True)
 
 
-def request_handler(session, user, request):
+def request_handler(sessionId, userId, request):
+	global mongoST
 	requestType = request['type']
 	
 	if requestType == "LaunchRequest":
-		return launch_request(session, user, request)
+		return launch_request(sessionId, userId, request)
 	elif requestType == "IntentRequest":
-		return intent_request(session, user, request)
+		return intent_request(sessionId, userId, request)
 	else:
 		return AlexaDidNotUnderstand()
 
 
-def launch_request(session, user, request):
-	if not st.isValidStUser(user.getUserId()):
-		genNewAlexaId(user.getUserId(),10)
-		alexaId = getAlexaIdFormUserID(user.getUserId())
+def launch_request(sessionId, userId, request):
+	global mongoST
+	if not st.isValidStUser(userId):
+		genNewAlexaId(userId,10)
+		alexaId = getAlexaIdFormUserID(userId)
 		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
 		output_type = "PlainText"
 
@@ -93,13 +111,13 @@ def launch_request(session, user, request):
 
 		return response
 
-def intent_request(session, user, request):
+def intent_request(sessionId, userId, request):
 	print "intent_request"
 	if debug: print json.dumps(request,sort_keys=True,indent=4)
 	logger.write_log(str(json.dumps(request,sort_keys=True,indent=4)))
-	if not st.isValidStUser(user.getUserId()):
-		genNewAlexaId(user.getUserId(),10)
-		alexaId = getAlexaIdFormUserID(user.getUserId())
+	if not st.isValidStUser(userId):
+		genNewAlexaId(userId,10)
+		alexaId = getAlexaIdFormUserID(userId)
 		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
 		output_type = "PlainText"
 
@@ -125,7 +143,7 @@ def intent_request(session, user, request):
 
 				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
-				result = st.set_mode(user.getUserId(), mode)
+				result = st.set_mode(userId, mode)
 
 				if mode == result:
 					return response
@@ -143,7 +161,7 @@ def intent_request(session, user, request):
 
 				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
-				result = st.set_phrase(user.getUserId(), phrase)
+				result = st.set_phrase(userId, phrase)
 
 				if phrase == result:
 					return response
@@ -154,7 +172,7 @@ def intent_request(session, user, request):
 				switchId = request['intent']['slots']['switch']['value']
 				switchState = request['intent']['slots']['state']['value']
 
-				result = st.st_switch(user.getUserId(), switchId, switchState)
+				result = st.st_switch(userId, switchId, switchState)
 
 				output_speech = "Telling " + switchId + " to turn " + result
 				output_type = "PlainText"
@@ -177,8 +195,8 @@ def intent_request(session, user, request):
 					st_doc.generateError(result, "Switch")
 
 			elif request['intent']['name'] ==  "STSamples":
-				genNewAlexaId(user.getUserId(),10)
-				alexaId = getAlexaIdFormUserID(user.getUserId())
+				genNewAlexaId(userId,10)
+				alexaId = getAlexaIdFormUserID(userId)
 				output_speech = "Requesting new samples. New Alexa ID has been generated. Please see the Echo App."
 				output_type = "PlainText"
 
@@ -211,16 +229,23 @@ def alexaIdGenerator(N):
 	return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(N))
 
 def getUserIdFromAlexaId(alexaId):
-	global MyDataStore
-	return MyDataStore.getAlexaUser(alexaId)
+	global mongoST
+	currentUser = mongoST.find_one({'alexaId':alexaId})
+	return currentUser['st_amazonEchoID']
 
 def genNewAlexaId(userId,size):
-	global MyDataStore
-	MyDataStore.genNewAlexaId(userId,size)
+	global mongoST
+	currentUser = mongoST.find_one({'st_amazonEchoID':userId})
+	newAlexaId = alexaIdGenerator(size)
+	while len([a for a in mongoST.find({'alexaId':newAlexaId})]) > 0:
+			newAlexaId = alexaIdGenerator(size)
+	currentUser['alexaId'] = newAlexaId
+	mongoST.update({'st_amazonEchoID':userId},currentUser,True)
 
 def getAlexaIdFormUserID(userId):
-	global MyDataStore
-	return MyDataStore.getAlexaId(userId)
+	global mongoST
+	currentUser = mongoST.find_one({'st_amazonEchoID':userId})
+	return currentUser['alexaId']
 
 
 def AlexaDidNotUnderstand():

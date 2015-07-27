@@ -1,0 +1,27 @@
+Database Layout:
+
+key = email
+
+
+{
+	_id : email,
+	alexaId:
+
+
+		st_amazonEchoID
+		st_token:
+		st_clientID:
+		st_clientSecrect:
+		st_expiresin:
+		st_scope:
+		st_api_location:
+		st_token_type:
+		st_url:
+
+		st_switches:[]
+		st_modes:[]
+		st_phrases: []
+
+
+
+}

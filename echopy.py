@@ -55,7 +55,8 @@ def authcode(alexaId):
 
 	if st.smartThingsToken(alexaId, userId,code):
 
-		print st.stData.getUser(userId).getClientInfo().token
+		print "authed..."
+		#print st.stData.getUser(userId).getClientInfo().token
 
 		myApp.genNewAlexaId(userId,100)
 
@@ -89,7 +90,7 @@ def run_echopy_app():
 
 
 if __name__ == "__main__":
-	st.smartThingsDataStoreInit()
+	st.smartThingsMongoDBInit()
 	logger.init_logging()
 	myApp.data_init()
 	run_echopy_app()
