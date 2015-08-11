@@ -46,12 +46,13 @@ def smartThingsMongoDBInit():
 
 
 
-def smartThingsAuth(altId, userId, clientId, clientSecret):
+def smartThingsAuth(altId, userId, clientId, clientSecret,clientEmail):
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 	clientInfo['st_clientId'] = clientId
 	clientInfo['st_clientSecret'] = clientSecret
+	clientInfo['st_clientEmail'] = clientEmail
 
 	if debug: print 'ST Auth: ' + userId
 	logger.write_log('ST Auth: ' + userId)
@@ -117,13 +118,13 @@ def switch(userId,deviceId,state):
 	if state.lower() == "toggle":
 		state = "OFF" if getSwitchState(clientInfo, deviceId) == "on" else "ON"
 
-	switch_uri = clientInfo.st_api_location + clientInfo.st_url + "/switch"
+	switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 	switch_json = {
 		"deviceId":deviceId,
 		"command":state.lower()
 	}
 	switch_header = {
-		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	response = requests.post(switch_uri, headers=switch_header, json=switch_json)
@@ -138,7 +139,7 @@ def getSwitchState(clientInfo, deviceId):
 		"deviceId":deviceId
 	}
 	switch_header = {
-		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	response = requests.get(switch_uri, headers=switch_header, json=switch_json).json()
@@ -155,21 +156,21 @@ def set_mode(userId,modeId):
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
-	modes = clientInfo.st_modes
+	modes = clientInfo['st_modes']
 
 	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
 
 
 	if len(selectedMode) < 1:
-		mode_uri = clientInfo.st_api_location + clientInfo.st_url + "/mode"
+		mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
 		
 		mode_header = {
-			"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 		}
 
 		#get list of modes
-		clientInfo.st_modes = requests.get(mode_uri, headers=mode_header).json()
-		modes = clientInfo.st_modes
+		clientInfo['st_modes'] = requests.get(mode_uri, headers=mode_header).json()
+		modes = clientInfo['st_modes']
 		if debug: print modes
 		logger.write_log(userId + " - Modes: " +  str(modes))
 
@@ -190,10 +191,10 @@ def set_mode(userId,modeId):
 		"mode":selectedMode
 	}
 	mode_header = {
-			"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 		}
 
-	mode_uri = clientInfo.st_api_location + clientInfo.st_url + "/mode"
+	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
 
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
@@ -312,7 +313,7 @@ def st_switch(userId, switchId, state):
 
 	if len(selectedSwitch) < 1:
 
-		switch_uri = clientInfo.st_api_location + clientInfo.st_url + "/switch"
+		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 		switch_header = {
 			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 		}
@@ -392,14 +393,14 @@ def initAllSwitches():
 		try:
 			clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
-			switch_uri = clientInfo.st_api_location + clientInfo.st_url + "/switch"
+			switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 			switch_header = {
-				"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 			}
 
-			clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
+			clientInfo['switches'] = requests.get(switch_uri, headers=switch_header).json()
 
-			print clientInfo.switches
+			print clientInfo['switches']
 
 		except:
 			pass
@@ -415,14 +416,14 @@ def initAllPhrases():
 		try:
 			clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
-			phrase_uri = clientInfo.st_api_location + clientInfo.st_url + "/phrase"
+			phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
 			phrase_header = {
-				"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 			}
 
-			clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json()
+			clientInfo['phrases'] = requests.get(phrase_uri, headers=phrase_header).json()
 
-			print clientInfo.phrases
+			print clientInfo['phrases']
 
 		except:
 			pass
@@ -438,17 +439,17 @@ def initAllModes():
 			clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 
-			mode_uri = clientInfo.st_api_location + clientInfo.st_url + "/mode"
+			mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
 			print mode_uri
 		
 			mode_header = {
-				"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 			}
 
 			#get list of modes
-			clientInfo.modes = requests.get(mode_uri, headers=mode_header).json()
+			clientInfo['modes'] = requests.get(mode_uri, headers=mode_header).json()
 
-			print clientInfo.modes
+			print clientInfo['modes']
 
 		except:
 			pass

@@ -38,7 +38,7 @@ def nest():
 @app.route(settings.url_root + "/email_test")
 def email():
 	msg = Message(
-			  'Hello',
+			  'ZPriddy - Alexa Support',
 		   sender='alexa@zpriddy.com',
 		   recipients=
 			   ['me@zpriddy.com'])
@@ -67,7 +67,7 @@ def auth():
 		clientEmail=request.form['Email']
 		#userId = myApp.getUserIdFromAlexaId(alexaId)
 
-		auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret)
+		auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		return redirect(auth_uri)
 
 

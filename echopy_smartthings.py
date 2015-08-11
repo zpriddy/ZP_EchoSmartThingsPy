@@ -18,12 +18,12 @@ appVersion = 1.0
 debug = settings.debug
 
 
-def STAlexaAuth(alexaId, clientId, clientSecret):
+def STAlexaAuth(alexaId, clientId, clientSecret,clientEmail):
 	global mongoST
 	clientInfo = mongoST.find_one({'alexaId':alexaId.upper()})
 	userId = clientInfo['st_amazonEchoID']
 
-	auth_uri = st.smartThingsAuth(alexaId, userId, clientId, clientSecret)
+	auth_uri = st.smartThingsAuth(alexaId, userId, clientId, clientSecret, clientEmail)
 	return auth_uri
 
 
