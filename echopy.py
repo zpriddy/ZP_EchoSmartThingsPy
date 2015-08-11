@@ -15,7 +15,7 @@ def home():
 	return echopy_doc.main_page
 
 
-@app.route("/alexa/")
+@app.route(settings.url_root)
 def main():
 	return echopy_doc.main_page
 
@@ -24,7 +24,7 @@ def nest():
 	return echopy_doc.nest_page
 
 
-@app.route("/alexa/EchoPyAPI",methods = ['GET','POST'])
+@app.route(settings.url_root + "/EchoPyAPI",methods = ['GET','POST'])
 def apicalls():
 	if request.method == 'POST':
 		data = request.get_json()
@@ -32,7 +32,7 @@ def apicalls():
 		sessionId = myApp.data_handler(data)
 		return sessionId + "\n"
 
-@app.route("/alexa/auth",methods = ['GET','POST'])
+@app.route(settings.url_root + "/auth",methods = ['GET','POST'])
 def auth():
 	if request.method == 'GET':
 		return echopy_doc.auth_page
@@ -47,7 +47,7 @@ def auth():
 		return redirect(auth_uri)
 
 
-@app.route("/alexa/oauth2/<path:alexaId>",methods = ['GET'])
+@app.route(settings.url_root + "/oauth2/<path:alexaId>",methods = ['GET'])
 def authcode(alexaId):
 
 	code = request.args.get('code')
@@ -63,7 +63,7 @@ def authcode(alexaId):
 	return redirect("/alexa")
 
 
-@app.route("/alexa/samples",methods = ['GET','POST'])
+@app.route(settings.url_root + "/samples",methods = ['GET','POST'])
 def samples():
 	if request.method == 'GET':
 		return echopy_doc.samples_page
