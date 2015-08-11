@@ -408,7 +408,7 @@ def initAllSwitches():
 		except:
 			pass
 
-	pickle.dump(stData,open(picklefile,"wb"))
+	
 
 
 def initAllPhrases():
@@ -431,7 +431,7 @@ def initAllPhrases():
 		except:
 			pass
 
-	pickle.dump(stData,open(picklefile,"wb"))
+
 
 def initAllModes():
 	global mongoST
@@ -457,7 +457,6 @@ def initAllModes():
 		except:
 			pass
 
-	pickle.dump(stData,open(picklefile,"wb"))
 
 
 
