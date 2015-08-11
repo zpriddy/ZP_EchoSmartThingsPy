@@ -10,6 +10,17 @@ from flask_mail import Mail, Message
 
 
 app = Flask(__name__)
+mail=Mail(app)
+
+app.config.update(
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = settings.mail_username,
+	MAIL_PASSWORD = settings.mail_password
+	)
+mail=Mail(app)
 
 @app.route("/")
 def home():
@@ -27,10 +38,10 @@ def nest():
 @app.route(settings.url_root + "/email_test")
 def email():
 	msg = Message(
-              'Hello',
-	       sender='alexa@zpriddy.com',
-	       recipients=
-               ['me@zpriddy.com'])
+			  'Hello',
+		   sender='alexa@zpriddy.com',
+		   recipients=
+			   ['me@zpriddy.com'])
 	msg.body = "This is the email body"
 	mail.send(msg)
 	return "Sent"

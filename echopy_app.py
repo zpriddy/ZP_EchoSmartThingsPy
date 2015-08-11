@@ -36,13 +36,8 @@ def run(app):
                 threaded=True,
                 use_reloader=False,
                 use_debugger=True,
-                host='0.0.0.0',
-                #EMAIL SETTINGS
-                MAIL_SERVER='smtp.gmail.com',
-                MAIL_PORT=465,
-                MAIL_USE_SSL=True,
-                MAIL_USERNAME = settings.mail_username,
-                #MAIL_PASSWORD = settings.mail_password
+                host='0.0.0.0'
+                
                 )
     finally:
         print "Disconnecting clients"
