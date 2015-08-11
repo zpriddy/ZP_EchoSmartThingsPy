@@ -44,7 +44,6 @@ def smartThingsMongoDBInit():
 	mongoDB = mongoClient['AlexaSmartThingsDB']
 	mongoST = mongoDB['ST']
 
-	initAllSwitches()
 
 
 
@@ -394,28 +393,28 @@ def initAllSwitches():
 	print all_users
 
 	for user in all_users:
-		try:
-			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
+		#try:
+		clientInfo = mongoST.find_one({'st_amazonEchoID':user})
 
-			switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
-			switch_header = {
-				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
-			}
+		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
+		switch_header = {
+			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+		}
 
-			clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json()
-
-
+		clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json()
 
 
 
-			print clientInfo['st_switches']
 
-			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
 
-			print "UPDATED"
+		print clientInfo['st_switches']
 
-		except:
-			pass
+		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+
+		print "UPDATED"
+
+		#except:
+			#pass
 
 	
 
