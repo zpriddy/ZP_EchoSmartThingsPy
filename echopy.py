@@ -99,7 +99,6 @@ def run_echopy_app():
 	import SocketServer
 	#SocketServer.BaseServer.handle_error = close_stream
 	SocketServer.ThreadingTCPServer.allow_reuse_address = True
-	mail=Mail(app)
 	echopy_app.run(app)
 
 
