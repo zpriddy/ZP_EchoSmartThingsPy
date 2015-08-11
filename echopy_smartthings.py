@@ -34,6 +34,8 @@ def data_init():
 	mongoDB = mongoClient['AlexaSmartThingsDB']
 	mongoST = mongoDB['ST']
 
+	st.initAllSwitches()
+
 
 
 def data_handler(rawdata):
