@@ -407,7 +407,7 @@ def initAllSwitches():
 		for switch in st_switches:
 			switch.replace(".","\uff0E")
 
-		print st_switches
+			print switch
 
 		clientInfo['st_switches'] = st_switches
 
