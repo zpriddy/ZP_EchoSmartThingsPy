@@ -306,7 +306,7 @@ def st_switch(userId, switchId, state):
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 
-	switches = clientInfo.st_switches
+	switches = clientInfo['st_switches']
 
 	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
 
@@ -317,8 +317,8 @@ def st_switch(userId, switchId, state):
 			"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
 		}
 
-		clientInfo.st_switches = requests.get(switch_uri, headers=switch_header).json()
-		switches = clientInfo.st_switches
+		clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json()
+		switches = clientInfo['st_switches']
 		if debug: print "Switchs: " + str(switches)
 		logger.write_log(userId + ' - Switches: ' + str(switches))
 
@@ -342,27 +342,27 @@ def getSamples(userId):
 	print "ABOUT TO GENERATE NEW SAMPLES 1"
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
-	mode_uri = clientInfo.st_api_location + clientInfo.st_url + "/mode"
+	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
 	
 	mode_header = {
-		"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
 	}
 
 	#get list of modes
 	modeList = requests.get(mode_uri, headers=mode_header).json()
 
-	switch_uri = clientInfo.st_api_location + clientInfo.url + "/switch"
+	switch_uri = clientInfo['st_api_location'] + clientInfo['url'] + "/switch"
 	switch_header = {
-		"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
 	}
 
 	switchList = requests.get(switch_uri, headers=switch_header).json()
 
 	print "ABOUT TO GENERATE NEW SAMPLES 2"
 
-	phrase_uri = clientInfo.st_api_location + clientInfo.url + "/phrase"
+	phrase_uri = clientInfo['st_api_location'] + clientInfo['url'] + "/phrase"
 	phrase_header = {
-		"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
 	}
 
 	phraseList = requests.get(phrase_uri, headers=phrase_header).json()
