@@ -391,6 +391,7 @@ def isValidStUser(userId):
 def initAllSwitches():
 	global mongoST
 	all_users = [a['_id'] for a in mongoST.find({})]
+	print all_users
 
 	for user in all_users:
 		try:
