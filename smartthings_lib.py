@@ -340,6 +340,7 @@ def st_switch(userId, switchId, state):
 def getSamples(userId):
 	global mongoST
 	print "ABOUT TO GENERATE NEW SAMPLES 1"
+	
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
@@ -351,7 +352,7 @@ def getSamples(userId):
 	#get list of modes
 	modeList = requests.get(mode_uri, headers=mode_header).json()
 
-	switch_uri = clientInfo['st_api_location'] + clientInfo['url'] + "/switch"
+	switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 	switch_header = {
 		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
@@ -360,7 +361,7 @@ def getSamples(userId):
 
 	print "ABOUT TO GENERATE NEW SAMPLES 2"
 
-	phrase_uri = clientInfo['st_api_location'] + clientInfo['url'] + "/phrase"
+	phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
 	phrase_header = {
 		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
