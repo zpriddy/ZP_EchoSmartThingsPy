@@ -36,7 +36,7 @@ def run(app):
                 threaded=True,
                 use_reloader=False,
                 use_debugger=True,
-                host='0.0.0.0'
+                host='0.0.0.0',
                 #EMAIL SETTINGS
                 MAIL_SERVER='smtp.gmail.com',
                 MAIL_PORT=465,
