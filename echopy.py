@@ -44,7 +44,7 @@ def email():
 			   ['me@zpriddy.com'])
 	msg.body = "This is the email body"
 	mail.send(msg)
-	return "Sent"
+	return redirect(settings.url_root)
 
 
 @app.route(settings.url_root + "/EchoPyAPI",methods = ['GET','POST'])
@@ -84,7 +84,7 @@ def authcode(alexaId):
 
 		myApp.genNewAlexaId(userId,100)
 
-	return redirect("/alexa")
+	return redirect(settings.url_root)
 
 
 @app.route(settings.url_root + "/samples",methods = ['GET','POST'])
