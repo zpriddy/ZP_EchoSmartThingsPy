@@ -405,7 +405,7 @@ def initAllSwitches():
 
 		
 		for switch in st_switches:
-			switch.replace(".","\uff0E")
+			switch.replace(".","$$")
 
 			print switch
 
