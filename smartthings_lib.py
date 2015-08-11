@@ -401,7 +401,7 @@ def initAllSwitches():
 			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 		}
 
-		clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json()
+		clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json().replace(".","\uff0E")
 
 
 
