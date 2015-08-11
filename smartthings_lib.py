@@ -314,7 +314,7 @@ def st_switch(userId, switchId, state):
 
 		switch_uri = clientInfo.st_api_location + clientInfo.st_url + "/switch"
 		switch_header = {
-			"Authorization": clientInfo.st_token_type + " " + clientInfo.st_token
+			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 		}
 
 		clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json()
@@ -345,7 +345,7 @@ def getSamples(userId):
 	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
 	
 	mode_header = {
-		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	#get list of modes
@@ -353,7 +353,7 @@ def getSamples(userId):
 
 	switch_uri = clientInfo['st_api_location'] + clientInfo['url'] + "/switch"
 	switch_header = {
-		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	switchList = requests.get(switch_uri, headers=switch_header).json()
@@ -362,7 +362,7 @@ def getSamples(userId):
 
 	phrase_uri = clientInfo['st_api_location'] + clientInfo['url'] + "/phrase"
 	phrase_header = {
-		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_token']
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	phraseList = requests.get(phrase_uri, headers=phrase_header).json()
