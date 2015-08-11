@@ -151,6 +151,7 @@ def intent_request(sessionId, userId, request):
 					st_doc.generateError(result, "Setting Mode")
 
 			elif request['intent']['name'] ==  "STPhrase":
+				genNewAlexaId(userId,100)
 				phrase = request['intent']['slots']['phrase']['value']
 				output_speech = "Telling Smart Things to say " + phrase 
 				output_type = "PlainText"
@@ -169,6 +170,7 @@ def intent_request(sessionId, userId, request):
 					st_doc.generateError(result, "Setting Phrase")
 
 			elif request['intent']['name'] ==  "STSwitch":
+				genNewAlexaId(userId,100)
 				switchId = request['intent']['slots']['switch']['value']
 				switchState = request['intent']['slots']['state']['value']
 

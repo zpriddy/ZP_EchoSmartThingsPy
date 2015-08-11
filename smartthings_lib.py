@@ -339,7 +339,6 @@ def st_switch(userId, switchId, state):
 
 def getSamples(userId):
 	global mongoST
-	print "ABOUT TO GENERATE NEW SAMPLES 1"
 	
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
@@ -359,7 +358,6 @@ def getSamples(userId):
 
 	switchList = requests.get(switch_uri, headers=switch_header).json()
 
-	print "ABOUT TO GENERATE NEW SAMPLES 2"
 
 	phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
 	phrase_header = {
@@ -368,12 +366,6 @@ def getSamples(userId):
 
 	phraseList = requests.get(phrase_uri, headers=phrase_header).json()
 
-	print "ABOUT TO GENERATE NEW SAMPLES"
-	print modeList
-	print phraseList
-	print switchList
-
-	print sampleGen.gen_all(modeList,switchList, phraseList)
 
 	return sampleGen.gen_all(modeList,switchList, phraseList)
 

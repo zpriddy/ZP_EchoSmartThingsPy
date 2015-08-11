@@ -6,6 +6,7 @@ import smartthings_lib as st
 import smartthings_settings as settings
 import logger
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
+from flask_mail import Mail, Message
 
 
 app = Flask(__name__)
@@ -22,6 +23,17 @@ def main():
 @app.route("/nest/")
 def nest():
 	return echopy_doc.nest_page.format(settings.full_root_url)
+
+@app.route(settings.url_root + "/email_test")
+def email():
+	msg = Message(
+              'Hello',
+	       sender='alexa@zpriddy.com',
+	       recipients=
+               ['me@zpriddy.com'])
+	msg.body = "This is the email body"
+	mail.send(msg)
+	return "Sent"
 
 
 @app.route(settings.url_root + "/EchoPyAPI",methods = ['GET','POST'])
@@ -87,7 +99,9 @@ def run_echopy_app():
 	import SocketServer
 	#SocketServer.BaseServer.handle_error = close_stream
 	SocketServer.ThreadingTCPServer.allow_reuse_address = True
+	mail=Mail(app)
 	echopy_app.run(app)
+
 
 
 if __name__ == "__main__":
