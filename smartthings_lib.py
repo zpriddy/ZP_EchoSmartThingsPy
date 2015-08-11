@@ -403,13 +403,12 @@ def initAllSwitches():
 
 		st_switches = requests.get(switch_uri, headers=switch_header).json()
 
-		
+		switches = []
 		for switch in st_switches:
-			switch = switch.replace(".","$$")
+			switches.append(switch.replace(".","$$"))
 
-			print switch
 
-		clientInfo['st_switches'] = st_switches
+		clientInfo['st_switches'] = switches
 
 
 
