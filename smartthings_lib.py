@@ -303,6 +303,7 @@ def st_switch(userId, switchId, state):
 	'''
 	This is used to chnage the state of a switch from SmartThings. State = "ON" or "OFF" ot "TOGGLE"
 	'''
+	print "SWITCH"
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
