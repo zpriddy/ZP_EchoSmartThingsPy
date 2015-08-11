@@ -12,16 +12,16 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-	return echopy_doc.main_page % (settings.full_root_url)
+	return echopy_doc.main_page.format(settings.full_root_url)
 
 
 @app.route(settings.url_root)
 def main():
-	return echopy_doc.main_page
+	return echopy_doc.main_page.format(settings.full_root_url)
 
 @app.route("/nest/")
 def nest():
-	return echopy_doc.nest_page
+	return echopy_doc.nest_page.format(settings.full_root_url)
 
 
 @app.route(settings.url_root + "/EchoPyAPI",methods = ['GET','POST'])
@@ -66,7 +66,7 @@ def authcode(alexaId):
 @app.route(settings.url_root + "/samples",methods = ['GET','POST'])
 def samples():
 	if request.method == 'GET':
-		return echopy_doc.samples_page
+		return echopy_doc.samples_page.format(settings.full_root_url)
 
 	if request.method == 'POST':
 		try:
@@ -74,9 +74,9 @@ def samples():
 			userId = myApp.getUserIdFromAlexaId(alexaId)
 			samples = st.getSamples(userId)
 			myApp.genNewAlexaId(userId,100)
-			return echopy_doc.samples_results.replace('RESULTS',samples.replace('\n','&#13;&#10;'))
+			return echopy_doc.samples_results.replace('RESULTS',samples.replace('\n','&#13;&#10;')).format(settings.full_root_url)
 		except:
-			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED")
+			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED").format(settings.full_root_url)
 
 
 
