@@ -308,7 +308,7 @@ def st_switch(userId, switchId, state):
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 
-	switches = clientInfo['st_switches']
+	#switches = clientInfo['st_switches']
 
 	selectedSwitch = [] #[a for a in switches if a.lower() == switchId.lower()]
 
