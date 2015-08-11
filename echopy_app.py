@@ -42,7 +42,7 @@ def run(app):
                 MAIL_PORT=465,
                 MAIL_USE_SSL=True,
                 MAIL_USERNAME = settings.mail_username,
-                MAIL_PASSWORD = settings.mail_password
+                #MAIL_PASSWORD = settings.mail_password
                 )
     finally:
         print "Disconnecting clients"
