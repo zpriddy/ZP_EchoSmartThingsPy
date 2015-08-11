@@ -401,7 +401,14 @@ def initAllSwitches():
 			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 		}
 
-		clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json().replace(".","\uff0E")
+		st_switches = requests.get(switch_uri, headers=switch_header).json()
+
+		
+		for switch in st_switches:
+			switch.replace(".","\uff0E")
+
+
+		clientInfo['st_switches'] = st_switches
 
 
 
