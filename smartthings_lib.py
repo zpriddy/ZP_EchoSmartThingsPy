@@ -405,7 +405,7 @@ def initAllSwitches():
 
 		
 		for switch in st_switches:
-			switch.replace(".","$$")
+			switch = switch.replace(".","$$")
 
 			print switch
 
