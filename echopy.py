@@ -41,6 +41,7 @@ def auth():
 		alexaId=request.form['AlexaID']
 		clientId=request.form['SmartThingsClientID']
 		clientSecret=request.form['SmartThingsClientSecret']
+		clientEmail=request.form['Email']
 		#userId = myApp.getUserIdFromAlexaId(alexaId)
 
 		auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret)

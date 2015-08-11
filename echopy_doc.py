@@ -175,6 +175,10 @@ auth_page='''
 	<label for="SmartThingsClientSecret">SmartThings Client Secret </label>
 	<input id="SmartThingsClientSecret" name="SmartThingsClientSecret" type="text" class="form-control" title="SmartThings Client Secret . This is a required field">
 </div>
+<div class="form-group">
+  <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
+  <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field">
+</div>
 <input type="submit" value="Authorize" class="btn btn-default">
 </form>
 </div>
