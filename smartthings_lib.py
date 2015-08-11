@@ -372,7 +372,9 @@ def getSamples(userId):
 	print modeList
 	print phraseList
 	print switchList
-	
+
+	print sampleGen.gen_all(modeList,switchList, phraseList)
+
 	return sampleGen.gen_all(modeList,switchList, phraseList)
 
 
