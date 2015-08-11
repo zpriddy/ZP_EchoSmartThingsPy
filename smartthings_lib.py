@@ -310,10 +310,10 @@ def st_switch(userId, switchId, state):
 
 	switches = clientInfo['st_switches']
 
-	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+	selectedSwitch = [] #[a for a in switches if a.lower() == switchId.lower()]
 
 	if len(selectedSwitch) < 1:
-
+		print "UPDATING"
 		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 		switch_header = {
 			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
