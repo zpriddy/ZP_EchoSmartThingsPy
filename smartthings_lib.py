@@ -44,6 +44,8 @@ def smartThingsMongoDBInit():
 	mongoDB = mongoClient['AlexaSmartThingsDB']
 	mongoST = mongoDB['ST']
 
+	initAllSwitches()
+
 
 
 def smartThingsAuth(altId, userId, clientId, clientSecret,clientEmail):
