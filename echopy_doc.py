@@ -163,19 +163,19 @@ auth_page='''
 
 
 <form action="auth" method="post">
-<div class="form-group">
+<div class="form-group required">
 	<label for="AlexaID">Alexa ID</label>
 	<input id="AlexaID" name="AlexaID" type="text" class="form-control" title="Alexa ID. This is a required field">
 </div>
-<div class="form-group">
+<div class="form-group required">
 	<label for="SmartThingsClientID">SmartThings Client ID</label>
 	<input id="SmartThingsClientID" name="SmartThingsClientID" type="text" class="form-control" title="SmartThings Client ID. This is a required field">
 </div>
-<div class="form-group">
+<div class="form-group required">
 	<label for="SmartThingsClientSecret">SmartThings Client Secret </label>
 	<input id="SmartThingsClientSecret" name="SmartThingsClientSecret" type="text" class="form-control" title="SmartThings Client Secret . This is a required field">
 </div>
-<div class="form-group">
+<div class="form-group required">
   <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
   <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field">
 </div>
