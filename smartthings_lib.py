@@ -395,7 +395,7 @@ def initAllSwitches():
 
 	for user in all_users:
 		try:
-			clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
 
 			switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 			switch_header = {
