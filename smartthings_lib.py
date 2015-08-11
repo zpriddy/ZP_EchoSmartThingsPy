@@ -408,7 +408,7 @@ def initAllSwitches():
 
 
 
-			print clientInfo['switches']
+			print clientInfo['st_switches']
 
 			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
 
