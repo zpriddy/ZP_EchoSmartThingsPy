@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-	return echopy_doc.main_page.format(settings.full_root_url)
+	return echopy_doc.main_page % (settings.full_root_url)
 
 
 @app.route(settings.url_root)
