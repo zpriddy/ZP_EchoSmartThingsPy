@@ -404,9 +404,15 @@ def initAllSwitches():
 
 			clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json()
 
-			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+
+
+
 
 			print clientInfo['switches']
+
+			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+
+			print "UPDATED"
 
 		except:
 			pass
