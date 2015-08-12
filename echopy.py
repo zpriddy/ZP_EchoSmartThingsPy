@@ -61,13 +61,10 @@ def auth():
 		return echopy_doc.auth_page
 
 	if request.method == 'POST':
-		alexaId=request.form['AlexaID']
-		clientId=request.form['SmartThingsClientID']
-		clientSecret=request.form['SmartThingsClientSecret']
-		clientEmail=request.form['Email']
-		#userId = myApp.getUserIdFromAlexaId(alexaId)
-
-		print alexaId, clientId, clientSecret, clientEmail
+		alexaId=request.form['AlexaID'].replace(' ','')
+		clientId=request.form['SmartThingsClientID'].replace(' ','')
+		clientSecret=request.form['SmartThingsClientSecret'].replace(' ','')
+		clientEmail=request.form['Email'].replace(' ','')
 
 		auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		return redirect(auth_uri)
@@ -100,7 +97,6 @@ def samples():
 			alexaId=request.form['AlexaID']
 			userId = myApp.getUserIdFromAlexaId(alexaId)
 			samples = st.getSamples(userId)
-			sendWelcomeEmail(userId)
 			myApp.genNewAlexaId(userId,100)
 			return echopy_doc.samples_results.replace('RESULTS',samples.replace('\n','&#13;&#10;')).format(settings.full_root_url)
 		except:
@@ -116,7 +112,7 @@ def sendWelcomeEmail(userId):
 		   recipients=
 			   [userEmail])
 	msg.body = '''
-	Welcome to ZPriddy Alexa SmartThings! This is a confromation that your account has been created. 
+	Welcome to ZPriddy Alexa SmartThings! This is a conformation that your account has been created and is linked to your SmartThings account! 
 
 	Comming Soon: Better Support! :) 
 	'''
