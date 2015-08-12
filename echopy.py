@@ -67,6 +67,8 @@ def auth():
 		clientEmail=request.form['Email']
 		#userId = myApp.getUserIdFromAlexaId(alexaId)
 
+		print alexaId, clientId, clientSecret, clientEmail
+
 		auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		return redirect(auth_uri)
 
