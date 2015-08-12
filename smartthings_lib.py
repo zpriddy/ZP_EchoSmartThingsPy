@@ -307,6 +307,7 @@ def st_switch(userId, switchId, state):
 	print "SWITCH"
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	selectedSwitch = []
 
 	try:
 		switches = clientInfo['st_switches']
