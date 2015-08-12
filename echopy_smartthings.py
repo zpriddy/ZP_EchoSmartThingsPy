@@ -196,7 +196,7 @@ def intent_request(sessionId, userId, request):
 				elif switchState == result.lower():
 					return response
 				else:
-					st_doc.generateError(result, "Switch")
+					return st_doc.generateError(result, "Switch")
 
 			elif request['intent']['name'] ==  "STSamples":
 				genNewAlexaId(userId,10)
