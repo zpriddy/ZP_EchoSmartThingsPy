@@ -117,6 +117,25 @@ def smartThingsToken(altId, userId, authCode):
 # Mode
 ###############################################################################
 
+def st_update_users_modes(userId):
+	'''
+	This is used to update the database of users modes
+	'''
+	if debug: print "Updating users modes"
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
+	mode_header = {
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+	}
+	clientInfo['st_modes'] = requests.get(mode_uri, headers=mode_header).json()
+
+	if debug: print clientInfo['st_modes']
+
+	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
+
+	return True
+
 def set_mode(userId,modeId):
 	'''
 	This is used to chnage current mode
@@ -124,53 +143,41 @@ def set_mode(userId,modeId):
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
+	if 'st_modes' not in clientInfo:
+		st_update_users_modes(userId)
+		clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+
 	modes = clientInfo['st_modes']
-
-	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
-
+	selectedMode = [a for a in modes if a.lower().replace('!','') == modeId.lower()]
 
 	if len(selectedMode) < 1:
-		mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
-		
-		mode_header = {
-			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
-		}
-
-		#get list of modes
-		clientInfo['st_modes'] = requests.get(mode_uri, headers=mode_header).json()
-		modes = clientInfo['st_modes']
-		if debug: print modes
-		logger.write_log(userId + " - Modes: " +  str(modes))
-
-		#update database with new list
-		mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
-
-
-		selectedMode = [a for a in modes if a.lower() == modeId.lower()]
+		st_update_users_modes(userId)
+		selectedMode = [a for a in modes if a.lower().replace('!','') == modeId.lower()]
 
 	if len(selectedMode) > 1:
 		return "Too many modes matched the mode name I heard: " + modeId
 	if len(selectedMode) < 1:
 		return "No modes matched the mode name I heard: " + modeId
+	else:
+		selectedMode = selectedMode[0]
+		if debug: print selectedMode
 
-	selectedMode = selectedMode[0]
-
-	mode_json = {
-		"mode":selectedMode
-	}
-	mode_header = {
-			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+		mode_json = {
+			"mode":selectedMode
 		}
+		mode_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
 
-	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
+		mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
 
-	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
-	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
+		response = requests.post(mode_uri, headers=mode_header, json=mode_json)
+		response = requests.post(mode_uri, headers=mode_header, json=mode_json)
 
-	if debug: print "Mode Response: " + str(response.json())
-	logger.write_log("Mode Response: " + str(response.json()))
+		if debug: print "Mode Response: " + str(response.json())
+		logger.write_log("Mode Response: " + str(response.json()))
 
-	return modeId if response.json()['error'] == 0 else "Unknown Error. See Logs"
+		return modeId if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
 ###############################################################################
 # Phrases
@@ -183,11 +190,11 @@ def st_update_users_phrases(userId):
 	if debug: print "Updating users phrases"
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
-	switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
-	switch_header = {
+	phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
+	phrase_header = {
 		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
-	clientInfo['st_phrases'] = requests.get(switch_uri, headers=switch_header).json()
+	clientInfo['st_phrases'] = requests.get(phrase_uri, headers=phrase_header).json()
 
 	if debug: print clientInfo['st_phrases']
 
