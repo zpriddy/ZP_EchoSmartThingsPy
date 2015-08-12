@@ -4,7 +4,7 @@
 #######################################
 
 import sampleUtterances_dict as sud
-valid = set('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.')
+valid = set('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. ')
 
 def gen_modes(modeList):
 	output = ""
