@@ -133,99 +133,87 @@ def intent_request(sessionId, userId, request):
 		return response
 
 	else:
-		try:
-			if request['intent']['name'] ==  "STSetMode":
-				mode = request['intent']['slots']['mode']['value']
-				output_speech = "Setting Smart Things to " + mode + " mode"
-				output_type = "PlainText"
 
-				card_type = "Simple"
-				card_title = "SmartThings Control - Setting Mode"
-				card_content = "Setting Smart Things to " + mode + " mode"
+		if request['intent']['name'] ==  "STSetMode":
+			mode = request['intent']['slots']['mode']['value']
+			output_speech = "Setting Smart Things to " + mode + " mode"
+			output_type = "PlainText"
 
-				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+			card_type = "Simple"
+			card_title = "SmartThings Control - Setting Mode"
+			card_content = "Setting Smart Things to " + mode + " mode"
 
-				result = st.set_mode(userId, mode)
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
-				if mode == result:
-					return response
-				else:
-					st_doc.generateError(result, "Setting Mode")
+			result = st.set_mode(userId, mode)
 
-			elif request['intent']['name'] ==  "STPhrase":
-				genNewAlexaId(userId,100)
-				phrase = request['intent']['slots']['phrase']['value']
-				output_speech = "Telling Smart Things to say " + phrase 
-				output_type = "PlainText"
-
-				card_type = "Simple"
-				card_title = "SmartThings Control - HelloHome"
-				card_content = "Telling Smart Things to say " + phrase 
-
-				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
-
-				result = st.set_phrase(userId, phrase)
-
-				if phrase == result:
-					return response
-				else:
-					st_doc.generateError(result, "Setting Phrase")
-
-			elif request['intent']['name'] ==  "STSwitch":
-				genNewAlexaId(userId,100)
-				switchId = request['intent']['slots']['switch']['value']
-				switchState = request['intent']['slots']['state']['value']
-
-				result = st.st_switch(userId, switchId, switchState)
-
-				output_speech = "Telling " + switchId + " to turn " + result
-				output_type = "PlainText"
-
-				card_type = "Simple"
-				card_title = "SmartThings Control - Switch"
-				card_content = "Telling " + switchId + " to turn " + result
-
-				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
-
-				if switchState == 'toggle':
-					if result.lower() != 'on' and result.lower() != 'off':
-						return st_doc.generateError(result, "Switch")
-					else:
-						return response
-
-				elif switchState == result.lower():
-					return response
-				else:
-					print st_doc.generateError(result, "Switch")
-					return st_doc.generateError(result, "Switch")
-
-			elif request['intent']['name'] ==  "STSamples":
-				genNewAlexaId(userId,10)
-				alexaId = getAlexaIdFormUserID(userId)
-				output_speech = "Requesting new samples. New Alexa ID has been generated. Please see the Echo App."
-				output_type = "PlainText"
-
-				card_type = "Simple"
-				card_title = "SmartThings Control"
-				card_content = "New samples have been requested. Please authenticate user with Alexa ID: " + alexaId + " to https://alexa.zpriddy.com/alexa/samples"
-
-				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
-
-
+			if mode == result:
 				return response
-
 			else:
-				output_speech = "Smart Things app did not understand your request. Please say it again."
-				output_type = "PlainText"
+				return st_doc.generateError(result, "Setting Mode")
 
-				card_type = "Simple"
-				card_title = "SmartThings Control - Welcome"
-				card_content = "Welcome to SmartThings Control App. Please say a command."
+		elif request['intent']['name'] ==  "STPhrase":
+			genNewAlexaId(userId,100)
+			phrase = request['intent']['slots']['phrase']['value']
+			output_speech = "Telling Smart Things to say " + phrase 
+			output_type = "PlainText"
 
-				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':False}
+			card_type = "Simple"
+			card_title = "SmartThings Control - HelloHome"
+			card_content = "Telling Smart Things to say " + phrase 
 
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+			result = st.set_phrase(userId, phrase)
+
+			if phrase == result:
 				return response
-		except:
+			else:
+				return st_doc.generateError(result, "Setting Phrase")
+
+		elif request['intent']['name'] ==  "STSwitch":
+			genNewAlexaId(userId,100)
+			switchId = request['intent']['slots']['switch']['value']
+			switchState = request['intent']['slots']['state']['value']
+
+			result = st.st_switch(userId, switchId, switchState)
+
+			output_speech = "Telling " + switchId + " to turn " + result
+			output_type = "PlainText"
+
+			card_type = "Simple"
+			card_title = "SmartThings Control - Switch"
+			card_content = "Telling " + switchId + " to turn " + result
+
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+			if switchState == 'toggle':
+				if result.lower() != 'on' and result.lower() != 'off':
+					return st_doc.generateError(result, "Switch")
+				else:
+					return response
+
+			elif switchState == result.lower():
+				return response
+			else:
+				return st_doc.generateError(result, "Switch")
+
+		elif request['intent']['name'] ==  "STSamples":
+			genNewAlexaId(userId,10)
+			alexaId = getAlexaIdFormUserID(userId)
+			output_speech = "Requesting new samples. New Alexa ID has been generated. Please see the Echo App."
+			output_type = "PlainText"
+
+			card_type = "Simple"
+			card_title = "SmartThings Control"
+			card_content = "New samples have been requested. Please authenticate user with Alexa ID: " + alexaId + " to https://alexa.zpriddy.com/alexa/samples"
+
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+
+			return response
+
+		else:
 			return AlexaDidNotUnderstand()
 
 
