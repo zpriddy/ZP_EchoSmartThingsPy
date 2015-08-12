@@ -332,7 +332,7 @@ def st_switch(userId, switchId, state):
 
 		print clientInfo['st_switches']
 
-		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+		mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
 		switches = clientInfo['st_switches']
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
 		print "2"
@@ -357,7 +357,7 @@ def st_switch(userId, switchId, state):
 
 		print clientInfo['st_switches']
 
-		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+		mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
 		switches = clientInfo['st_switches']
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
 
