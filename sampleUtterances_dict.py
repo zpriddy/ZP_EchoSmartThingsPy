@@ -11,6 +11,22 @@ mode_samples = [
 
 
 switch_samples = [
+	'STSwitch turn {{off|state}} {{ZPSWITCHALEXA|switch}}',
+	'STSwitch turn {{on|state}} {{ZPSWITCHALEXA|switch}}',
+
+	'STSwitch switch {{ZPSWITCHALEXA|switch}} {{off|state}}',
+	'STSwitch switch {{ZPSWITCHALEXA|switch}} {{on|state}}',
+
+	'STSwitch set {{ZPSWITCHALEXA|switch}} switch to {{off|state}}',
+	'STSwitch set {{ZPSWITCHALEXA|switch}} switch to {{on|state}}',
+	'STSwitch set {{ZPSWITCHALEXA|switch}} switch to {{toggle|state}}',
+
+	'STSwitch set switch {{ZPSWITCHALEXA|switch}} {{off|state}}',
+	'STSwitch set switch {{ZPSWITCHALEXA|switch}} {{on|state}}',
+	'STSwitch set switch {{ZPSWITCHALEXA|switch}} {{toggle|state}}'
+	]
+
+switch_samples_old = [
 	'STSwitch switch {{ZPSWITCHALEXA|switch}} {{off|state}}',
 	'STSwitch switch {{ZPSWITCHALEXA|switch}} {{on|state}}',
 	'STSwitch switch {{ZPSWITCHALEXA|switch}} {{toggle|state}}',
@@ -27,6 +43,7 @@ switch_samples = [
 	'STSwitch set switch {{ZPSWITCHALEXA|switch}} {{on|state}}',
 	'STSwitch set switch {{ZPSWITCHALEXA|switch}} {{toggle|state}}'
 	]
+
 
 phrase_samples = [
 	'STPhrase to say {{ZPPHRASEALEXA|phrase}}',
