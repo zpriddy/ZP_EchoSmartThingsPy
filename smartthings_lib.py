@@ -313,6 +313,8 @@ def st_switch(userId, switchId, state):
 	try:
 		switches = clientInfo['st_switches']
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+		print "SWITCH 1"
+		print selectedSwitch
 		selectedSwitch = selectedSwitch[0]
 		if len(selectedSwitch) == 1:
 			print selectedSwitch
