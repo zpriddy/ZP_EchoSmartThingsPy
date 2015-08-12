@@ -113,10 +113,8 @@ def switch(userId,deviceId,state):
 	'''
 	This is used to chnage the state of a switch. State = "ON" or "OFF" ot "TOGGLE"
 	'''
-	print "SWITCH ACTION"
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
-	print clientInfo
 
 	if state.lower() == "toggle":
 		state = "OFF" if getSwitchState(clientInfo, deviceId) == "on" else "ON"
@@ -326,8 +324,6 @@ def st_update_users_switches(userId):
 	return true
 
 
-
-
 def st_switch(userId, switchId, state):
 	'''
 	This is used to chnage the state of a switch from SmartThings. State = "ON" or "OFF" ot "TOGGLE"
@@ -354,62 +350,7 @@ def st_switch(userId, switchId, state):
 	else:
 		selectedSwitch = selectedSwitch[0]
 		return switch(userId,selectedSwitch,state)
-'''
-	except:
-		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
-		switch_header = {
-			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
-		}
 
-		st_switches = requests.get(switch_uri, headers=switch_header).json()
-
-		switches = []
-		for switch in st_switches:
-			switches.append(switch.replace(".","$$"))
-
-
-		clientInfo['st_switches'] = switches
-
-		print clientInfo['st_switches']
-
-		mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
-		switches = clientInfo['st_switches']
-		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
-		print "2"
-		print selectedSwitch
-	
-
-	if len(selectedSwitch) < 1:
-		print "UPDATING"
-		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
-		switch_header = {
-			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
-		}
-
-		st_switches = requests.get(switch_uri, headers=switch_header).json()
-
-		switches = []
-		for switch in st_switches:
-			switches.append(switch.replace(".","$$"))
-
-
-		clientInfo['st_switches'] = switches
-
-		print clientInfo['st_switches']
-
-		mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
-		switches = clientInfo['st_switches']
-		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
-
-	if len(selectedSwitch) > 1:
-		return "Too many switches matched the switch name I heard: " + switchId
-	if len(selectedSwitch) < 1:
-		return "No switches matched the switch name I heard: " + switchId
-
-	selectedSwitch = selectedSwitch[0]
-
-	return switch(userId,selectedSwitch,state)
-'''
 
 def getSamples(userId):
 	global mongoST
