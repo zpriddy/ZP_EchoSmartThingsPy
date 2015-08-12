@@ -113,6 +113,7 @@ def switch(userId,deviceId,state):
 	'''
 	This is used to chnage the state of a switch. State = "ON" or "OFF" ot "TOGGLE"
 	'''
+	print "SWITCH ACTION"
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 	print clientInfo
@@ -313,11 +314,8 @@ def st_switch(userId, switchId, state):
 	try:
 		switches = clientInfo['st_switches']
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
-		print "SWITCH 1"
-		print selectedSwitch
 		if len(selectedSwitch) == 1:
 			selectedSwitch = selectedSwitch[0]
-			print selectedSwitch
 			return switch(userId,selectedSwitch,state)
 
 	except:
