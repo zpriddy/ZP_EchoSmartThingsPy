@@ -308,27 +308,53 @@ def st_switch(userId, switchId, state):
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
+	try:
+		switches = clientInfo['st_switches']
+		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+		
+	except:
+		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
+			switch_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
 
-	switches = clientInfo['st_switches']
+			st_switches = requests.get(switch_uri, headers=switch_header).json()
 
-	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+			switches = []
+			for switch in st_switches:
+				switches.append(switch.replace(".","$$"))
+
+
+			clientInfo['st_switches'] = switches
+
+			print clientInfo['st_switches']
+
+		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+		switches = clientInfo['st_switches']
+		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+	
 
 	if len(selectedSwitch) < 1:
 		print "UPDATING"
 		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
-		switch_header = {
-			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
-		}
+			switch_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
 
-		clientInfo['st_switches'] = requests.get(switch_uri, headers=switch_header).json()
+			st_switches = requests.get(switch_uri, headers=switch_header).json()
+
+			switches = []
+			for switch in st_switches:
+				switches.append(switch.replace(".","$$"))
+
+
+			clientInfo['st_switches'] = switches
+
+			print clientInfo['st_switches']
+
+		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
 		switches = clientInfo['st_switches']
-		if debug: print "Switchs: " + str(switches)
-		logger.write_log(userId + ' - Switches: ' + str(switches))
-
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
-
-		#write new switches to the databse
-		mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
 
 	if len(selectedSwitch) > 1:
 		return "Too many switches matched the switch name I heard: " + switchId
@@ -393,35 +419,30 @@ def initAllSwitches():
 	print all_users
 
 	for user in all_users:
-		#try:
-		clientInfo = mongoST.find_one({'st_amazonEchoID':user})
+		try:
+			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
 
-		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
-		switch_header = {
-			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
-		}
+			switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
+			switch_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
 
-		st_switches = requests.get(switch_uri, headers=switch_header).json()
+			st_switches = requests.get(switch_uri, headers=switch_header).json()
 
-		switches = []
-		for switch in st_switches:
-			switches.append(switch.replace(".","$$"))
-
-
-		clientInfo['st_switches'] = switches
+			switches = []
+			for switch in st_switches:
+				switches.append(switch.replace(".","$$"))
 
 
+			clientInfo['st_switches'] = switches
 
-
-
-		print clientInfo['st_switches']
+			print clientInfo['st_switches']
 
 		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
 
-		print "UPDATED"
 
-		#except:
-			#pass
+		except:
+			print "Error getting Switches"
 
 	
 
