@@ -311,13 +311,13 @@ def st_switch(userId, switchId, state):
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 	selectedSwitch = []
 
-	try:
-		switches = clientInfo['st_switches']
-		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
-		if len(selectedSwitch) == 1:
-			selectedSwitch = selectedSwitch[0]
-			return switch(userId,selectedSwitch,state)
-
+	
+	switches = clientInfo['st_switches']
+	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+	if len(selectedSwitch) == 1:
+		selectedSwitch = selectedSwitch[0]
+		return switch(userId,selectedSwitch,state)
+'''
 	except:
 		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 		switch_header = {
@@ -372,7 +372,7 @@ def st_switch(userId, switchId, state):
 	selectedSwitch = selectedSwitch[0]
 
 	return switch(userId,selectedSwitch,state)
-
+'''
 
 def getSamples(userId):
 	global mongoST
