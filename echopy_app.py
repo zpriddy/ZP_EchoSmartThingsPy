@@ -35,7 +35,7 @@ def run(app):
                 port=settings.server_port,
                 threaded=True,
                 use_reloader=False,
-                use_debugger=True,
+                use_debugger=False,
                 host='0.0.0.0'
                 
                 )
