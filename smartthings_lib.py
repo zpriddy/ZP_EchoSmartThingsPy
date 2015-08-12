@@ -321,7 +321,7 @@ def st_update_users_switches(userId):
 
 	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
 
-	return true
+	return True
 
 
 def st_switch(userId, switchId, state):
