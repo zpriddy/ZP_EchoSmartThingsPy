@@ -312,6 +312,8 @@ def st_switch(userId, switchId, state):
 	try:
 		switches = clientInfo['st_switches']
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+		print "1"
+		print selectedSwitch
 
 	except:
 		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
@@ -333,6 +335,8 @@ def st_switch(userId, switchId, state):
 		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
 		switches = clientInfo['st_switches']
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
+		print "2"
+		print selectedSwitch
 	
 
 	if len(selectedSwitch) < 1:
