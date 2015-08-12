@@ -115,6 +115,7 @@ def switch(userId,deviceId,state):
 	'''
 	global mongoST
 	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	print clientInfo
 
 	if state.lower() == "toggle":
 		state = "OFF" if getSwitchState(clientInfo, deviceId) == "on" else "ON"
@@ -314,6 +315,7 @@ def st_switch(userId, switchId, state):
 		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
 		selectedSwitch = selectedSwitch[0]
 		if len(selectedSwitch) == 1:
+			print selectedSwitch
 			return switch(userId,selectedSwitch,state)
 
 	except:
