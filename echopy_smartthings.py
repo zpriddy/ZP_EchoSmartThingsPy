@@ -226,6 +226,11 @@ def getUserIdFromAlexaId(alexaId):
 	currentUser = mongoST.find_one({'alexaId':alexaId})
 	return currentUser['st_amazonEchoID']
 
+def getUserEmail(userId):
+	global mongoST
+	currentUser = mongoST.find_one({'_id':userId})
+	return currentUser['st_clientEmail']
+
 def genNewAlexaId(userId,size):
 	global mongoST
 	currentUser = mongoST.find_one({'st_amazonEchoID':userId})

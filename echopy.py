@@ -84,7 +84,8 @@ def authcode(alexaId):
 		print "authed..."
 		#print st.stData.getUser(userId).getClientInfo().token
 
-		myApp.genNewAlexaId(userId,100)
+		myApp.genNewAlexaId(userId,100)\
+		sendWelcomeEmail(userId)
 
 	return redirect(settings.url_root)
 
@@ -99,6 +100,7 @@ def samples():
 			alexaId=request.form['AlexaID']
 			userId = myApp.getUserIdFromAlexaId(alexaId)
 			samples = st.getSamples(userId)
+			sendWelcomeEmail(userId)
 			myApp.genNewAlexaId(userId,100)
 			return echopy_doc.samples_results.replace('RESULTS',samples.replace('\n','&#13;&#10;')).format(settings.full_root_url)
 		except:
@@ -106,7 +108,19 @@ def samples():
 
 
 
+def sendWelcomeEmail(userId):
+	userEmail = myApp.getUserEmail(userId)
+	msg = Message(
+			  'ZPriddy - Alexa Support',
+		   sender='alexa@zpriddy.com',
+		   recipients=
+			   [userEmail])
+	msg.body = '''
+	Welcome to ZPriddy Alexa SmartThings! This is a confromation that your account has been created. 
 
+	Comming Soon: Better Support! :) 
+	'''
+	mail.send(msg)
 
 def run_echopy_app():
 	import SocketServer
