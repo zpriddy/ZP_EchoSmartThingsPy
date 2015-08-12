@@ -196,6 +196,7 @@ def intent_request(sessionId, userId, request):
 				elif switchState == result.lower():
 					return response
 				else:
+					print st_doc.generateError(result, "Switch")
 					return st_doc.generateError(result, "Switch")
 
 			elif request['intent']['name'] ==  "STSamples":
