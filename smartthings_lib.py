@@ -439,7 +439,7 @@ def initAllPhrases():
 
 	for user in all_users:
 		try:
-			clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
 
 			phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
 			phrase_header = {
@@ -450,8 +450,10 @@ def initAllPhrases():
 
 			print clientInfo['phrases']
 
+			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+
 		except:
-			pass
+			print "Error getting Phrases"
 
 
 
@@ -461,23 +463,20 @@ def initAllModes():
 
 	for user in all_users:
 		try:
-			clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
-
+			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
 
 			mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
-			print mode_uri
-		
 			mode_header = {
 				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 			}
 
-			#get list of modes
+
 			clientInfo['modes'] = requests.get(mode_uri, headers=mode_header).json()
 
 			print clientInfo['modes']
 
 		except:
-			pass
+			print "Error getting Modes"
 
 
 
