@@ -314,20 +314,20 @@ def st_switch(userId, switchId, state):
 		
 	except:
 		switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
-			switch_header = {
-				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
-			}
+		switch_header = {
+			"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+		}
 
-			st_switches = requests.get(switch_uri, headers=switch_header).json()
+		st_switches = requests.get(switch_uri, headers=switch_header).json()
 
-			switches = []
-			for switch in st_switches:
-				switches.append(switch.replace(".","$$"))
+		switches = []
+		for switch in st_switches:
+			switches.append(switch.replace(".","$$"))
 
 
-			clientInfo['st_switches'] = switches
+		clientInfo['st_switches'] = switches
 
-			print clientInfo['st_switches']
+		print clientInfo['st_switches']
 
 		mongoST.update({'st_amazonEchoID':user},clientInfo,True)
 		switches = clientInfo['st_switches']
