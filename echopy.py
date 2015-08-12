@@ -84,7 +84,7 @@ def authcode(alexaId):
 		print "authed..."
 		#print st.stData.getUser(userId).getClientInfo().token
 
-		myApp.genNewAlexaId(userId,100)\
+		myApp.genNewAlexaId(userId,100)
 		sendWelcomeEmail(userId)
 
 	return redirect(settings.url_root)
