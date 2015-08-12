@@ -189,7 +189,7 @@ def st_update_users_phrases(userId):
 	}
 	clientInfo['st_phrases'] = requests.get(switch_uri, headers=switch_header).json()
 
-	if debug: print clientInfo['st_switches']
+	if debug: print clientInfo['st_phrases']
 
 	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
 
@@ -204,6 +204,7 @@ def set_phrase(userId,phraseId):
 
 	if 'st_phrases' not in clientInfo:
 		st_update_users_phrases(userId)
+		clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 	phrases = clientInfo['st_phrases']
 	selectedPhrase = [a for a in phrases if a.lower().replace('!','') == phraseId.lower()]
@@ -277,6 +278,7 @@ def st_switch(userId, switchId, state):
 
 	if 'st_switches' not in clientInfo:
 		st_update_users_switches(userId)
+		clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 	
 	switches = clientInfo['st_switches']
 	selectedSwitch = [a for a in switches if a.lower().replace('$$','.') == switchId.lower()]
