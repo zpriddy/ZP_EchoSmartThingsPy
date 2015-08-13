@@ -106,13 +106,6 @@ def page_generator(pageName,pageBody):
 
 
 ###############################################################################
-# PAGES 
-###############################################################################
-
-main_page = page_generator('Home',main_page_body)
-
-
-###############################################################################
 # Page Bodies  
 ###############################################################################
 
@@ -609,4 +602,14 @@ alexa@zpriddy.com</p>
 
 <p>Last Edited on 2015&#8211;08&#8211;11</p>
 '''
+
+
+
+###############################################################################
+# PAGES 
+###############################################################################
+
+main_page = page_generator('Home',main_page_body)
+
+
 NotNestUser = {"outputSpeech": {"type":"PlainText","text":"Current user is not a valid nest user. Please look for help"},"card":{"type":"Simple","title":"Nest Control Error","content":"Current user is not a valid nest user. Please look for help"},'shouldEndSession':True}
