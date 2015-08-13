@@ -54,6 +54,7 @@ ZP_NAVBAR_GENERATED_LINKS
 
 
 html_footer='''
+<br><br><br>
 <div class="navbar navbar-inverse navbar-fixed-bottom">
   <div class="container">
     <span class="navbar-text">
@@ -379,7 +380,7 @@ Our Privacy Policy link includes the word &#8216;Privacy&#8217;, and can be easi
  &bull; Via Email<br>
 Users are able to change their personal information:<br>
  &bull; By emailing us<br>
- &bull; By chatting with us or sending us a ticket<<br>/p>
+ &bull; By chatting with us or sending us a ticket<br></p>
 
 <p>How does our site handle do not track signals?
 We honor do not track signals and do not track, plant cookies, or use advertising when a Do Not Track (DNT) browser mechanism is in place.</p>
