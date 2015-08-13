@@ -35,7 +35,7 @@ def main():
 def nest():
 	return echopy_doc.nest_page.format(settings.full_root_url)
 
-@app.route("/privacy/")
+@app.route(settings.url_root + "/privacy")
 def privacy():
 	return echopy_doc.privacy_policy.format(settings.full_root_url)
 
