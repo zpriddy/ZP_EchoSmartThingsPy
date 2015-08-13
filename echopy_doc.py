@@ -535,7 +535,7 @@ This privacy policy has been compiled to better serve those who are concerned wi
 <p>Google, as a third party vendor, uses cookies to serve ads on our site. Google&#8217;s use of the DART cookie enables it to serve ads to our users based on their visit to our site and other sites on the Internet. Users may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy.</p>
 
 <p>We have implemented the following:
- • Demographics and Interests Reporting</p>
+ & bull; Demographics and Interests Reporting</p>
 
 <p>We along with third-party vendors, such as Google use first-party cookies (such as the Google Analytics cookies) and third-party cookies (such as the DoubleClick cookie) or other third-party identifiers together to compile data regarding user interactions with ad impressions, and other ad service functions as they relate to our website.</p>
 
@@ -597,7 +597,7 @@ We will notify the users via in site notification
  & bull; Allow users to unsubscribe by using the link at the bottom of each email</p>
 
 <p>If at any time you would like to unsubscribe from receiving future emails, you can email us at
- • Follow the instructions at the bottom of each email.
+ & bull; Follow the instructions at the bottom of each email.
 and we will promptly remove you from ALL correspondence.</p>
 
 <p><strong><em>Contacting Us</em></strong></p>
