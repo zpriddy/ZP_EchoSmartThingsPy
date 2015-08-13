@@ -318,8 +318,8 @@ This privacy policy has been compiled to better serve those who are concerned wi
 <p>We may use the information we collect from you when you register, sign up for our newsletter, surf the website, or use certain other site features in the following ways:</p>
 
 <p>
-&bull; To improve our website in order to better serve you.
-&bull; To allow us to better service you in responding to your customer service requests.
+&bull; To improve our website in order to better serve you.<br>
+&bull; To allow us to better service you in responding to your customer service requests.<br>
 </p>
 
 <p><strong><em>How do we protect visitor information?</em></strong></p>
@@ -358,12 +358,12 @@ This privacy policy has been compiled to better serve those who are concerned wi
 
 <p>Google, as a third party vendor, uses cookies to serve ads on our site. Google&#8217;s use of the DART cookie enables it to serve ads to our users based on their visit to our site and other sites on the Internet. Users may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy.</p>
 
-<p>We have implemented the following:
- & bull; Demographics and Interests Reporting</p>
+<p>We have implemented the following:<br>
+ &bull; Demographics and Interests Reporting</p>
 
 <p>We along with third-party vendors, such as Google use first-party cookies (such as the Google Analytics cookies) and third-party cookies (such as the DoubleClick cookie) or other third-party identifiers together to compile data regarding user interactions with ad impressions, and other ad service functions as they relate to our website.</p>
 
-<p>Opting out:
+<p>Opting out:<br>
 Users can set preferences for how Google advertises to you using the Google Ad Settings page. Alternatively, you can opt out by visiting the Network Advertising initiative opt out page or permanently using the Google Analytics Opt Out Browser add on.</p>
 
 <p>California Online Privacy Protection Act</p>
@@ -371,15 +371,15 @@ Users can set preferences for how Google advertises to you using the Google Ad S
 <p>CalOPPA is the first state law in the nation to require commercial websites and online services to post a privacy policy. The law&#8217;s reach stretches well beyond California to require a person or company in the United States (and conceivably the world) that operates websites collecting personally identifiable information from California consumers to post a conspicuous privacy policy on its website stating exactly the information being collected and those individuals with whom it is being shared, and to comply with this policy. - See more at: http://consumercal.org/california-online-privacy-protection-act-caloppa/#sthash.0FdRbT51.dpuf</p>
 
 <p>According to CalOPPA we agree to the following:
-Users can visit our site anonymously
-Once this privacy policy is created, we will add a link to it on our home page, or as a minimum on the first significant page after entering our website.
-Our Privacy Policy link includes the word &#8216;Privacy&#8217;, and can be easily be found on the page specified above.</p>
+Users can visit our site anonymously<br>
+Once this privacy policy is created, we will add a link to it on our home page, or as a minimum on the first significant page after entering our website.<br>
+Our Privacy Policy link includes the word &#8216;Privacy&#8217;, and can be easily be found on the page specified above.<br></p>
 
-<p>Users will be notified of any privacy policy changes:
- & bull; Via Email
-Users are able to change their personal information:
- & bull; By emailing us
- & bull; By chatting with us or sending us a ticket</p>
+<p>Users will be notified of any privacy policy changes:<br>
+ &bull; Via Email<br>
+Users are able to change their personal information:<br>
+ &bull; By emailing us<br>
+ &bull; By chatting with us or sending us a ticket<<br>/p>
 
 <p>How does our site handle do not track signals?
 We honor do not track signals and do not track, plant cookies, or use advertising when a Do Not Track (DNT) browser mechanism is in place.</p>
@@ -398,10 +398,10 @@ It&#8217;s also important to note that we allow third party behavioral tracking<
 <p>The Fair Information Practices Principles form the backbone of privacy law in the United States and the concepts they include have played a significant role in the development of data protection laws around the globe. Understanding the Fair Information Practice Principles and how they should be implemented is critical to comply with the various privacy laws that protect personal information.</p>
 
 <p>In order to be in line with Fair Information Practices we will take the following responsive action, should a data breach occur:
-We will notify the users via email
- & bull; Within 1 business day
-We will notify the users via in site notification
- & bull; Within 1 business day</p>
+We will notify the users via email<br>
+ &bull; Within 1 business day<br>
+We will notify the users via in site notification<br>
+ &bull; Within 1 business day<br></p>
 
 <p>We also agree to the individual redress principle, which requires that individuals have a right to pursue legally enforceable rights against data collectors and processors who fail to adhere to the law. This principle requires not only that individuals have enforceable rights against data users, but also that individuals have recourse to courts or a government agency to investigate and/or prosecute non-compliance by data processors.</p>
 
@@ -412,18 +412,17 @@ We will notify the users via in site notification
 <p>We collect your email address in order to:
  & bull; Send information, respond to inquiries, and/or other requests or questions.</p>
 
-<p>To be in accordance with CANSPAM we agree to the following:
+<p>To be in accordance with CANSPAM we agree to the following:<br>
 
- &bull; NOT use false, or misleading subjects or email addresses
- 
- &bull; Identify the message as an advertisement in some reasonable way
- &bull; Include the physical address of our business or site headquarters
- &bull; Monitor third party email marketing services for compliance, if one is used.
- &bull; Honor opt-out/unsubscribe requests quickly
- &bull; Allow users to unsubscribe by using the link at the bottom of each email</p>
+ &bull; NOT use false, or misleading subjects or email addresses<br>
+ &bull; Identify the message as an advertisement in some reasonable way<br>
+ &bull; Include the physical address of our business or site headquarters<br>
+ &bull; Monitor third party email marketing services for compliance, if one is used.<br>
+ &bull; Honor opt-out/unsubscribe requests quickly<br>
+ &bull; Allow users to unsubscribe by using the link at the bottom of each email<br></p>
 
-<p>If at any time you would like to unsubscribe from receiving future emails, you can email us at
- & bull; Follow the instructions at the bottom of each email.
+<p>If at any time you would like to unsubscribe from receiving future emails, you can email us at <br>
+ &bull; Follow the instructions at the bottom of each email.<br>
 and we will promptly remove you from ALL correspondence.</p>
 
 <p><strong><em>Contacting Us</em></strong></p>
