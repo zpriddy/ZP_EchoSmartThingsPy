@@ -51,7 +51,7 @@ def email():
 	return redirect(settings.url_root)
 
 
-@app.route(settings.url_root + "/EchoPyAPI",methods = ['GET','POST'])
+@app.route(settings.url_root + "/EchoPyAPI",methods = ['POST'])
 def apicalls():
 	if request.method == 'POST':
 		data = request.get_json()
