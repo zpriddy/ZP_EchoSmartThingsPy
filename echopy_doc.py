@@ -412,8 +412,10 @@ We will notify the users via in site notification
 <p>We collect your email address in order to:
  & bull; Send information, respond to inquiries, and/or other requests or questions.</p>
 
-<pre>To be in accordance with CANSPAM we agree to the following:
+<p>To be in accordance with CANSPAM we agree to the following:
+
  &bull; NOT use false, or misleading subjects or email addresses
+ 
  &bull; Identify the message as an advertisement in some reasonable way
  &bull; Include the physical address of our business or site headquarters
  &bull; Monitor third party email marketing services for compliance, if one is used.
@@ -422,7 +424,7 @@ We will notify the users via in site notification
 
 <p>If at any time you would like to unsubscribe from receiving future emails, you can email us at
  & bull; Follow the instructions at the bottom of each email.
-and we will promptly remove you from ALL correspondence.</pre>
+and we will promptly remove you from ALL correspondence.</p>
 
 <p><strong><em>Contacting Us</em></strong></p>
 
