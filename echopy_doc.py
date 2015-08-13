@@ -494,8 +494,8 @@ This privacy policy has been compiled to better serve those who are concerned wi
 
 <p>We may use the information we collect from you when you register, sign up for our newsletter, surf the website, or use certain other site features in the following ways:</p>
 
-<pre><code>  • To improve our website in order to better serve you.
-  • To allow us to better service you in responding to your customer service requests.
+<pre><code>  & bull; To improve our website in order to better serve you.
+  & bull; To allow us to better service you in responding to your customer service requests.
 </code></pre>
 
 <p><strong><em>How do we protect visitor information?</em></strong></p>
@@ -552,10 +552,10 @@ Once this privacy policy is created, we will add a link to it on our home page, 
 Our Privacy Policy link includes the word &#8216;Privacy&#8217;, and can be easily be found on the page specified above.</p>
 
 <p>Users will be notified of any privacy policy changes:
- • Via Email
+ & bull; Via Email
 Users are able to change their personal information:
- • By emailing us
- • By chatting with us or sending us a ticket</p>
+ & bull; By emailing us
+ & bull; By chatting with us or sending us a ticket</p>
 
 <p>How does our site handle do not track signals?
 We honor do not track signals and do not track, plant cookies, or use advertising when a Do Not Track (DNT) browser mechanism is in place.</p>
@@ -575,9 +575,9 @@ It&#8217;s also important to note that we allow third party behavioral tracking<
 
 <p>In order to be in line with Fair Information Practices we will take the following responsive action, should a data breach occur:
 We will notify the users via email
- • Within 1 business day
+ & bull; Within 1 business day
 We will notify the users via in site notification
- • Within 1 business day</p>
+ & bull; Within 1 business day</p>
 
 <p>We also agree to the individual redress principle, which requires that individuals have a right to pursue legally enforceable rights against data collectors and processors who fail to adhere to the law. This principle requires not only that individuals have enforceable rights against data users, but also that individuals have recourse to courts or a government agency to investigate and/or prosecute non-compliance by data processors.</p>
 
@@ -586,15 +586,15 @@ We will notify the users via in site notification
 <p>The CAN-SPAM Act is a law that sets the rules for commercial email, establishes requirements for commercial messages, gives recipients the right to have emails stopped from being sent to them, and spells out tough penalties for violations.</p>
 
 <p>We collect your email address in order to:
- • Send information, respond to inquiries, and/or other requests or questions.</p>
+ & bull; Send information, respond to inquiries, and/or other requests or questions.</p>
 
 <p>To be in accordance with CANSPAM we agree to the following:
- • NOT use false, or misleading subjects or email addresses
- • Identify the message as an advertisement in some reasonable way
- • Include the physical address of our business or site headquarters
- • Monitor third party email marketing services for compliance, if one is used.
- • Honor opt-out/unsubscribe requests quickly
- • Allow users to unsubscribe by using the link at the bottom of each email</p>
+ & bull; NOT use false, or misleading subjects or email addresses
+ & bull; Identify the message as an advertisement in some reasonable way
+ & bull; Include the physical address of our business or site headquarters
+ & bull; Monitor third party email marketing services for compliance, if one is used.
+ & bull; Honor opt-out/unsubscribe requests quickly
+ & bull; Allow users to unsubscribe by using the link at the bottom of each email</p>
 
 <p>If at any time you would like to unsubscribe from receiving future emails, you can email us at
  • Follow the instructions at the bottom of each email.
