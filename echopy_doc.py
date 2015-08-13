@@ -58,7 +58,7 @@ html_footer='''
 <div class="navbar navbar-inverse navbar-fixed-bottom">
   <div class="container">
     <span class="navbar-text">
-      <a href="''' + settings.full_root_url + 'privacy' + '''">Privacy Policy</a>
+      <a href="''' + settings.full_root_url + '/privacy' + '''">Privacy Policy</a>
     </span>
   </div>
 </div>
