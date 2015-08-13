@@ -18,7 +18,7 @@ def navbar_generator(pageName):
 			navbar_generated_links += '\t\t\t\t<li class="active"><a href="' + navbar_links[i] +'">' + page + '''<span class="sr-only">(current)</span></a></li>''' + '\n'
 		else:
 			navbar_generated_links += '\t\t\t\t<li><a href="' + navbar_links[i] + '">' + page + '''</a></li>''' + '\n'
-	return html_navbar.replace('ZP_NAVBAR_GENERATED_LINKS',navbar_generated_links)
+	return '''<title> ZP Alexa Projects - ''' + pageName + '''</title>''' + '\n' + html_navbar.replace('ZP_NAVBAR_GENERATED_LINKS',navbar_generated_links)
 
 
 html_navbar='''
@@ -150,86 +150,26 @@ main_page_body='''
 </div>
 '''
 
-auth_page='''
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-  <script>
-  (function(i,s,o,g,r,a,m){{i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){{
-  (i[r].q=i[r].q||[]).push(arguments)}},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  }})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-65257509-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-
-</head>
-
-
-
-
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="https://alexa.zpriddy.com">ZP Alexa Projects</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="https://alexa.zpriddy.com">Home</a></li>
-        <li class="active"><a href="#">SmartThings<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Nest</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="https://zpriddy.com">zpriddy.com</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-<div class="container">
-
-
-
-
+auth_page_body='''
 <form action="auth" method="post">
-<div class="form-group required">
-	<label for="AlexaID">Alexa ID</label>
-	<input id="AlexaID" name="AlexaID" type="text" class="form-control" title="Alexa ID. This is a required field" required="required">
-</div>
-<div class="form-group required">
-	<label for="SmartThingsClientID">SmartThings Client ID</label>
-	<input id="SmartThingsClientID" name="SmartThingsClientID" type="text" class="form-control" title="SmartThings Client ID. This is a required field" required="required">
-</div>
-<div class="form-group required">
-	<label for="SmartThingsClientSecret">SmartThings Client Secret </label>
-	<input id="SmartThingsClientSecret" name="SmartThingsClientSecret" type="text" class="form-control" title="SmartThings Client Secret . This is a required field" required="required">
-</div>
-<div class="form-group required">
-  <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
-  <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field" required="required">
-</div>
-<input type="submit" value="Authorize" class="btn btn-default">
+	<div class="form-group required">
+		<label for="AlexaID">Alexa ID</label>
+		<input id="AlexaID" name="AlexaID" type="text" class="form-control" title="Alexa ID. This is a required field" required="required">
+	</div>
+	<div class="form-group required">
+		<label for="SmartThingsClientID">SmartThings Client ID</label>
+		<input id="SmartThingsClientID" name="SmartThingsClientID" type="text" class="form-control" title="SmartThings Client ID. This is a required field" required="required">
+	</div>
+	<div class="form-group required">
+		<label for="SmartThingsClientSecret">SmartThings Client Secret </label>
+		<input id="SmartThingsClientSecret" name="SmartThingsClientSecret" type="text" class="form-control" title="SmartThings Client Secret . This is a required field" required="required">
+	</div>
+	<div class="form-group required">
+	  <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
+	  <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field" required="required">
+	</div>
+	<input type="submit" value="Authorize" class="btn btn-default">
 </form>
-</div>
 '''
 
 nest_page='''
@@ -610,6 +550,6 @@ alexa@zpriddy.com</p>
 ###############################################################################
 
 main_page = page_generator('Home',main_page_body)
-
+auth_page = page_generator('Auth',auth_page_body)
 
 NotNestUser = {"outputSpeech": {"type":"PlainText","text":"Current user is not a valid nest user. Please look for help"},"card":{"type":"Simple","title":"Nest Control Error","content":"Current user is not a valid nest user. Please look for help"},'shouldEndSession':True}
