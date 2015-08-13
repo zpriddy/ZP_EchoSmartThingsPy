@@ -1,4 +1,5 @@
-import ssl 
+import ssl
+import smartthings_settings as settings
 
 ssl_enable = False
 
@@ -22,7 +23,7 @@ def run(app):
             '''
 
             app.run(debug=True,
-                    port=5000,
+                    port=settings.server_port,
                     threaded=True,
                     use_reloader=False,
                     use_debugger=True,
@@ -31,11 +32,12 @@ def run(app):
                     )
         else:
             app.run(debug=True,
-                port=5000,
+                port=settings.server_port,
                 threaded=True,
                 use_reloader=False,
-                use_debugger=True,
+                use_debugger=False,
                 host='0.0.0.0'
+                
                 )
     finally:
         print "Disconnecting clients"

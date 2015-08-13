@@ -25,6 +25,8 @@ import smartthings_settings as settings
 import sampleUtterances_generator as sampleGen
 import logger
 import os.path
+import pymongo
+from pymongo import MongoClient
 
 from urllib import quote
 
@@ -34,93 +36,289 @@ initUserData = settings.init_user_data
 picklefile = 'smartthings_settings.pickle'
 
 
-def smartThingsDataStoreInit():
-	global stData
 
-	if debug: print 'Datastore Init'
-
-	if loadSettings and os.path.isfile(picklefile):
-		stData = pickle.load(open(picklefile,'rb'))
-		pickle.dump(stData,open(picklefile,"wb"))
-
-	else:
-		stData = STDataStore()
-
-	if initUserData:
-		initAllSwitches()
-		initAllModes()
-		initAllPhrases()
+def smartThingsMongoDBInit():
+	global mongoST
+	mongoClient = MongoClient()
+	mongoClient = MongoClient('localhost', 27017)
+	mongoDB = mongoClient['AlexaSmartThingsDB']
+	mongoST = mongoDB['ST']
 
 
-def smartThingsAuth(altId, userId, clientId, clientSecret):
-	global stData
-	currentClientUserId = userId
-	currentClient = stData.getUser(userId)
-	clientInfo = currentClient.getClientInfo()
-	clientInfo.clientId = clientId
-	clientInfo.clientSecret = clientSecret
 
-	if debug: print 'ST Auth: ' + currentClientUserId
-	logger.write_log('ST Auth: ' + currentClientUserId)
+
+def smartThingsAuth(altId, userId, clientId, clientSecret,clientEmail):
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+
+	clientInfo['st_clientId'] = clientId
+	clientInfo['st_clientSecret'] = clientSecret
+	clientInfo['st_clientEmail'] = clientEmail
+
+	if debug: print 'ST Auth: ' + userId
+	logger.write_log('ST Auth: ' + userId)
 	auth_uri = settings.auth_uri_1.replace('CLIENTID',clientId).replace('CALLBACK',quote(settings.callback_url + altId))
 	if debug: print 'Auth URL: ' + auth_uri
 	logger.write_log('Auth URL: ' + auth_uri)
+
+	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
+
 
 	return auth_uri
 
 
 def smartThingsToken(altId, userId, authCode):
-	global stData
-	currentClient = stData.getUser(userId)
-	clientInfo = currentClient.getClientInfo()
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 	if debug: print 'ST Token: ' + userId
 	logger.write_log('ST Token: ' + userId)
-	token_uri = settings.auth_uri_2.replace('CODE',authCode).replace('CLIENTID',clientInfo.clientId).replace('CLIENTSECRET',clientInfo.clientSecret).replace('CALLBACK',quote(settings.callback_url + altId))
+	token_uri = settings.auth_uri_2.replace('CODE',authCode).replace('CLIENTID',clientInfo['st_clientId']).replace('CLIENTSECRET',clientInfo['st_clientSecret']).replace('CALLBACK',quote(settings.callback_url + altId))
 	if debug: print 'Token URL: ' + token_uri
 	logger.write_log('Token URL: ' + token_uri)
 	response = requests.get(token_uri).json()
 	print response
-	clientInfo.setFromOauth(response)
+	#clientInfo.setFromOauth(response)
+	oauthResponse = response
+	clientInfo['st_access_token'] = oauthResponse['access_token']
+	clientInfo['st_token_type'] = oauthResponse['token_type']
+	clientInfo['st_scope'] = oauthResponse['scope']
+	clientInfo['st_expires_in'] = oauthResponse['expires_in']
+	clientInfo['st_api'] = settings.api.replace('CLIENTID',str(clientInfo['st_clientId']))
+	clientInfo['st_api_location'] = settings.api_location
+
 	if debug: print "Response: " + str(response)
 	logger.write_log("Response: " + str(response))
 
 	#Get Endpoints
 	endpoints_params = {
-		"access_token": clientInfo.token
+		"access_token": clientInfo['st_access_token']
 	}
-	if debug: print "Endpoints URL: " + str(clientInfo.api)
-	logger.write_log("Endpoints URL: " + str(clientInfo.api))
-	response = requests.get(clientInfo.api, params=endpoints_params).json()  #[0]['url']
+	if debug: print "Endpoints URL: " + str(clientInfo['st_api'])
+	logger.write_log("Endpoints URL: " + str(clientInfo['st_api']))
+	response = requests.get(clientInfo['st_api'], params=endpoints_params).json()  #[0]['url']
 	print "Response: "
 	print response
 	response = response[0]['url']
 	if debug: print "Endpoints: " + str(response)
 	logger.write_log("Endpoints: " + str(response))
-	clientInfo.url = response
+	clientInfo['st_url'] = response
+	clientInfo['authenticated'] = True
 
-	pickle.dump(stData,open(picklefile,"wb"))
+	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
 
 	return True
+
+
+
+
+
+###############################################################################
+# Mode
+###############################################################################
+
+def st_update_users_modes(userId):
+	'''
+	This is used to update the database of users modes
+	'''
+	if debug: print "Updating users modes"
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
+	mode_header = {
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+	}
+	clientInfo['st_modes'] = requests.get(mode_uri, headers=mode_header).json()
+
+	if debug: print clientInfo['st_modes']
+
+	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
+
+	return True
+
+def set_mode(userId,modeId):
+	'''
+	This is used to chnage current mode
+	'''
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+
+	if 'st_modes' not in clientInfo:
+		st_update_users_modes(userId)
+		clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+
+	modes = clientInfo['st_modes']
+	selectedMode = [a for a in modes if a.lower().replace('!','') == modeId.lower()]
+
+	if len(selectedMode) < 1:
+		st_update_users_modes(userId)
+		selectedMode = [a for a in modes if a.lower().replace('!','') == modeId.lower()]
+
+	if len(selectedMode) > 1:
+		return "Too many modes matched the mode name I heard: " + modeId
+	if len(selectedMode) < 1:
+		return "No modes matched the mode name I heard: " + modeId
+	else:
+		selectedMode = selectedMode[0]
+		if debug: print selectedMode
+
+		mode_json = {
+			"mode":selectedMode
+		}
+		mode_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
+
+		mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
+
+		response = requests.post(mode_uri, headers=mode_header, json=mode_json)
+		response = requests.post(mode_uri, headers=mode_header, json=mode_json)
+
+		if debug: print "Mode Response: " + str(response.json())
+		logger.write_log("Mode Response: " + str(response.json()))
+
+		return modeId if response.json()['error'] == 0 else "Unknown Error. See Logs"
+
+###############################################################################
+# Phrases
+###############################################################################
+
+def st_update_users_phrases(userId):
+	'''
+	This is used to update the database of users phrases
+	'''
+	if debug: print "Updating users phrases"
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
+	phrase_header = {
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+	}
+	clientInfo['st_phrases'] = requests.get(phrase_uri, headers=phrase_header).json()
+
+	if debug: print clientInfo['st_phrases']
+
+	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
+
+	return True
+
+def set_phrase(userId,phraseId):
+	'''
+	This is used to chnage current phrase
+	'''
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+
+	if 'st_phrases' not in clientInfo:
+		st_update_users_phrases(userId)
+		clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+
+	phrases = clientInfo['st_phrases']
+	selectedPhrase = [a for a in phrases if a.lower().replace('!','') == phraseId.lower()]
+
+	if len(selectedPhrase) < 1:
+		st_update_users_phrases(userId)
+		selectedPhrase = [a for a in phrases if a.lower().replace('!','') == phraseId.lower()]
+
+	if len(selectedPhrase) > 1:
+		return "Too many phrases matched the phrase name I heard: " + phraseId
+	if len(selectedPhrase) < 1:
+		return "No phrase matched the phrase name I heard: " + phraseId
+	else:
+		selectedPhrase = selectedPhrase[0]
+		if debug: print "Phrase: " + selectedPhrase
+
+		## Push chnages to REST API
+		phrase_json = {
+			"phrase":selectedPhrase
+		}
+		phrase_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+		}
+
+		phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
+
+		response = requests.post(phrase_uri, headers=phrase_header, json=phrase_json)
+
+		if debug: print "Phrase Response: " + str(response.json())
+		logger.write_log("Phrase Response: " + str(response.json()))
+
+		return phraseId if response.json()['error'] == 0 else "Unknown Error. See Logs"
+
+
+###############################################################################
+# SWITCHES
+###############################################################################
+
+def st_update_users_switches(userId):
+	'''
+	This is used to update the database of users switches
+	'''
+	if debug: print "Updating users switches"
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
+	switch_header = {
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+	}
+	st_switches = requests.get(switch_uri, headers=switch_header).json()
+	switches = []
+	for switch in st_switches:
+		switches.append(switch.replace(".","$$"))
+	clientInfo['st_switches'] = switches
+
+	if debug: print clientInfo['st_switches']
+
+	mongoST.update({'st_amazonEchoID':userId},clientInfo,True)
+
+	return True
+
+def st_switch(userId, switchId, state):
+	'''
+	This is used to chnage the state of a switch from SmartThings. State = "ON" or "OFF" ot "TOGGLE"
+	'''
+	print "SWITCH"
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	selectedSwitch = []
+
+
+	if 'st_switches' not in clientInfo:
+		st_update_users_switches(userId)
+		clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
+	
+	switches = clientInfo['st_switches']
+	selectedSwitch = [a for a in switches if a.lower().replace('$$','.') == switchId.lower()]
+	if len(selectedSwitch) < 1:
+		st_update_users_switches(userId)
+		selectedSwitch = [a for a in switches if a.lower().replace('$$','.') == switchId.lower()]
+
+	if len(selectedSwitch) < 1:
+		return "No switches matched the switch name I heard: " + switchId
+	if len(selectedSwitch) > 1:
+		return "Too many switches matched the switch name I heard: " + switchId
+	else:
+		selectedSwitch = selectedSwitch[0]
+		if debug: print "Switching" + selectedSwitch
+		return switch(userId,selectedSwitch,state)
 
 def switch(userId,deviceId,state):
 	'''
 	This is used to chnage the state of a switch. State = "ON" or "OFF" ot "TOGGLE"
 	'''
-	global stData
-	currentClient = stData.getUser(userId)
-	clientInfo = currentClient.getClientInfo()
+	global mongoST
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
 	if state.lower() == "toggle":
 		state = "OFF" if getSwitchState(clientInfo, deviceId) == "on" else "ON"
 
-	switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+	switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 	switch_json = {
 		"deviceId":deviceId,
 		"command":state.lower()
 	}
 	switch_header = {
-		"Authorization": clientInfo.token_type + " " + clientInfo.token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	response = requests.post(switch_uri, headers=switch_header, json=switch_json)
@@ -130,12 +328,12 @@ def switch(userId,deviceId,state):
 	return state if response.json()['error'] == 0 else "Unknown Error. See Logs"
 
 def getSwitchState(clientInfo, deviceId):
-	switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+	switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 	switch_json = {
 		"deviceId":deviceId
 	}
 	switch_header = {
-		"Authorization": clientInfo.token_type + " " + clientInfo.token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	response = requests.get(switch_uri, headers=switch_header, json=switch_json).json()
@@ -145,184 +343,40 @@ def getSwitchState(clientInfo, deviceId):
 
 	return response['switch']
 
-def set_mode(userId,modeId):
-	'''
-	This is used to chnage current mode
-	'''
-	global stData
-	currentClient = stData.getUser(userId)
-	clientInfo = currentClient.getClientInfo()
-
-	modes = clientInfo.modes
-
-	selectedMode = [a for a in modes if a.lower() == modeId.lower()]
-
-
-	if len(selectedMode) < 1:
-		mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
-		
-		mode_header = {
-			"Authorization": clientInfo.token_type + " " + clientInfo.token
-		}
-
-		#get list of modes
-		clientInfo.modes = requests.get(mode_uri, headers=mode_header).json()
-		modes = clientInfo.modes
-		if debug: print modes
-		logger.write_log(userId + " - Modes: " +  str(modes))
-
-
-		selectedMode = [a for a in modes if a.lower() == modeId.lower()]
-
-	if len(selectedMode) > 1:
-		return "Too many modes matched the mode name I heard: " + modeId
-	if len(selectedMode) < 1:
-		return "No modes matched the mode name I heard: " + modeId
-
-	selectedMode = selectedMode[0]
-
-	mode_json = {
-		"mode":selectedMode
-	}
-	mode_header = {
-			"Authorization": clientInfo.token_type + " " + clientInfo.token
-		}
-
-	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
-
-	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
-	response = requests.post(mode_uri, headers=mode_header, json=mode_json)
-
-	if debug: print "Mode Response: " + str(response.json())
-	logger.write_log("Mode Response: " + str(response.json()))
-
-	return modeId if response.json()['error'] == 0 else "Unknown Error. See Logs"
-
-
-def set_phrase(userId,phraseId):
-	'''
-	This is used to chnage current phrase
-	'''
-	print "NEW PHRASE"
-	print phraseId
-	global stData
-	currentClient = stData.getUser(userId)
-	clientInfo = currentClient.getClientInfo()
-
-	phrases = clientInfo.phrases
-	print phrases
-
-	selectedPhrase = [a for a in phrases if a.lower().replace('!','') == phraseId.lower()]
-	print selectedPhrase
-
-
-	if len(selectedPhrase) < 1:
-		phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
-		phrase_header = {
-			"Authorization": clientInfo.token_type + " " + clientInfo.token
-		}
-
-		request = requests.get(phrase_uri, headers=phrase_header).json()
-		clientInfo.phrases = request
-		phrases = clientInfo.phrases
-		if debug: print phrases
-		logger.write_log(userId + " - Phrases: " +  str(phrases))
-
-
-		selectedPhrase = [a for a in phrases if a.lower().replace('!','') == phraseId.lower()]
-
-	if len(selectedPhrase) > 1:
-		return "Too many phrases matched the phrase name I heard: " + phraseId
-	if len(selectedPhrase) < 1:
-		return "No phrase matched the phrase name I heard: " + phraseId
-
-	selectedPhrase = selectedPhrase[0]
-
-	phrase_json = {
-		"phrase":selectedPhrase
-	}
-	phrase_header = {
-			"Authorization": clientInfo.token_type + " " + clientInfo.token
-		}
-
-	phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
-
-	response = requests.post(phrase_uri, headers=phrase_header, json=phrase_json)
-
-
-	if debug: print "Phrase Response: " + str(response.json())
-	logger.write_log("Phrase Response: " + str(response.json()))
-
-	return phraseId if response.json()['error'] == 0 else "Unknown Error. See Logs"
-
-def st_switch(userId, switchId, state):
-	'''
-	This is used to chnage the state of a switch from SmartThings. State = "ON" or "OFF" ot "TOGGLE"
-	'''
-	global stData
-	currentClient = stData.getUser(userId)
-	clientInfo = currentClient.getClientInfo()
-
-	switches = clientInfo.switches
-
-	selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
-
-	if len(selectedSwitch) < 1:
-
-		switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
-		switch_header = {
-			"Authorization": clientInfo.token_type + " " + clientInfo.token
-		}
-
-		clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
-		switches = clientInfo.switches
-		if debug: print "Switchs: " + str(switches)
-		logger.write_log(userId + ' - Switches: ' + str(switches))
-
-		selectedSwitch = [a for a in switches if a.lower() == switchId.lower()]
-
-	if len(selectedSwitch) > 1:
-		return "Too many switches matched the switch name I heard: " + switchId
-	if len(selectedSwitch) < 1:
-		return "No switches matched the switch name I heard: " + switchId
-
-	selectedSwitch = selectedSwitch[0]
-
-	return switch(userId,selectedSwitch,state)
-
+###############################################################################
+# samples
+###############################################################################
 
 def getSamples(userId):
-	global stData
-	print "ABOUT TO GENERATE NEW SAMPLES 1"
-	currentClient = stData.getUser(userId)
-	clientInfo = currentClient.getClientInfo()
+	global mongoST
+	
+	clientInfo = mongoST.find_one({'st_amazonEchoID':userId})
 
-	mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
+	mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
 	
 	mode_header = {
-		"Authorization": clientInfo.token_type + " " + clientInfo.token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	#get list of modes
 	modeList = requests.get(mode_uri, headers=mode_header).json()
 
-	switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
+	switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
 	switch_header = {
-		"Authorization": clientInfo.token_type + " " + clientInfo.token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	switchList = requests.get(switch_uri, headers=switch_header).json()
 
-	print "ABOUT TO GENERATE NEW SAMPLES 2"
 
-	phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
+	phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
 	phrase_header = {
-		"Authorization": clientInfo.token_type + " " + clientInfo.token
+		"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
 	}
 
 	phraseList = requests.get(phrase_uri, headers=phrase_header).json()
 
-	print "ABOUT TO GENERATE NEW SAMPLES"
+
 	return sampleGen.gen_all(modeList,switchList, phraseList)
 
 
@@ -330,230 +384,88 @@ def getSamples(userId):
 
 
 def isValidStUser(userId):
-	global stData
-	return stData.isValidUser(userId)
-
-
-def initAllSwitches():
-	global stData
-	all_users = stData.getAllUsers()
-
-	for user in all_users:
-		try:
-			currentClient = stData.getUser(user)
-			clientInfo = currentClient.getClientInfo()
-
-			switch_uri = clientInfo.api_location + clientInfo.url + "/switch"
-			switch_header = {
-				"Authorization": clientInfo.token_type + " " + clientInfo.token
-			}
-
-			clientInfo.switches = requests.get(switch_uri, headers=switch_header).json()
-
-			print clientInfo.switches
-
-		except:
-			pass
-
-	pickle.dump(stData,open(picklefile,"wb"))
-
-
-def initAllPhrases():
-	global stData
-	all_users = stData.getAllUsers()
-
-	for user in all_users:
-		try:
-			currentClient = stData.getUser(user)
-			clientInfo = currentClient.getClientInfo()
-
-			phrase_uri = clientInfo.api_location + clientInfo.url + "/phrase"
-			phrase_header = {
-				"Authorization": clientInfo.token_type + " " + clientInfo.token
-			}
-
-			clientInfo.phrases = requests.get(phrase_uri, headers=phrase_header).json()
-
-			print clientInfo.phrases
-
-		except:
-			pass
-
-	pickle.dump(stData,open(picklefile,"wb"))
-
-def initAllModes():
-	global stData
-	all_users = stData.getAllUsers()
-
-	for user in all_users:
-		try:
-			currentClient = stData.getUser(user)
-			clientInfo = currentClient.getClientInfo()
-
-			mode_uri = clientInfo.api_location + clientInfo.url + "/mode"
-			print mode_uri
-		
-			mode_header = {
-				"Authorization": clientInfo.token_type + " " + clientInfo.token
-			}
-
-			#get list of modes
-			clientInfo.modes = requests.get(mode_uri, headers=mode_header).json()
-
-			print clientInfo.modes
-
-		except:
-			pass
-
-	pickle.dump(stData,open(picklefile,"wb"))
-
-
-
-
-
-
-
-
-
-
-
-###############################
-# CLASSSES AND DATASTRUCTUE 
-###############################
-
-class STUser(object):
-	def __init__(self,userId):
-		self.userId = userId
-		self.clientInfo = STClientInfo()
-		#Use this to build out a list of all available devices and device types
-		self.deviceList = None
-
-	def getClientInfo(self):
-		return self.clientInfo
-
-class STClientInfo(object):
-	def __init__(self):
-
-		self._access_token = None
-		self._expires_in = None
-		self._client_id = None
-		self._client_secret = None
-		self._api = settings.api
-		self._api_location = settings.api_location
-		self._token_type = None 
-		self._scope = None
-		self._url = None 
-		self._switches = {}
-		self._modes = {}
-
-	@property
-	def token(self):
-		return self._access_token
-
-	@token.setter
-	def token(self,value):
-		self._access_token = value
-
-	@property
-	def api(self):
-		return self._api
-
-	@api.setter
-	def api(self, value):
-		self._api = value
-
-	@property
-	def api_location(self):
-		return self._api_location
-
-	@property
-	def token_type(self):
-		return self._token_type
-
-	@property
-	def url(self):
-		return self._url
-
-	@url.setter
-	def url(self, value):
-		self._url = value
-
-	@property
-	def clientId(self):
-		return self._client_id
-	
-	@clientId.setter
-	def clientId(self, value):
-		print "SETTING CLIENT ID"
-		self._client_id = value
-
-	@property
-	def clientSecret(self):
-		return self._client_secret
-
-	@clientSecret.setter
-	def clientSecret(self, value):
-		self._client_secret = value
-
-	@property
-	def switches(self):
-		return self._switches
-
-	@switches.setter
-	def switches(self, value):
-		self._switches = value
-
-	@property
-	def modes(self):
-		return self._modes
-
-	@modes.setter
-	def modes(self, value):
-		self._modes = value 
-
-	@property
-	def phrases(self):
-		return self._phrases
-
-	@phrases.setter
-	def phrases(self, value):
-			self._phrases = value
-
-	def setFromOauth(self, oauthResponse):
-		self._access_token = oauthResponse['access_token']
-		self._token_type = oauthResponse['token_type']
-		self._scope = oauthResponse['scope']
-		self._expires_in = oauthResponse['expires_in']
-		print self._api
-		print self._client_id
-		self._api = self._api.replace('CLIENTID',str(self._client_id))
-
-
-
-
-
-class STDataStore(object):
-	def __init__(self):
-		self.stUsers = {}
-
-	def getAllUsers(self):
-		print self.stUsers
-		return self.stUsers
-
-	def addUser(self, userId, stUser):
-		if not self.isValidUser(userId):
-			self.stUsers[userId] = stUser
-
-	def getUser(self, userId):
-		if not self.isValidUser(userId):
-			self.addUser(userId,STUser(userId))
-
-		return self.stUsers[userId]
-
-	def isValidUser(self, userId):
-		if userId in self.stUsers:
+	global mongoST
+	if(mongoST.find_one({'st_amazonEchoID':userId})):
+		if(mongoST.find_one({'st_amazonEchoID':userId})['authenticated']):
 			return True
 		else:
 			return False
+	else:
+		return False
+
+
+def initAllSwitches():
+	global mongoST
+	all_users = [a['_id'] for a in mongoST.find({})]
+	print all_users
+
+	for user in all_users:
+		try:
+			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
+			switch_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/switch"
+			switch_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
+
+			st_switches = requests.get(switch_uri, headers=switch_header).json()
+			switches = []
+			for switch in st_switches:
+				switches.append(switch.replace(".","$$"))
+			clientInfo['st_switches'] = switches
+
+			if debug: print clientInfo['st_switches']
+
+			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+
+		except:
+			print "Error getting Switches"
+
+	
+
+
+def initAllPhrases():
+	global mongoST
+	all_users = [a['_id'] for a in mongoST.find({})]
+
+	for user in all_users:
+		try:
+			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
+			phrase_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/phrase"
+			phrase_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
+			clientInfo['phrases'] = requests.get(phrase_uri, headers=phrase_header).json()
+
+			if debug: print clientInfo['phrases']
+
+			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+
+		except:
+			print "Error getting Phrases"
+
+
+
+def initAllModes():
+	global mongoST
+	all_users = [a['_id'] for a in mongoST.find({})]
+
+	for user in all_users:
+		try:
+			clientInfo = mongoST.find_one({'st_amazonEchoID':user})
+			mode_uri = clientInfo['st_api_location'] + clientInfo['st_url'] + "/mode"
+			mode_header = {
+				"Authorization": clientInfo['st_token_type'] + " " + clientInfo['st_access_token']
+			}
+			clientInfo['modes'] = requests.get(mode_uri, headers=mode_header).json()
+
+			if debug: print clientInfo['modes']
+
+			mongoST.update({'st_amazonEchoID':user},clientInfo,True)
+
+		except:
+			print "Error getting Modes"
+
+
+
 
 
