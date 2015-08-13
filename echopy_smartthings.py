@@ -120,7 +120,7 @@ def intent_request(sessionId, userId, request):
 	if not st.isValidStUser(userId):
 		genNewAlexaId(userId,10)
 		alexaId = getAlexaIdFormUserID(userId)
-		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
+		output_speech = "This application has been updated and requires you to reconfigure your Smart Things tokens. Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
 		output_type = "PlainText"
 
 		card_type = "Simple"
