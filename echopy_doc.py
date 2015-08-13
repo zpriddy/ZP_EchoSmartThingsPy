@@ -57,7 +57,7 @@ html_footer='''
 <div class="navbar navbar-inverse navbar-fixed-bottom">
   <div class="container">
     <span class="navbar-text">
-      Something useful
+      <a href="''' + settings.full_root_url + 'privacy' + '''">Privacy Policy</a>
     </span>
   </div>
 </div>
@@ -294,7 +294,7 @@ samples_results_body='''
 	<p> Please copy and paste the results below into your Alexa SampleUtterances in the ASK portal. </p>
 	<div class="panel panel-primary">
 		<div class="panel-heading">Sample</div>
-		<div class="panel-body" style="max-height: 10;overflow-y: scroll;">RESULTS</div>
+		<div class="panel-body" style="max-height: 500px;overflow-y: scroll;">RESULTS</div>
 	</div>
 </div>
 '''
@@ -444,5 +444,6 @@ main_page = page_generator('Home',main_page_body)
 auth_page = page_generator('Auth',auth_page_body)
 samples_page = page_generator('Request Samples',samples_page_body)
 samples_results = page_generator('Sample Results',samples_results_body)
+privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
 
 NotNestUser = {"outputSpeech": {"type":"PlainText","text":"Current user is not a valid nest user. Please look for help"},"card":{"type":"Simple","title":"Nest Control Error","content":"Current user is not a valid nest user. Please look for help"},'shouldEndSession':True}
