@@ -99,7 +99,7 @@ html_header='''
 # PAGE GENERATOR 
 ###############################################################################
 def page_generator(pageName,pageBody):
-	generated_page= html_header + navbar_generator(pageName) + html_footer
+	generated_page= html_header + navbar_generator(pageName) + pageBody + html_footer
 
 	return generated_page
 
