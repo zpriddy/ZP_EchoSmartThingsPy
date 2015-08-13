@@ -317,9 +317,10 @@ This privacy policy has been compiled to better serve those who are concerned wi
 
 <p>We may use the information we collect from you when you register, sign up for our newsletter, surf the website, or use certain other site features in the following ways:</p>
 
-<pre><code>  & bull; To improve our website in order to better serve you.
-  & bull; To allow us to better service you in responding to your customer service requests.
-</code></pre>
+<p>
+&bull; To improve our website in order to better serve you.
+&bull; To allow us to better service you in responding to your customer service requests.
+</p>
 
 <p><strong><em>How do we protect visitor information?</em></strong></p>
 
@@ -412,12 +413,12 @@ We will notify the users via in site notification
  & bull; Send information, respond to inquiries, and/or other requests or questions.</p>
 
 <p>To be in accordance with CANSPAM we agree to the following:
- & bull; NOT use false, or misleading subjects or email addresses
- & bull; Identify the message as an advertisement in some reasonable way
- & bull; Include the physical address of our business or site headquarters
- & bull; Monitor third party email marketing services for compliance, if one is used.
- & bull; Honor opt-out/unsubscribe requests quickly
- & bull; Allow users to unsubscribe by using the link at the bottom of each email</p>
+ &bull; NOT use false, or misleading subjects or email addresses
+ &bull; Identify the message as an advertisement in some reasonable way
+ &bull; Include the physical address of our business or site headquarters
+ &bull; Monitor third party email marketing services for compliance, if one is used.
+ &bull; Honor opt-out/unsubscribe requests quickly
+ &bull; Allow users to unsubscribe by using the link at the bottom of each email</p>
 
 <p>If at any time you would like to unsubscribe from receiving future emails, you can email us at
  & bull; Follow the instructions at the bottom of each email.
