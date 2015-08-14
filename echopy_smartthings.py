@@ -4,7 +4,7 @@ import echopy_doc
 import smartthings_doc as st_doc
 import smartthings_lib as st
 import smartthings_settings as settings
-import date_check as dc
+import alexa_utils as utils
 import random
 import logger
 import string
@@ -58,7 +58,7 @@ def data_handler(rawdata):
 	timestamp = currentRequest['timestamp']
 
 
-	if dc.datecheck(timestamp,5):
+	if utils.datecheck(timestamp,5):
 		response = request_handler(sessionId, userId, currentRequest)
 	else:
 		response = AlexaInvalidDate()
@@ -269,61 +269,6 @@ def AlexaInvalidDate():
 	response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
 	return response
-
-class Session:
-	def __init__(self,sessionData):
-		self.sessionId = sessionData['sessionId']
-
-
-	def getSessionID(self):
-		return self.sessionId
-
-class User:
-	def __init__(self,userId):
-		self.userId = userId
-		self.settings = {}
-
-	def getUserId(self):
-		return self.userId
-
-class DataStore:
-	def __init__(self):
-		self.sessions = {}
-		self.users = {}
-		self.alexaIds = {}
-
-	def getSession(self,session):
-		if session['new'] is True or session['sessionId'] not in self.sessions:
-			self.sessions[session['sessionId']] = Session(session)
-
-		return self.sessions[session['sessionId']]
-
-	def getUser(self,session):
-		userId = session['user']['userId']
-		if userId not in self.users:
-			self.users[userId] = User(userId)
-			alexaId = alexaIdGenerator(100)
-			while alexaId in self.alexaIds.values():
-				alexaId = alexaIdGenerator(100)
-			self.alexaIds[userId] = alexaId
-
-
-		return self.users[userId]
-
-	def getAlexaUser(self,alexaId):
-
-		userId = [a for a, alexa in self.alexaIds.items() if alexa == alexaId][0]
-		return userId
-
-
-	def getAlexaId(self, userId):
-		return self.alexaIds[userId]
-
-	def genNewAlexaId(self,userId, size):
-		alexaId = alexaIdGenerator(size)
-		while alexaId in self.alexaIds.values():
-			alexaId = alexaIdGenerator(size)
-		self.alexaIds[userId] = alexaId
 
 
 

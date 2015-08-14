@@ -20,11 +20,9 @@
 
 import json
 import requests
-import pickle
 import smartthings_settings as settings
 import sampleUtterances_generator as sampleGen
 import logger
-import os.path
 import pymongo
 from pymongo import MongoClient
 
