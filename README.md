@@ -1,3 +1,8 @@
+# THIS IS IN DEVELOPMENT - I AM NOT PROVIDING SUPPORT AT THIS TIME
+# LIVE SERVICE RUNNING AT: https://alexa.zpriddy.com
+
+
+
 
 # EchoSmartThingsPy
 A python based API for integrating the Amazon Echo to SmartThings
