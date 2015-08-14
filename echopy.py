@@ -1,4 +1,26 @@
-import os
+#! /usr/bin/python
+#################################################
+#			EchoPy Alexa API					#
+#################################################
+# Zachary Priddy - 2015 						#
+# me@zpriddy.com 								#
+#												#
+# Features: 									#
+#									 			#
+#												#
+#################################################
+#################################################
+
+
+#################################################
+# TO DO:
+# Move smartthings_settings to app_settings
+# chage myApp to stApp and add nestApp
+
+###############################################################################
+# IMPORTS
+###############################################################################
+
 import echopy_app
 import echopy_doc
 import echopy_smartthings as myApp
@@ -22,6 +44,11 @@ app.config.update(
 	)
 mail=Mail(app)
 
+
+###############################################################################
+# BASE PAGES
+###############################################################################
+
 @app.route("/")
 def home():
 	return echopy_doc.main_page.format(settings.full_root_url)
@@ -31,9 +58,7 @@ def home():
 def main():
 	return echopy_doc.main_page.format(settings.full_root_url)
 
-@app.route("/nest/")
-def nest():
-	return echopy_doc.nest_page.format(settings.full_root_url)
+
 
 @app.route(settings.url_root + "/privacy")
 def privacy():
@@ -50,6 +75,10 @@ def email():
 	mail.send(msg)
 	return redirect(settings.url_root)
 
+
+###############################################################################
+# SMARTTHINGS PAGES
+###############################################################################
 
 @app.route(settings.url_root + "/EchoPyAPI",methods = ['POST'])
 def apicalls():
@@ -107,6 +136,14 @@ def samples():
 			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED").format(settings.full_root_url)
 
 
+###############################################################################
+# NEST PAGES
+###############################################################################
+
+@app.route("/nest/")
+def nest():
+	return echopy_doc.nest_page.format(settings.full_root_url)
+
 @app.route(settings.url_root + "/nest/auth",methods = ['GET','POST'])
 def nest_auth():
 	if request.method == 'GET':
@@ -119,6 +156,11 @@ def nest_auth():
 		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		#return redirect(auth_uri)
 		return "TO DO"
+
+
+###############################################################################
+# OTHER
+###############################################################################
 
 def sendWelcomeEmail(userId):
 	userEmail = myApp.getUserEmail(userId)
