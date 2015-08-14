@@ -175,6 +175,23 @@ auth_page_body='''
 </div>
 '''
 
+nest_auth_page_body='''
+<div class="container">
+	<form action="auth" method="post">
+		<div class="form-group required">
+			<label for="AlexaID">Alexa ID</label>
+			<input id="AlexaID" name="AlexaID" type="text" class="form-control" title="Alexa ID. This is a required field" required="required">
+		</div>
+		<div class="form-group required">
+		  <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
+		  <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field" required="required">
+		</div>
+		<input type="submit" value="Authorize" class="btn btn-default">
+	</form>
+</div>
+'''
+
+
 nest_page='''
 <!DOCTYPE html>
 <html lang="en">
@@ -448,5 +465,7 @@ auth_page = page_generator('Auth',auth_page_body)
 samples_page = page_generator('Request Samples',samples_page_body)
 samples_results = page_generator('Sample Results',samples_results_body)
 privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
+
+nest_auth_page = page_generator('Auth',nest_auth_page_body)
 
 NotNestUser = {"outputSpeech": {"type":"PlainText","text":"Current user is not a valid nest user. Please look for help"},"card":{"type":"Simple","title":"Nest Control Error","content":"Current user is not a valid nest user. Please look for help"},'shouldEndSession':True}

@@ -107,6 +107,18 @@ def samples():
 			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED").format(settings.full_root_url)
 
 
+@app.route(settings.url_root + "/nest/auth",methods = ['GET','POST'])
+def nest_auth():
+	if request.method == 'GET':
+		return echopy_doc.nest_auth_page
+
+	if request.method == 'POST':
+		alexaId=request.form['AlexaID'].replace(' ','')
+		clientEmail=request.form['Email'].replace(' ','')
+
+		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
+		#return redirect(auth_uri)
+		return "TO DO"
 
 def sendWelcomeEmail(userId):
 	userEmail = myApp.getUserEmail(userId)
