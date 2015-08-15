@@ -195,12 +195,26 @@ def intent_request(session, userId, request):
 
 		elif request['intent']['name'] ==  "NestWarmUpIntent":
 			setTemp = nest.setTurnUpTemperatureAll(userId)
-			output_speech = "Turning up the Nest to an average temperature of " + str(setTemp) + " degrees."
+			if setTemp is not False:
+				output_speech = "Turning up the Nest to an average temperature of " + str(setTemp) + " degrees."
+				output_type = "PlainText"
+
+				card_type = "Simple"
+				card_title = "Nest Control - Setting Nest Temp"
+				card_content = "Telling Nest to set to " + str(setTemp) + " degrees fahrenheit."
+
+				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+				return response
+
+
+		elif request['intent']['name'] ==  "NestSetAway":
+			setTemp = nest.setModeAll('away')
+			output_speech = "Setting Nest to away"
 			output_type = "PlainText"
 
 			card_type = "Simple"
-			card_title = "Nest Control - Setting Nest Temp"
-			card_content = "Telling Nest to set to " + str(setTemp) + " degrees fahrenheit."
+			card_title = "Nest Control - Setting Nest To Away"
+			card_content = "Setting Nest to away mode."
 
 			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 			return response

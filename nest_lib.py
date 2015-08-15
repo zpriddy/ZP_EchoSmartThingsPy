@@ -201,30 +201,26 @@ def setTurnUpTemperatureAll(userId):
 ###############################################################################
 # THIS IS WHERE I LEFT OFF
 ###############################################################################
-	
-'''
 
 def setModeAll(userId,mode):
-	print "SET Away"
-	global nestData
-	currentUser = nestData.getUser(userId)
-	structures = currentUser.getStructureIds()
-	token = currentUser.getToken()
-
+	global mongoNEST
+	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
+	access_token = clientInfo['nest_usertoken']
+	structures = dataToObject(clientInfo['structures']).getStructures()
 	command = {"away":mode}
 
 	commandSucessfull = True
 
 
 	for structure in structures:
-		command_uri = 'https://developer-api.nest.com/structures/' + structure + "?auth=" + token
+		command_uri = 'https://developer-api.nest.com/structures/' + structure + "?auth=" + access_token
 		response = requests.put(url=command_uri, data=command, json=command)
 		if response.status_code != 200:
 			commandSucessfull = False
 
 	return commandSucessfull
 	
-
+'''
 def getAvgTemp(userId):
 	global nestData
 	currentUser = nestData.getUser(userId)
@@ -282,6 +278,9 @@ class NestStructure:
 	def getStructureIds(self):
 		ids = [a['id'] for a in self._structures.values()]
 		return ids
+
+	def getStructures(self):
+		retunr self._structures
 
 class NestThermostats:
 	def __init__(self,rawData):

@@ -5,6 +5,10 @@
       "slots": []
     },
     {
+      "intent": "NestSetAway",
+      "slots": []
+    },
+    {
       "intent": "NestCoolDownIntent",
       "slots": []
     },
