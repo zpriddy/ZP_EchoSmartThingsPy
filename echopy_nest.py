@@ -168,6 +168,9 @@ def intent_request(session, userId, request):
 				nest.setTemperatureTargetAll(userId,int(nestTempValue))
 
 			return response
+
+		else:
+			return launch_request(session, user, request) ##Just do the same thing as launch request
 '''
 		elif request['intent']['name'] ==  "NestCoolDownIntent":
 			setTemp = nest.setTurnDownTemperatureAll(user.getUserId())
@@ -212,8 +215,7 @@ def intent_request(session, userId, request):
 
 			return response
 '''
-		else:
-			return launch_request(session, user, request) ##Just do the same thing as launch request
+		
 
 
 
