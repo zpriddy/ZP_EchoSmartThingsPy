@@ -183,9 +183,10 @@ nest_auth_page_body='''
 	<div class="alert alert-info" role="alert">
 		Currently we can only support 1000 Nest users. We currently have NESTCOUNT users.
 	</div>
-	<div class="alert alert-warning alert-dismissible" role="alert">
+	<div class="alert alert-error alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<strong>Warning!</strong> Better check yourself, you're not looking too good.
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees! </p> 
+		<button type="button" class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</button>
 	</div>
 	<form action="auth" method="post">
 		<div class="form-group required">
