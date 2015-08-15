@@ -77,7 +77,7 @@ def getStructures(userId):
 	global mongoNEST
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
-	access_token = clientInfo['access_token']
+	access_token = clientInfo['nest_usertoken']
 	structures_uri = "https://developer-api.nest.com/structures?auth=" + access_token
 
 	structures_raw = requests.get(structures_uri).json()
@@ -92,7 +92,7 @@ def getThermostats(userId):
 	global mongoNEST
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
-	access_token = clientInfo['access_token']
+	access_token = clientInfo['nest_usertoken']
 	thermostats_uri = "https://developer-api.nest.com/devices/thermostats?auth=" + access_token
 
 	thermostats_raw = requests.get(thermostats_uri).json()
@@ -110,7 +110,7 @@ def setTemperatureTargetAll(userId,temp):
 	global mongoNEST
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
-	access_token = clientInfo['access_token']
+	access_token = clientInfo['nest_usertoken']
 	thermostats = clientInfo['thermostats'].getThermostatIds()
 
 	command = {"target_temperature_f":int(temp)}
@@ -139,7 +139,7 @@ def setTurnDownTemperatureAll(userId):
 	global nestData
 	currentUser = nestData.getUser(userId)
 	thermostats = currentUser.getThermostats()
-	token = currentUser.getToken()
+	access_token = clientInfo['nest_usertoken']
 
 	commandSucessfull = True
 
@@ -150,7 +150,7 @@ def setTurnDownTemperatureAll(userId):
 		currentTemp = thermostats[device]['status']['target_temperature_f']
 		deviceId = thermostats[device]['id']
 		command = {"target_temperature_f":int(currentTemp)-2}
-		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + deviceId + "?auth=" + token
+		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + deviceId + "?auth=" + access_token
 		response = requests.put(url=command_uri, data=command, json=command)
 		if response.status_code != 200:
 			commandSucessfull = False
