@@ -116,6 +116,9 @@ def setTemperatureTargetAll(userId,temp):
 	global mongoNEST
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
+	if(int(temp) > 100):
+		return False
+
 	access_token = clientInfo['nest_usertoken']
 	thermostats = dataToObject(clientInfo['thermostats']).getThermostatIds()
 
