@@ -144,7 +144,7 @@ def samples():
 # NEST PAGES
 ###############################################################################
 
-@app.route("/nest")
+@app.route(settings.url_root + "/nest",methods = ['GET'])
 def nest_page():
 	return echopy_doc.nest_page.format(settings.full_root_url)
 
