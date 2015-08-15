@@ -146,7 +146,7 @@ def samples():
 
 @app.route(settings.url_root + "/nest",methods = ['GET'])
 def nest_page():
-	return echopy_doc.nest_page.format(settings.full_root_url)
+	return echopy_doc.nest_page(nestApp.get_nest_user_count()).format(settings.full_root_url)
 
 @app.route(settings.url_root + "/nest/EchoPyAPI",methods = ['POST'])
 def nest_apicalls():
