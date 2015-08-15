@@ -153,16 +153,23 @@ main_page_body='''
 </div>
 
 <div class="container">
-	<div class="panel panel-default">
+div class="panel panel-default">
 		<div class="panel-heading">
-		    <h3 class="panel-title">Setting up Alexa with your SmartThings</h3>
+			<h3 class="panel-title">Setting up Alexa with your SmartThings</h3>
 		</div>
 		<div class="panel-body">
-
-			To setup your Alexa to talk to SmartThings please go to my Github linked below and follow the README instructions. There are three other files that you will need in order to complete the process (Thats why I link to Github).
-
-			<a class="btn btn-warning" href="https://github.com/zpriddy/ZP-Echo-ST-Beta" role="button">Git Hub</a>
-		
+	    	<p>To setup Alexa to talk to your SmartThings, Please follow the instructions: <a class="btn btn-warning" href="{0}/smartthings/setup" role="button">SmartThings Setup Instructions</a></p>
+	    	<p>
+			Supported Functions:
+			<ul>
+			<li> HelloHome - Executes HelloHome Action. 'Alexa, tell Smart Things to say I'm Home'</li>
+			<li> Switches - 'Alexa, tell Smart Things to tuen off kitchen lights' </li>
+			<li> Set Mode - 'Alexa, tell Smart Things to chnage Mode to movie' </li>
+			</ul>
+	    </p>
+	    <p>
+	    	The code that is running on this site is avilable here on <a href="https://github.com/zpriddy/ZP_EchoSmartThingsPy"> GitHub </a> I am always working on adding more features and will make announcements of new featuers that are added! 
+	    </p>
 		</div>
 	</div>
 	<div class="panel panel-default">
@@ -269,10 +276,11 @@ st_setup_page_body='''
 		<ul class="list-group">
 			<li class="list-group-item">Ask your Alexa to talk to SmartThings by saying: 'Alexa, Talk to Smart Things' (If you didnt use Smart Things as your invocation name, you will have to replace Smart Things with the invocation name you used)</li>
 			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only.</li>
-			<li class="list-group-item">Go to the <a href="{0}/samples">SmartThings Samples Page</a></li>
-			<li class="list-group-item">Enter your Alexa ID</li>
-			<li class="list-group-item">Click on Get Samples</li>
-			<li class="list-group-item">Highlight and copy the text that is displayed in the blue box.</li>
+			<li class="list-group-item">Go to the <a href="{0}/auth">SmartThings Auth Page</a></li>
+			<li class="list-group-item">Enter your Alexa ID, OAuth Client ID, OAuth Client Secret (From previous step in the SmartThings IDE) and your Email Address</li>
+			<li class="list-group-item">Click on Authorize</li>
+			<li class="list-group-item">You will be asked to log in to your SmartThings account. Select the devices that you would like Alexa to be able to control.</li>
+			
 		</ul>
 	</div>
 
@@ -287,10 +295,10 @@ st_setup_page_body='''
 		<ul class="list-group">
 			<li class="list-group-item">Ask your Alexa for a new AlexaID by saying: 'Alexa, Tell Smart Things to give me a new alexa ID' (If you didnt use Smart Things as your invocation name, you will have to replace Smart Things with the invocation name you used)</li>
 			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only. This will be different than the last one you used.</li>
-			<li class="list-group-item">Go to the <a href="{0}/auth">Nest Auth Page</a></li>
-			<li class="list-group-item">Enter your Alexa ID, OAuth Client ID, OAuth Client Secret (From previous step in the SmartThings IDE) and your Email Address</li>
-			<li class="list-group-item">Click on Authorize</li>
-			<li class="list-group-item">You will be asked to log in to your SmartThings account. Select the devices that you would like Alexa to be able to control.</li>
+			<li class="list-group-item">Go to the <a href="{0}/samples">SmartThings Samples Page</a></li>
+			<li class="list-group-item">Enter your Alexa ID</li>
+			<li class="list-group-item">Click on Get Samples</li>
+			<li class="list-group-item">Highlight and copy the text that is displayed in the blue box.</li>
 			<li class="list-group-item">Go to the Amazon developer portal If you still have this open you can skip the next 6 steps. <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit"> Amazon Alexa Portal</a></li>
 			<li class="list-group-item">At the top of the page click on 'SIGN IN or CREATE FREE ACCOUNT'</li>
 			<li class="list-group-item">Login with youe Amazon ID</li>
