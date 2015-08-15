@@ -163,7 +163,7 @@ def nest_auth():
 		alexaId=request.form['AlexaID'].replace(' ','')
 		clientEmail=request.form['Email'].replace(' ','')
 
-		auth_uri = nestApp
+		auth_uri = nestApp.nestAuth(alexaId)
 		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		return redirect(auth_uri)
 		
