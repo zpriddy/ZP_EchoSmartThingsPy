@@ -177,6 +177,9 @@ auth_page_body='''
 
 nest_auth_page_body='''
 <div class="container">
+	<div class="alert alert-info" role="alert">
+		Currently we can only support 1000 Nest users. We currently have NESTCOUNT users.
+	</div>
 	<form action="auth" method="post">
 		<div class="form-group required">
 			<label for="AlexaID">Alexa ID</label>
@@ -466,6 +469,7 @@ samples_page = page_generator('Request Samples',samples_page_body)
 samples_results = page_generator('Sample Results',samples_results_body)
 privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
 
-nest_auth_page = page_generator('Auth',nest_auth_page_body)
+def nest_auth_page(count):
+	page_generator('Auth',nest_auth_page_body).replace('NESTCOUNT',str(count))
 
 NotNestUser = {"outputSpeech": {"type":"PlainText","text":"Current user is not a valid nest user. Please look for help"},"card":{"type":"Simple","title":"Nest Control Error","content":"Current user is not a valid nest user. Please look for help"},'shouldEndSession':True}
