@@ -232,6 +232,11 @@ def genNewAlexaId(userId,size):
 	mongoNEST.update({'nest_amazonEchoID':userId},currentUser,True)
 	return newAlexaId
 
+def getUserIdFromAlexaId(alexaId):
+	global mongoNEST
+	currentUser = mongoNEST.find_one({'alexaId':alexaId})
+	return currentUser['nest_amazonEchoID']
+
 ###############################################################################
 # TO BE DELETED
 ###############################################################################

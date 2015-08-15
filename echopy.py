@@ -168,12 +168,13 @@ def nest_auth():
 		return redirect(auth_uri)
 		
 @app.route(settings.url_root + "/nest/oauth2",methods = ['GET'])
-def nest_authcode(alexaId):
-	user = request.args.get('state')
+def nest_authcode():
+	alexaId = request.args.get('state')
 	code = request.args.get('code')
 
-	if nestApp.nestToken(user,code):
+	if nestApp.nestToken(alexaId,code):
 		print "authed.."
+		userId = nestApp.getUserIdFromAlexaId(alexaId)
 		nestApp.genNewAlexaId(userId,100)
 
 	return redirect(settings.url_root)
