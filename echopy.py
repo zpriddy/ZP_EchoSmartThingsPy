@@ -156,8 +156,8 @@ def nest_auth():
 
 		auth_uri = nestApp
 		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
-		#return redirect(auth_uri)
-		return "TO DO"
+		return redirect(auth_uri)
+		
 
 
 ###############################################################################
