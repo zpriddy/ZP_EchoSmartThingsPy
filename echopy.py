@@ -26,6 +26,7 @@ import echopy_doc
 import echopy_smartthings as myApp
 import echopy_nest as nestApp
 import smartthings_lib as st
+import nest_lib as nest
 import smartthings_settings as settings
 import logger
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
@@ -196,6 +197,7 @@ def run_echopy_app():
 
 if __name__ == "__main__":
 	st.smartThingsMongoDBInit()
+	nest.nestDBInit()
 	logger.init_logging()
 	myApp.data_init()
 	nestApp.data_init()
