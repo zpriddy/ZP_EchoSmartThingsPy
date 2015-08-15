@@ -123,6 +123,11 @@ def authcode(alexaId):
 
 	return redirect(settings.url_root)
 
+@app.route(settings.url_root + "/smartthings/static/<path:path>",methods = ['GET'])
+def st_static_files(path):
+	return send_from_directory('st_static', path)
+
+
 
 @app.route(settings.url_root + "/samples",methods = ['GET','POST'])
 def samples():
