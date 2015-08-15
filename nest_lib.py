@@ -137,7 +137,7 @@ def setTemperatureTargetAll(userId,temp):
 
 
 ###############################################################################
-# THIS IS WHERE I LEFT OFF
+# Turn down temp by 2 degress
 ###############################################################################
 
 def setTurnDownTemperatureAll(userId):
@@ -168,6 +168,10 @@ def setTurnDownTemperatureAll(userId):
 			return False
 
 	return sum(temps)/len(temps)
+
+###############################################################################
+# THIS IS WHERE I LEFT OFF
+###############################################################################
 
 '''
 def setTurnUpTemperatureAll(userId):

@@ -185,7 +185,7 @@ def intent_request(session, userId, request):
 
 				card_type = "Simple"
 				card_title = "Nest Control - Setting Nest Temp"
-				card_content = "Telling Nest to set to " + "str(setTemp+2)" + " degrees fahrenheit."
+				card_content = "Telling Nest to set to " + str(setTemp)  + " degrees fahrenheit."
 
 				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 

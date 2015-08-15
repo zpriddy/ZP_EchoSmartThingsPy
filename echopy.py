@@ -14,7 +14,7 @@
 
 #################################################
 # TO DO:
-# Move smartthings_settings to app_settings
+# Move smartthings_settings to echopy_settings
 # chage myApp to stApp and add nestApp
 
 ###############################################################################
