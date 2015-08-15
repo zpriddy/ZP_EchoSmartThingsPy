@@ -112,6 +112,9 @@ def page_generator(pageName,pageBody):
 
 main_page_body='''
 <div class="container">
+	<div class="alert alert-info" role="alert">
+		We currently have STCOUNT users.
+	</div>
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
@@ -463,12 +466,13 @@ alexa@zpriddy.com</p>
 # PAGES 
 ###############################################################################
 
-main_page = page_generator('Home',main_page_body)
+#main_page = page_generator('Home',main_page_body)
 auth_page = page_generator('Auth',auth_page_body)
 samples_page = page_generator('Request Samples',samples_page_body)
 samples_results = page_generator('Sample Results',samples_results_body)
 privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
-
+def main_page(count):
+	return page_generator('Home',main_page_body).replace('STCOUNT', str(count))
 def nest_auth_page(count):
 	return page_generator('Auth',nest_auth_page_body).replace('NESTCOUNT',str(count))
 

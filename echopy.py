@@ -53,12 +53,14 @@ mail=Mail(app)
 
 @app.route("/")
 def home():
-	return echopy_doc.main_page.format(settings.full_root_url)
+	count = myApp.get_st_user_count()
+	return echopy_doc.main_page(count).format(settings.full_root_url)
 
 
 @app.route(settings.url_root)
 def main():
-	return echopy_doc.main_page.format(settings.full_root_url)
+	count = myApp.get_st_user_count()
+	return echopy_doc.main_page(count).format(settings.full_root_url)
 
 
 

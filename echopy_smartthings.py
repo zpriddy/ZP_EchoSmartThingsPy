@@ -18,6 +18,11 @@ appVersion = 1.0
 debug = settings.debug
 
 
+def get_st_user_count():
+	global mongoST
+	return mongoST.find({}).count()
+
+
 def STAlexaAuth(alexaId, clientId, clientSecret,clientEmail):
 	global mongoST
 	clientInfo = mongoST.find_one({'alexaId':alexaId.upper()})
