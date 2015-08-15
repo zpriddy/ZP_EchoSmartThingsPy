@@ -206,7 +206,7 @@ def setModeAll(userId,mode):
 	global mongoNEST
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 	access_token = clientInfo['nest_usertoken']
-	structures = dataToObject(clientInfo['structures']).getStructures()
+	structures = dataToObject(clientInfo['structures']).getStructureIds()
 	command = {"away":mode}
 
 	commandSucessfull = True
