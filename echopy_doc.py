@@ -349,7 +349,7 @@ nest_setup_page_body='''
 		<ul class="list-group">
 			<li class="list-group-item">Ask your Alexa to talk to Nest by saying: 'Alexa, Talk to Nest' (If you didnt use Nest as your invocation name, you will have to replace Nest with the invocation name you used)</li>
 			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only.</li>
-			<li class="list-group-item">Go to the <a href="https://alexa.zpriddy.com/nest/auth">Nest Auth Page</a></li>
+			<li class="list-group-item">Go to the <a href="{0}/nest/auth">Nest Auth Page</a></li>
 			<li class="list-group-item">Enter your Alexa ID and your Email address</li>
 			<li class="list-group-item">Click on Authorize</li>
 			<li class="list-group-item">You will be asked to log in to your Nest account. Confirm that you are wanting to link the app to your Nest</li>
