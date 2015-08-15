@@ -433,7 +433,7 @@ samples_results = page_generator('Sample Results',samples_results_body)
 privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
 
 def nest_page(count):
-	return page_generator('Auth',nest_page_body).replace('NESTCOUNT',str(count))
+	return page_generator('Nest',nest_page_body).replace('NESTCOUNT',str(count))
 
 def main_page(count):
 	return page_generator('Home',main_page_body).replace('STCOUNT', str(count))
