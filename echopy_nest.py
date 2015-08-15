@@ -231,9 +231,6 @@ def intent_request(session, userId, request):
 			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 			return response
 
-		else:
-			return launch_request(session, userId, request) ##Just do the same thing as launch request
-'''
 
 		elif request['intent']['name'] ==  "HelpIntent":
 			output_speech = "This is the Nest control app. You can tell me to set temperature to 74 degrees fahrenheit. You can also say that you are too hot or too cold and I will adjust the temperature by two degrees."
@@ -247,8 +244,9 @@ def intent_request(session, userId, request):
 
 
 			return response
-'''
-		
+
+		else:
+			return launch_request(session, userId, request) ##Just do the same thing as launch request
 
 
 

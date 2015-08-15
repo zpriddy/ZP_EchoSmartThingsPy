@@ -148,6 +148,10 @@ def samples():
 def nest_page():
 	return echopy_doc.nest_page(nestApp.get_nest_user_count()).format(settings.full_root_url)
 
+@app.route(settings.url_root + "/nest/setup",methods = ['GET'])
+def nest_setup():
+	return echopy_doc.nest_setup_page(nestApp.get_nest_user_count()).format(settings.full_root_url)
+
 @app.route(settings.url_root + "/nest/EchoPyAPI",methods = ['POST'])
 def nest_apicalls():
 	if request.method == 'POST':
@@ -182,6 +186,8 @@ def nest_authcode():
 		nestApp.genNewAlexaId(userId,100)
 
 	return redirect(settings.url_root)
+
+
 
 @app.route(settings.url_root + "/nest/static/<path:path>",methods = ['GET'])
 def nest_static_files(path):
