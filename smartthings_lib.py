@@ -29,9 +29,8 @@ from pymongo import MongoClient
 from urllib import quote
 
 debug = settings.debug
-loadSettings = settings.smartthings_load_pickle
+
 initUserData = settings.init_user_data
-picklefile = 'smartthings_settings.pickle'
 
 
 
