@@ -115,43 +115,39 @@ main_page_body='''
 	<div class="alert alert-info" role="alert">
 		We currently have STCOUNT SmartThings users.
 	</div>
-	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
+		</div>
+
+
+
 			<div class="jumbotron">
 		    	<h2> Help Me Out!</h2>
 		  	
 		  	<p>
 		  	<p>Please consider helping me out so that I can keep supporting this and other Open Source projects! I run all of this out of my pocket and it doesnt all come free.. Please consider helping me out so that I can keep everything running!
 		  	</p>
-	    	<table>
-			<td>
-				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
-			</td>
-			<td>
-				&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-			</td>
-			<td>
-				<p>
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-					<input type="hidden" name="cmd" value="_donations">
-					<input type="hidden" name="business" value="paypal@zpriddy.com">
-					<input type="hidden" name="lc" value="US">
-					<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
-					<input type="hidden" name="no_note" value="0">
-					<input type="hidden" name="currency_code" value="USD">
-					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-					<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
-					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-					</form>
-				</p>
-			</td>
-		</table>
+	    	<div class="row">
+				<div class="col-xs-6 col-sm-4">
+					<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+				</div>
+				<div class="col-xs-6 col-sm-4">
+				</div>
+				<div class="col-xs-6 col-sm-4">
+						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+						<input type="hidden" name="cmd" value="_donations">
+						<input type="hidden" name="business" value="paypal@zpriddy.com">
+						<input type="hidden" name="lc" value="US">
+						<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
+						<input type="hidden" name="no_note" value="0">
+						<input type="hidden" name="currency_code" value="USD">
+						<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+						<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
+						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+						</form>
+				</div>
+			</div>
 
 		</div>
 		</div>
-	<div class="col-md-2"></div>
-</div>
 
 <div class="container">
 <div class="panel panel-default">
