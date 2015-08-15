@@ -121,6 +121,9 @@ main_page_body='''
 			<div class="jumbotron">
 		    	<h2> Help Me Out!</h2>
 		  	</div>
+		  	<p>
+		  	<p>Please consider helping me out so that I can keep supporting this and other Open Source projects! I run all of this out of my pocket and it doesnt all come free.. Please consider helping me out so that I can keep everything running!
+		  	</p>
 	    	<table>
 			<td>
 				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
