@@ -178,9 +178,9 @@ def intent_request(session, userId, request):
 
 		else:
 			return launch_request(session, user, request) ##Just do the same thing as launch request
-'''
+
 		elif request['intent']['name'] ==  "NestCoolDownIntent":
-			setTemp = nest.setTurnDownTemperatureAll(user.getUserId())
+			setTemp = nest.setTurnDownTemperatureAll(userId)
 			output_speech = "Turning down the Nest"
 			output_type = "PlainText"
 
@@ -193,7 +193,7 @@ def intent_request(session, userId, request):
 			
 
 			return response
-
+'''
 		elif request['intent']['name'] ==  "NestWarmUpIntent":
 			setTemp = nest.setTurnUpTemperatureAll(user.getUserId())
 			output_speech = "Turning up the Nest"

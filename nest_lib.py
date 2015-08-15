@@ -142,17 +142,19 @@ def setTemperatureTargetAll(userId,temp):
 
 def setTurnDownTemperatureAll(userId):
 	print "Turn Down Temp"
-	global nestData
-	currentUser = nestData.getUser(userId)
-	thermostats = currentUser.getThermostats()
+	global mongoNEST
+	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
+
 	access_token = clientInfo['nest_usertoken']
+	thermostats = dataToObject(clientInfo['thermostats']).getThermostats()
 
 	commandSucessfull = True
 
 	#setTemperatureTargetAll(userId, int(getAvgTargetTemp(userId))-2)
 	
-	getThermostats(userId)
+	#getThermostats(userId)
 	for device in thermostats:
+		print "Setting Temp for: " + device
 		currentTemp = thermostats[device]['status']['target_temperature_f']
 		deviceId = thermostats[device]['id']
 		command = {"target_temperature_f":int(currentTemp)-2}
@@ -279,6 +281,10 @@ class NestThermostats:
 	def getThermostatIds(self):
 		ids = [a['id'] for a in self._thermostats.values()]
 		return ids
+
+	def getThermostats(self):
+		return self._thermostats
+
 
 ###############################################################################
 # TO BE DELETED
