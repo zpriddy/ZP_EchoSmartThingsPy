@@ -191,7 +191,7 @@ def intent_request(session, userId, request):
 			return response
 
 		else:
-			return launch_request(session, user, request) ##Just do the same thing as launch request
+			return launch_request(session, userId, request) ##Just do the same thing as launch request
 '''
 		elif request['intent']['name'] ==  "NestWarmUpIntent":
 			setTemp = nest.setTurnUpTemperatureAll(user.getUserId())
