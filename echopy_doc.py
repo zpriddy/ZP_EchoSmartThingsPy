@@ -115,10 +115,6 @@ main_page_body='''
 	<div class="alert alert-info" role="alert">
 		We currently have STCOUNT SmartThings users.
 	</div>
-		</div>
-
-
-
 			<div class="jumbotron">
 		    	<h2> Help Me Out!</h2>
 		  	
@@ -148,7 +144,6 @@ main_page_body='''
 
 		</div>
 		</div>
-</div>
 
 <div class="container">
 <div class="panel panel-default">
