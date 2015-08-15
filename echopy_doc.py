@@ -508,9 +508,9 @@ nest_page_body='''
 	<div class="alert alert-info" role="alert">
 			We currently have NESTCOUNT Nest users.
 	</div>
-	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
+
+
+
 			<div class="jumbotron">
 		    	<h2> Help Me Out!</h2>
 		  	
@@ -539,9 +539,9 @@ nest_page_body='''
 			</div>
 
 		</div>
-		
-	<div class="col-md-2"></div>
-</div>
+		</div>
+
+
 
 <div class="container">
 	<div class="panel panel-default">
