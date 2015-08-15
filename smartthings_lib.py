@@ -35,6 +35,10 @@ picklefile = 'smartthings_settings.pickle'
 
 
 
+
+
+
+
 def smartThingsMongoDBInit():
 	global mongoST
 	mongoClient = MongoClient()

@@ -24,6 +24,7 @@
 import echopy_app
 import echopy_doc
 import echopy_smartthings as myApp
+import echopy_nest as nestApp
 import smartthings_lib as st
 import smartthings_settings as settings
 import logger
@@ -153,6 +154,7 @@ def nest_auth():
 		alexaId=request.form['AlexaID'].replace(' ','')
 		clientEmail=request.form['Email'].replace(' ','')
 
+		auth_uri = nestApp
 		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		#return redirect(auth_uri)
 		return "TO DO"

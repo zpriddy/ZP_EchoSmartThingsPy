@@ -45,7 +45,6 @@ def nestDBInit():
 ###############################################################################
 
 def nestAuth(alexaId):
-	global mongoNEST
 	auth_uri = settings.nest_auth_uri_1.replace('STATE',alexaId)
 	return auth_uri
 
@@ -97,24 +96,23 @@ def getThermostats(userId):
 	mongoNEST.update({'nest_amazonEchoID':userId},clientInfo,True)
 
 ###############################################################################
-# THIS IS WHERE I LEFT OFF
+# SET ALL THERMOSTATS
 ###############################################################################
 
 def setTemperatureTargetAll(userId,temp):
-	print "SET TEMP"
-	global nestData
-	currentUser = nestData.getUser(userId)
-	thermostats = currentUser.getThermostatIds()
-	token = currentUser.getToken()
+	global mongoNEST
+	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
+
+	access_token = clientInfo['access_token']
+	thermostats = clientInfo['thermostats'].getThermostatIds()
 
 	command = {"target_temperature_f":int(temp)}
 
 	commandSucessfull = True
 
-
 	for device in thermostats:
 		print "Device:" + device
-		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + device + "?auth=" + token
+		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + device + "?auth=" + access_token
 		print command_uri
 		response = requests.put(url=command_uri, data=command, json=command)
 		print response
@@ -123,6 +121,11 @@ def setTemperatureTargetAll(userId,temp):
 			commandSucessfull = False
 
 	return commandSucessfull
+
+
+###############################################################################
+# THIS IS WHERE I LEFT OFF
+###############################################################################
 
 def setTurnDownTemperatureAll(userId):
 	print "Turn Down Temp"
@@ -147,7 +150,7 @@ def setTurnDownTemperatureAll(userId):
 
 	return commandSucessfull
 
-
+'''
 def setTurnUpTemperatureAll(userId):
 	print "Turn Up Temp"
 	global nestData
@@ -216,11 +219,20 @@ def getAvgTargetTemp(userId):
 	avgTemp = sum(temps)/len(temps)
 
 	return avgTemp
+'''
+###############################################################################
+# CHECK IF USER IS VALID USER
+###############################################################################
 
-def isValidUser(userId):
-	global nestData
-
-	return nestData.isValidUser(userId)
+def isValidNestUser(userId):
+	global mongoNEST
+	if(mongoNEST.find_one({'nest_amazonEchoID':userId})):
+		if(mongoNEST.find_one({'nest_amazonEchoID':userId})['authenticated']):
+			return True
+		else:
+			return False
+	else:
+		return False
 
 ###############################################################################
 # CLASS STRUCTURES FOR DATA STORAGE

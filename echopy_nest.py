@@ -23,7 +23,7 @@
 import json
 import nestpy_app
 import echopy_doc
-import nestpy_lib as nest
+import nest_lib as nest
 import echopy_settings as settings
 import logger
 import alexa_utils as utils
@@ -33,6 +33,14 @@ from pymongo import MongoClient
 
 
 appVersion = 1.0
+
+
+
+def nestAuth(alexaId):
+	return nest.nestAuth(alexaId)
+
+def nestToken(alexaId,authCode):
+	return nest.nestToken(alexaId,authCode)
 
 ###############################################################################
 # DATABASE INIT
@@ -60,10 +68,10 @@ def data_handler(rawdata):
 	currentRequest = rawdata['request']
 
 	#Check for user in database
-	if len([a for a in mongoNEST.find({'st_amazonEchoID':userId})]) == 0:
+	if len([a for a in mongoNEST.find({'nest_amazonEchoID':userId})]) == 0:
 		print "Need to add user into database"
-		currentUser = {'_id':userId,'st_amazonEchoID':userId,'authenticated':False}
-		mongoNEST.update({'st_amazonEchoID':userId},currentUser,True)
+		currentUser = {'_id':userId,'nest_amazonEchoID':userId,'authenticated':False}
+		mongoNEST.update({'nest_amazonEchoID':userId},currentUser,True)
 
 
 	#Check Timestamp of Request
@@ -89,25 +97,26 @@ def data_handler(rawdata):
 # intent_handler is where all requests are processed
 ###############################################################################
 
-def request_handler(session, user, request):
+def request_handler(session, userId, request):
 	requestType = request['type']
 
 	if requestType == "LaunchRequest":
-		return launch_request(session, user, request)
+		return launch_request(session, userId, request)
 	elif requestType == "IntentRequest":
-		return intent_request(session, user, request)
+		return intent_request(session, userId, request)
 	else:
 		return utils.alexaDidNotUnderstand('Nest Control') 
 
 
-def launch_request(session, user, request):
-	if not nest.isValidUser(user.getUserId()):
+def launch_request(session, userId, request):
+	if not nest.isValidNestUser(userId):
+		alexaId = genNewAlexaId(userId,10)
 		output_speech = "Current user is not a valid nest user. Please look at the Echo app for help"
 		output_type = "PlainText"
 
 		card_type = "Simple"
 		card_title = "Nest Control - Setting Nest Temp"
-		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + user.getUserId() + " to Nest as instructed in the README"
+		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + alexaId + " to Nest as instructed in the README"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
@@ -125,16 +134,17 @@ def launch_request(session, user, request):
 
 		return response
 
-def intent_request(session, user, request):
+def intent_request(session, userId, request):
 	print "intent_request"
 
-	if not nest.isValidUser(user.getUserId()):
+	if not nest.isValidNestUser(userId):
+		alexaId = genNewAlexaId(userId,10)
 		output_speech = "Current user is not a valid nest user. Please look at the Echo app for help"
 		output_type = "PlainText"
 
 		card_type = "Simple"
 		card_title = "Nest Control - Setting Nest Temp"
-		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + user.getUserId() + " to Nest as instructed in the README"
+		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + alexaId + " to Nest as instructed in the README"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
@@ -155,10 +165,10 @@ def intent_request(session, user, request):
 			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
 			if int(nestTempValue) <= 90:
-				nest.setTemperatureTargetAll(user.getUserId(),int(nestTempValue))
+				nest.setTemperatureTargetAll(userId,int(nestTempValue))
 
 			return response
-
+'''
 		elif request['intent']['name'] ==  "NestCoolDownIntent":
 			setTemp = nest.setTurnDownTemperatureAll(user.getUserId())
 			output_speech = "Turning down the Nest"
@@ -201,11 +211,22 @@ def intent_request(session, user, request):
 
 
 			return response
-
+'''
 		else:
 			return launch_request(session, user, request) ##Just do the same thing as launch request
 
 
+
+
+def genNewAlexaId(userId,size):
+	global mongoNEST
+	currentUser = mongoNEST.find_one({'nest_amazonEchoID':userId})
+	newAlexaId = alexaIdGenerator(size)
+	while len([a for a in mongoNEST.find({'alexaId':newAlexaId})]) > 0:
+			newAlexaId = alexaIdGenerator(size)
+	currentUser['alexaId'] = newAlexaId
+	mongoNEST.update({'nest_amazonEchoID':userId},currentUser,True)
+	return newAlexaId
 
 ###############################################################################
 # TO BE DELETED
