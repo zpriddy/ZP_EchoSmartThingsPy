@@ -145,6 +145,14 @@ def samples():
 def nest():
 	return echopy_doc.nest_page.format(settings.full_root_url)
 
+@app.route(settings.url_root + "nest/EchoPyAPI",methods = ['POST'])
+def nest_apicalls():
+	if request.method == 'POST':
+		data = request.get_json()
+		print "POST"
+		sessionId = nestApp.data_handler(data)
+		return sessionId + "\n"
+
 @app.route(settings.url_root + "/nest/auth",methods = ['GET','POST'])
 def nest_auth():
 	if request.method == 'GET':
