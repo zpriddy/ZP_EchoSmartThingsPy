@@ -123,7 +123,7 @@ main_page_body='''
 		  	</div>
 	    	<p>Please consider helping me out so that I can keep supporting this and other Open Source projects! I run all of this out of my pocket and it doesnt all come free.. Please consider helping me out so that I can keep everything running!
 
-	    	<p><a class="btn btn-primary btn-lg" href="https://cash.me/$ZPriddy" role="button">Donate via Square Cash!</a></p>
+	    	<p><a class="btn btn-primary btn-lg" href="https://cash.me/$ZPriddy" role="button">Donate via Square Cash!</a>
 	    	
 	    		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 				<input type="hidden" name="cmd" value="_donations">
