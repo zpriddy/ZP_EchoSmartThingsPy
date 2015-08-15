@@ -210,7 +210,7 @@ nest_auth_page_body='''
 
 nest_page_body='''
 <div class="container">
-	div class="alert alert-info" role="alert">
+	<div class="alert alert-info" role="alert">
 			We currently have NESTCOUNT Nest users.
 	</div>
 	<div class="row">
