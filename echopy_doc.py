@@ -470,6 +470,6 @@ samples_results = page_generator('Sample Results',samples_results_body)
 privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
 
 def nest_auth_page(count):
-	page_generator('Auth',nest_auth_page_body).replace('NESTCOUNT',str(count))
+	return page_generator('Auth',nest_auth_page_body).replace('NESTCOUNT',str(count))
 
 NotNestUser = {"outputSpeech": {"type":"PlainText","text":"Current user is not a valid nest user. Please look for help"},"card":{"type":"Simple","title":"Nest Control Error","content":"Current user is not a valid nest user. Please look for help"},'shouldEndSession':True}
