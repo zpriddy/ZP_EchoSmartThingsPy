@@ -148,6 +148,7 @@ main_page_body='''
 
 		</div>
 		</div>
+</div>
 
 <div class="container">
 <div class="panel panel-default">
