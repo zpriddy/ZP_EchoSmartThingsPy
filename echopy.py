@@ -33,7 +33,7 @@ from flask import Flask, render_template, Response, send_from_directory, request
 from flask_mail import Mail, Message
 
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='')
 mail=Mail(app)
 
 app.config.update(
@@ -182,6 +182,10 @@ def nest_authcode():
 		nestApp.genNewAlexaId(userId,100)
 
 	return redirect(settings.url_root)
+
+@app.route(settings.url_root + "/nest/static/<path:path>",methods = ['GET'])
+def nest_static_files(path):
+	return send_from_directory('nest_static', path)
 
 
 ###############################################################################

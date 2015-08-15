@@ -182,7 +182,7 @@ auth_page_body='''
 <div class="container">
 	<div class="alert alert-danger alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees! </p> 
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees or on PayPal</p> 
 		<table>
 			<td>
 				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
@@ -236,6 +236,7 @@ nest_auth_page_body='''
 	</div>
 	<div class="alert alert-danger alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees or on PayPal</p> 
 		<table>
 			<td>
 				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>

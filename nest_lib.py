@@ -168,7 +168,7 @@ def setTurnDownTemperatureAll(userId):
 	return sum(temps)/len(temps)
 
 ###############################################################################
-# THIS IS WHERE I LEFT OFF
+# NEST TEMP UP
 ###############################################################################
 
 
@@ -197,6 +197,10 @@ def setTurnUpTemperatureAll(userId):
 			return False
 
 	return sum(temps)/len(temps)
+
+###############################################################################
+# THIS IS WHERE I LEFT OFF
+###############################################################################
 	
 '''
 
