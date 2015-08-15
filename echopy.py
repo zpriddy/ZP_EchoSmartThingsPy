@@ -167,7 +167,7 @@ def nest_auth():
 		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		return redirect(auth_uri)
 		
-@app.route(settings.url_root + "nest/oauth2",methods = ['GET'])
+@app.route(settings.url_root + "/nest/oauth2",methods = ['GET'])
 def nest_authcode(alexaId):
 	user = request.args.get('state')
 	code = request.args.get('code')
