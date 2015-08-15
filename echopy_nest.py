@@ -122,8 +122,8 @@ def launch_request(session, userId, request):
 		output_type = "PlainText"
 
 		card_type = "Simple"
-		card_title = "Nest Control - Setting Nest Temp"
-		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + alexaId + " to Nest as instructed in the README"
+		card_title = "Nest Control - Setup"
+		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + alexaId + " to Nest as instructed on the website"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
@@ -150,8 +150,8 @@ def intent_request(session, userId, request):
 		output_type = "PlainText"
 
 		card_type = "Simple"
-		card_title = "Nest Control - Setting Nest Temp"
-		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + alexaId + " to Nest as instructed in the README"
+		card_title = "Nest Control - Setup"
+		card_content = "Current user is not a valid nest user. Please authenticate user with userId: " + alexaId + " to Nest as instructed on the website"
 
 		response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
