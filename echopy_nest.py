@@ -25,6 +25,7 @@ import echopy_doc
 import nest_lib as nest
 import echopy_settings as settings
 import logger
+import random
 import alexa_utils as utils
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
 import pymongo
