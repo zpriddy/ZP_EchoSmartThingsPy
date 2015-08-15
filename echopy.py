@@ -157,7 +157,7 @@ def nest_apicalls():
 @app.route(settings.url_root + "/nest/auth",methods = ['GET','POST'])
 def nest_auth():
 	if request.method == 'GET':
-		return echopy_doc.nest_auth_page(nestApp.get_nest_user_count)
+		return echopy_doc.nest_auth_page(nestApp.get_nest_user_count())
 
 	if request.method == 'POST':
 		alexaId=request.form['AlexaID'].replace(' ','')
