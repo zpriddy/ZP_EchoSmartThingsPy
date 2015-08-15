@@ -38,8 +38,8 @@ debug = settings.debug
 
 
 
-def nestAuth(alexaId):
-	return nest.nestAuth(alexaId)
+def nestAuth(alexaId, clientEmail):
+	return nest.nestAuth(alexaId, clientEmail)
 
 def nestToken(alexaId,authCode):
 	return nest.nestToken(alexaId,authCode)
@@ -48,6 +48,10 @@ def get_nest_user_count():
 	global mongoNEST
 	return mongoNEST.find({}).count()
 
+def getUserEmail(userId):
+	global mongoNEST
+	currentUser = mongoNEST.find_one({'_id':userId})
+	return currentUser['nest_clientEmail']
 
 ###############################################################################
 # DATABASE INIT
@@ -72,6 +76,7 @@ def data_handler(rawdata):
 	#currentUser = MyDataStore.getUser(rawdata['session'])
 	sessionId = rawdata['session']['sessionId']
 	userId = rawdata['session']['user']['userId']
+	print userId
 	currentRequest = rawdata['request']
 
 	#Check for user in database

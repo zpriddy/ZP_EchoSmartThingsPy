@@ -169,7 +169,7 @@ def nest_auth():
 		alexaId=request.form['AlexaID'].replace(' ','')
 		clientEmail=request.form['Email'].replace(' ','')
 
-		auth_uri = nestApp.nestAuth(alexaId)
+		auth_uri = nestApp.nestAuth(alexaId, clientEmail)
 		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
 		return redirect(auth_uri)
 		
@@ -185,7 +185,7 @@ def nest_authcode():
 		userId = nestApp.getUserIdFromAlexaId(alexaId)
 		nestApp.genNewAlexaId(userId,100)
 
-	sendNestWelcomeEmail(userId)
+		sendNestWelcomeEmail(userId)
 	return redirect(settings.url_root + '/nest')
 
 
@@ -194,8 +194,11 @@ def nest_authcode():
 def nest_static_files(path):
 	return send_from_directory('nest_static', path)
 
+
+
+
 def sendNestWelcomeEmail(userId):
-	userEmail = myApp.getUserEmail(userId)
+	userEmail = nestApp.getUserEmail(userId)
 	msg = Message(
 			  'ZPriddy - Alexa Support',
 		   sender='alexa@zpriddy.com',
