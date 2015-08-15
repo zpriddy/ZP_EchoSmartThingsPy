@@ -46,7 +46,7 @@ def nestToken(alexaId,authCode):
 
 def get_nest_user_count():
 	global mongoNEST
-	mongoNEST.find({}).count
+	mongoNEST.find({}).count()
 
 ###############################################################################
 # DATABASE INIT
