@@ -4,7 +4,7 @@ import smartthings_settings as settings
 
 
 navbar_titles=['Home','SmartThings','Nest']
-navbar_links=[settings.full_root_url, settings.full_root_url,settings.full_root_url + '/nest']
+navbar_links=[settings.full_root_url, settings.full_root_url + '/smartthings' ,settings.full_root_url + '/nest']
 
 
 ###############################################################################
@@ -153,16 +153,23 @@ main_page_body='''
 </div>
 
 <div class="container">
-	<div class="panel panel-default">
+<div class="panel panel-default">
 		<div class="panel-heading">
-		    <h3 class="panel-title">Setting up Alexa with your SmartThings</h3>
+			<h3 class="panel-title">Setting up Alexa with your SmartThings</h3>
 		</div>
 		<div class="panel-body">
-
-			To setup your Alexa to talk to SmartThings please go to my Github linked below and follow the README instructions. There are three other files that you will need in order to complete the process (Thats why I link to Github).
-
-			<a class="btn btn-warning" href="https://github.com/zpriddy/ZP-Echo-ST-Beta" role="button">Git Hub</a>
-		
+	    	<p>To setup Alexa to talk to your SmartThings, Please follow the instructions: <a class="btn btn-warning" href="{0}/smartthings/setup" role="button">SmartThings Setup Instructions</a></p>
+	    	<p>
+			Supported Functions:
+			<ul>
+			<li> HelloHome - Executes HelloHome Action. 'Alexa, tell Smart Things to say I'm Home'</li>
+			<li> Switches - 'Alexa, tell Smart Things to tuen off kitchen lights' </li>
+			<li> Set Mode - 'Alexa, tell Smart Things to chnage Mode to movie' </li>
+			</ul>
+	    </p>
+	    <p>
+	    	The code that is running on this site is avilable here on <a href="https://github.com/zpriddy/ZP_EchoSmartThingsPy"> GitHub </a> I am always working on adding more features and will make announcements of new featuers that are added! 
+	    </p>
 		</div>
 	</div>
 	<div class="panel panel-default">
@@ -175,6 +182,140 @@ main_page_body='''
 			<a class="btn btn-info" href="{0}/samples" role="button">SmartThings Alexa Smaples</a>
 		</div>
 	</div>
+</div>
+'''
+
+st_setup_page_body='''
+<div class="container">
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees or on PayPal</p> 
+		<table>
+			<td>
+				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+			</td>
+			<td>
+				&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+			</td>
+			<td>
+				<p>
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_donations">
+					<input type="hidden" name="business" value="paypal@zpriddy.com">
+					<input type="hidden" name="lc" value="US">
+					<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
+					<input type="hidden" name="no_note" value="0">
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+					<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+					</form>
+				</p>
+			</td>
+		</table>
+	</div>
+
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Step 1: Amazon Echo Setup</div>
+		<div class="panel-body">
+	    <p>At this point in time you will need to create an Amazon developer account with the same Amazon account that is used for your Amazon Echo. Follow the steps below to do so.</p>
+		</div>
+
+		<!-- List group -->
+		<ul class="list-group">
+			<li class="list-group-item">Go to the Amazon developer portal: <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit"> Amazon Alexa Portal</a></li>
+			<li class="list-group-item">At the top of the page click on 'SIGN IN or CREATE FREE ACCOUNT'</li>
+			<li class="list-group-item">Login with youe Amazon ID</li>
+			<li class="list-group-item">Go to Apps & Services at the top of the page</li>
+			<li class="list-group-item">Click on Alexa</li>
+			<li class="list-group-item">Click on Alexa Skills Kit</li>
+			<li class="list-group-item">Click Add New Skill</li>
+			<li class="list-group-item">Fill out the first form:<br>-Name: Anything you want it to be - I use Smart Things Control<br>-Invocation Name: The hotword to call the app - I have gotten it working with Smart Things<br>-Version: 1.0 <- This is hard-coded for now<br>-Endpoint: https://alexa.zpriddy.com/alexa/EchoPyAPI</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">Copy the content of <a href="{0}/smartthings/static/intentSchema.json">this page</a> into the Intent Schema</li>
+			<li class="list-group-item">Copy the content of <a href="{0}/smartthings/static/sampleUtterances.txt">this page</a> into the Sample Utterances</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">Click on 'My development endpoint has a certificate from a trusted certificate authority (required for certification)'</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">Make sure that the skill is enabled</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">DO NOT Submit for Certification. Don't close this windo, you will need it again at the end.</li>
+		</ul>
+	</div>
+
+
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Step 2: SmartThings Setup</div>
+		<div class="panel-body">
+	    <p>To get PyDash to talk to your SmartThings devices, you need to create a SmartApp that will serve as an API. </p>
+		</div>
+
+		<!-- List group -->
+		<ul class="list-group">
+			<li class="list-group-item">Go to <a href="https://graph.api.smartthings.com"> SmartThings IDE </a> and log in to your SmartThings IDE account.</li>
+			<li class="list-group-item">Click on 'MySmartApps' tab</li>
+			<li class="list-group-item">Click on '+NewSmartApp' button</li>
+			<li class="list-group-item">Fill in the required information. The 'Name'and 'Description' are both required fields, but their values are not important.</li>
+			<li class="list-group-item">Click the 'Enable OAuth in Smart App' button to grant REST API access to the new SmartApp. Note the 'OAuth Client ID' and 'OAuth Client Secret'. Both will later be required by the Alexa backend to authenticate with the new SmartApp and talk to SmartThings.</li>
+			<li class="list-group-item">Click the 'Create' button to get to the code editor. </li>
+			<li class="list-group-item">Copy the content of <a href="{0}/smartthings/static/alexaAccess.txt">this page</a> into the SmartApp</li>
+			<li class="list-group-item">Click the 'Save' button and then 'Publish -> For Me'.</li>
+		</ul>
+	</div>
+
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Step 3: Link your SmartThings to Alexa</div>
+		<div class="panel-body">
+	    <p>Follow the steps below to connect your Smart Things accoutn to your Amazon Echo</p>
+		</div>
+
+		<!-- List group -->
+		<ul class="list-group">
+			<li class="list-group-item">Ask your Alexa to talk to SmartThings by saying: 'Alexa, Talk to Smart Things' (If you didnt use Smart Things as your invocation name, you will have to replace Smart Things with the invocation name you used)</li>
+			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only.</li>
+			<li class="list-group-item">Go to the <a href="{0}/auth">SmartThings Auth Page</a></li>
+			<li class="list-group-item">Enter your Alexa ID, OAuth Client ID, OAuth Client Secret (From previous step in the SmartThings IDE) and your Email Address</li>
+			<li class="list-group-item">Click on Authorize</li>
+			<li class="list-group-item">You will be asked to log in to your SmartThings account. Select the devices that you would like Alexa to be able to control.</li>
+			
+		</ul>
+	</div>
+
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Step 4: Customized Sample Utterances</div>
+		<div class="panel-body">
+	    <p>Follow the steps below to get your customized sample utterances</p>
+		</div>
+
+		<!-- List group -->
+		<ul class="list-group">
+			<li class="list-group-item">Ask your Alexa for a new AlexaID by saying: 'Alexa, Tell Smart Things to give me a new alexa ID' (If you didnt use Smart Things as your invocation name, you will have to replace Smart Things with the invocation name you used)</li>
+			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only. This will be different than the last one you used.</li>
+			<li class="list-group-item">Go to the <a href="{0}/samples">SmartThings Samples Page</a></li>
+			<li class="list-group-item">Enter your Alexa ID</li>
+			<li class="list-group-item">Click on Get Samples</li>
+			<li class="list-group-item">Highlight and copy the text that is displayed in the blue box.</li>
+			<li class="list-group-item">Go to the Amazon developer portal If you still have this open you can skip the next 6 steps. <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit"> Amazon Alexa Portal</a></li>
+			<li class="list-group-item">At the top of the page click on 'SIGN IN or CREATE FREE ACCOUNT'</li>
+			<li class="list-group-item">Login with youe Amazon ID</li>
+			<li class="list-group-item">Go to Apps & Services at the top of the page</li>
+			<li class="list-group-item">Click on Alexa</li>
+			<li class="list-group-item">Click on Alexa Skills Kit</li>
+			<li class="list-group-item">Click edit on the skill that you already created</li>
+			<li class="list-group-item">Click on Interaction Modle on the left</li>
+			<li class="list-group-item">Paste the output of the samples page into the Sample Utterances</li>
+			<li class="list-group-item">Done</li>
+
+		</ul>
+	</div>
+
+
+
+
 </div>
 '''
 
@@ -614,6 +755,7 @@ auth_page = page_generator('Auth',auth_page_body)
 samples_page = page_generator('Request Samples',samples_page_body)
 samples_results = page_generator('Sample Results',samples_results_body)
 privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
+st_setup_page = page_generator('SmartThings Setup',st_setup_page_body)
 
 def nest_setup_page(count):
 	return page_generator('Nest Setup',nest_setup_page_body).replace('NESTCOUNT',str(count))
@@ -623,6 +765,10 @@ def nest_page(count):
 
 def main_page(count):
 	return page_generator('Home',main_page_body).replace('STCOUNT', str(count))
+
+def st_main_page(count):
+	return page_generator('SmartThings',main_page_body).replace('STCOUNT', str(count))
+
 def nest_auth_page(count):
 	return page_generator('Auth',nest_auth_page_body).replace('NESTCOUNT',str(count))
 
