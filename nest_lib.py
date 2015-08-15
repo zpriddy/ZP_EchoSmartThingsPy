@@ -23,6 +23,9 @@
 import json
 import requests
 
+from bson.binary import Binary
+import pickle 
+
 
 import pymongo
 from pymongo import MongoClient
@@ -81,7 +84,7 @@ def getStructures(userId):
 	structures_uri = "https://developer-api.nest.com/structures?auth=" + access_token
 
 	structures_raw = requests.get(structures_uri).json()
-	clientInfo['structures'] = NestStructure(structures_raw)
+	clientInfo['structures'] = Binary(pickle.dump(NestStructure(structures_raw)))
 
 	print clientInfo['structures']
 
@@ -96,7 +99,7 @@ def getThermostats(userId):
 	thermostats_uri = "https://developer-api.nest.com/devices/thermostats?auth=" + access_token
 
 	thermostats_raw = requests.get(thermostats_uri).json()
-	clientInfo['thermostats'] = NestThermostats(thermostats_raw)
+	clientInfo['thermostats'] = Binary(pickle.dump(NestThermostats(thermostats_raw)))
 
 	print clientInfo['thermostats']
 
