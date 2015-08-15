@@ -269,7 +269,7 @@ st_setup_page_body='''
 		<!-- Default panel contents -->
 		<div class="panel-heading">Step 3: Link your SmartThings to Alexa</div>
 		<div class="panel-body">
-	    <p>Follow the steps below to connect your nest thermostat to your Amazon Echo</p>
+	    <p>Follow the steps below to connect your Smart Things accoutn to your Amazon Echo</p>
 		</div>
 
 		<!-- List group -->
