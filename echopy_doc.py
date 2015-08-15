@@ -120,7 +120,7 @@ main_page_body='''
 		<div class="col-md-8">
 			<div class="jumbotron">
 		    	<h2> Help Me Out!</h2>
-		  	</div>
+		  	
 		  	<p>
 		  	<p>Please consider helping me out so that I can keep supporting this and other Open Source projects! I run all of this out of my pocket and it doesnt all come free.. Please consider helping me out so that I can keep everything running!
 		  	</p>
@@ -148,6 +148,7 @@ main_page_body='''
 			</td>
 		</table>
 
+		</div>
 		</div>
 	<div class="col-md-2"></div>
 </div>
