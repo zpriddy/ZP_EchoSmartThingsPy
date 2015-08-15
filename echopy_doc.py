@@ -156,6 +156,11 @@ main_page_body='''
 
 auth_page_body='''
 <div class="container">
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees! </p> 
+		<button type="button" class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</button>
+	</div>
 	<form action="auth" method="post">
 		<div class="form-group required">
 			<label for="AlexaID">Alexa ID</label>
