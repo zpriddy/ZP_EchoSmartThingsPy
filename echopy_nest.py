@@ -21,7 +21,6 @@
 ###############################################################################
 
 import json
-import nestpy_app
 import echopy_doc
 import nest_lib as nest
 import echopy_settings as settings
