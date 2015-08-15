@@ -1,0 +1,33 @@
+{
+  "intents": [
+    {
+      "intent": "HelpIntent",
+      "slots": []
+    },
+    {
+      "intent": "NestSetAway",
+      "slots": []
+    },
+    {
+      "intent": "NestSetHome",
+      "slots": []
+    },
+    {
+      "intent": "NestCoolDownIntent",
+      "slots": []
+    },
+    {
+      "intent": "NestWarmUpIntent",
+      "slots": []
+    },
+    {
+      "intent": "NestSetTempIntent",
+      "slots": [
+        {
+          "name": "temp",
+          "type": "NUMBER"
+        }
+      ]
+    }
+  ]
+}
