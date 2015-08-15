@@ -131,6 +131,11 @@ def st_static_files(path):
 def st_setup():
 	return echopy_doc.st_setup_page.format(settings.full_root_url)
 
+@app.route(settings.url_root + "/smartthings",methods = ['GET'])
+def st_main():
+	count = myApp.get_st_user_count()
+	return echopy_doc.st_main_page(count).format(settings.full_root_url)
+
 @app.route(settings.url_root + "/samples",methods = ['GET','POST'])
 def samples():
 	if request.method == 'GET':

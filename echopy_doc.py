@@ -765,6 +765,10 @@ def nest_page(count):
 
 def main_page(count):
 	return page_generator('Home',main_page_body).replace('STCOUNT', str(count))
+
+def st_main_page(count):
+	return page_generator('SmartThings',main_page_body).replace('STCOUNT', str(count))
+
 def nest_auth_page(count):
 	return page_generator('Auth',nest_auth_page_body).replace('NESTCOUNT',str(count))
 
