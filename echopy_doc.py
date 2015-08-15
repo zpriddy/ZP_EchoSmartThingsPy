@@ -233,7 +233,7 @@ st_setup_page_body='''
 			<li class="list-group-item">Click on Next</li>
 			<li class="list-group-item">Make sure that the skill is enabled</li>
 			<li class="list-group-item">Click on Next</li>
-			<li class="list-group-item">At this point you can close the amazon developer portal. DO NOT Submit for Certification</li>
+			<li class="list-group-item">DO NOT Submit for Certification. Don't close this windo, you will need it again at the end.</li>
 		</ul>
 	</div>
 
@@ -253,7 +253,7 @@ st_setup_page_body='''
 			<li class="list-group-item">Fill in the required information. The 'Name'and 'Description' are both required fields, but their values are not important.</li>
 			<li class="list-group-item">Click the 'Enable OAuth in Smart App' button to grant REST API access to the new SmartApp. Note the 'OAuth Client ID' and 'OAuth Client Secret'. Both will later be required by the Alexa backend to authenticate with the new SmartApp and talk to SmartThings.</li>
 			<li class="list-group-item">Click the 'Create' button to get to the code editor. </li>
-			<li class="list-group-item">Copy the content of <a href="{0}/smartthings/static/alexaAccess.groovy">this page</a> into the SmartApp</li>
+			<li class="list-group-item">Copy the content of <a href="{0}/smartthings/static/alexaAccess.txt">this page</a> into the SmartApp</li>
 			<li class="list-group-item">Click the 'Save' button and then 'Publish -> For Me'.</li>
 		</ul>
 	</div>
@@ -267,15 +267,45 @@ st_setup_page_body='''
 
 		<!-- List group -->
 		<ul class="list-group">
-			<li class="list-group-item">Ask your Alexa to talk to Nest by saying: 'Alexa, Talk to Nest' (If you didnt use Nest as your invocation name, you will have to replace Nest with the invocation name you used)</li>
+			<li class="list-group-item">Ask your Alexa to talk to SmartThings by saying: 'Alexa, Talk to Smart Things' (If you didnt use Smart Things as your invocation name, you will have to replace Smart Things with the invocation name you used)</li>
 			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only.</li>
-			<li class="list-group-item">Go to the <a href="{0}/nest/auth">Nest Auth Page</a></li>
+			<li class="list-group-item">Go to the <a href="{0}/samples">SmartThings Samples Page</a></li>
+			<li class="list-group-item">Enter your Alexa ID</li>
+			<li class="list-group-item">Click on Get Samples</li>
+			<li class="list-group-item">Highlight and copy the text that is displayed in the blue box.</li>
+		</ul>
+	</div>
+
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Step 4: Customized Sample Utterances</div>
+		<div class="panel-body">
+	    <p>Follow the steps below to get your customized sample utterances</p>
+		</div>
+
+		<!-- List group -->
+		<ul class="list-group">
+			<li class="list-group-item">Ask your Alexa for a new AlexaID by saying: 'Alexa, Tell Smart Things to give me a new alexa ID' (If you didnt use Smart Things as your invocation name, you will have to replace Smart Things with the invocation name you used)</li>
+			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only. This will be different than the last one you used.</li>
+			<li class="list-group-item">Go to the <a href="{0}/auth">Nest Auth Page</a></li>
 			<li class="list-group-item">Enter your Alexa ID, OAuth Client ID, OAuth Client Secret (From previous step in the SmartThings IDE) and your Email Address</li>
 			<li class="list-group-item">Click on Authorize</li>
 			<li class="list-group-item">You will be asked to log in to your SmartThings account. Select the devices that you would like Alexa to be able to control.</li>
-			<li class="list-group-item">Done!</li>
+			<li class="list-group-item">Go to the Amazon developer portal If you still have this open you can skip the next 6 steps. <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit"> Amazon Alexa Portal</a></li>
+			<li class="list-group-item">At the top of the page click on 'SIGN IN or CREATE FREE ACCOUNT'</li>
+			<li class="list-group-item">Login with youe Amazon ID</li>
+			<li class="list-group-item">Go to Apps & Services at the top of the page</li>
+			<li class="list-group-item">Click on Alexa</li>
+			<li class="list-group-item">Click on Alexa Skills Kit</li>
+			<li class="list-group-item">Click edit on the skill that you already created</li>
+			<li class="list-group-item">Click on Interaction Modle on the left</li>
+			<li class="list-group-item">Paste the output of the samples page into the Sample Utterances</li>
+			<li class="list-group-item">Done</li>
+
 		</ul>
 	</div>
+
+
 
 
 </div>
