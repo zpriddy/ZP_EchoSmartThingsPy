@@ -153,7 +153,7 @@ main_page_body='''
 </div>
 
 <div class="container">
-div class="panel panel-default">
+<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Setting up Alexa with your SmartThings</h3>
 		</div>
