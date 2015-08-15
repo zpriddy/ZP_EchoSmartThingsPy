@@ -214,7 +214,9 @@ def setModeAll(userId,mode):
 
 	for structure in structures:
 		command_uri = 'https://developer-api.nest.com/structures/' + structure + "?auth=" + access_token
+		print command_uri
 		response = requests.put(url=command_uri, data=command, json=command)
+		print response
 		if response.status_code != 200:
 			commandSucessfull = False
 
