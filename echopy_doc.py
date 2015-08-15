@@ -172,7 +172,11 @@ auth_page_body='''
 	<div class="alert alert-danger alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees! </p> 
+		<table>
+		<td>
 		<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+		</td>
+		<td>
 		<p>
     		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 			<input type="hidden" name="cmd" value="_donations">
@@ -184,7 +188,9 @@ auth_page_body='''
 			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 			</form>
-		</p>
+		</p
+		</td>
+		</table>
 	</div>
 	<form action="auth" method="post">
 		<div class="form-group required">
