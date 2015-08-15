@@ -4,7 +4,7 @@ import smartthings_settings as settings
 
 
 navbar_titles=['Home','SmartThings','Nest']
-navbar_links=[settings.full_root_url, settings.full_root_url,settings.full_root_url + '/nest']
+navbar_links=[settings.full_root_url, settings.full_root_url + '/smartthings' ,settings.full_root_url + '/nest']
 
 
 ###############################################################################
