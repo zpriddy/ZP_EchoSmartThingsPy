@@ -198,4 +198,5 @@ if __name__ == "__main__":
 	st.smartThingsMongoDBInit()
 	logger.init_logging()
 	myApp.data_init()
+	nestApp.data_init()
 	run_echopy_app()
