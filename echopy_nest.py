@@ -33,6 +33,8 @@ from pymongo import MongoClient
 
 appVersion = 1.0
 
+debug = settings.debug
+
 
 
 def nestAuth(alexaId):
