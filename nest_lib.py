@@ -84,9 +84,9 @@ def getStructures(userId):
 	structures_uri = "https://developer-api.nest.com/structures?auth=" + access_token
 
 	structures_raw = requests.get(structures_uri).json()
-	clientInfo['structures'] = Binary(pickle.dumps(NestStructure(structures_raw)))
+	clientInfo['structures'] = objectToData(NestStructure(structures_raw))
 
-	print clientInfo['structures']
+	print dataToObject(clientInfo['structures'])._structures
 
 	mongoNEST.update({'nest_amazonEchoID':userId},clientInfo,True)
 
@@ -99,9 +99,9 @@ def getThermostats(userId):
 	thermostats_uri = "https://developer-api.nest.com/devices/thermostats?auth=" + access_token
 
 	thermostats_raw = requests.get(thermostats_uri).json()
-	clientInfo['thermostats'] = Binary(pickle.dumps(NestThermostats(thermostats_raw)))
+	clientInfo['thermostats'] = objectToData(NestThermostats(thermostats_raw))
 
-	print clientInfo['thermostats']
+	print dataToObject(clientInfo['thermostats'])._thermostats
 
 	mongoNEST.update({'nest_amazonEchoID':userId},clientInfo,True)
 
@@ -247,6 +247,13 @@ def isValidNestUser(userId):
 ###############################################################################
 # CLASS STRUCTURES FOR DATA STORAGE
 ###############################################################################
+
+
+def objectToData(pObject):
+	return Binary(pickle.dumps(pObject))
+
+def dataToObject(pData):
+	return pickle.loads(pData)
 
 class NestStructure:
 	def __init__(self,rawData):
