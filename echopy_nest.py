@@ -176,8 +176,6 @@ def intent_request(session, userId, request):
 
 			return response
 
-		else:
-			return launch_request(session, user, request) ##Just do the same thing as launch request
 
 		elif request['intent']['name'] ==  "NestCoolDownIntent":
 			setTemp = nest.setTurnDownTemperatureAll(userId)
@@ -190,9 +188,10 @@ def intent_request(session, userId, request):
 
 			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
-			
-
 			return response
+
+		else:
+			return launch_request(session, user, request) ##Just do the same thing as launch request
 '''
 		elif request['intent']['name'] ==  "NestWarmUpIntent":
 			setTemp = nest.setTurnUpTemperatureAll(user.getUserId())
