@@ -208,7 +208,7 @@ def intent_request(session, userId, request):
 
 
 		elif request['intent']['name'] ==  "NestSetAway":
-			setTemp = nest.setModeAll('away')
+			setTemp = nest.setModeAll(userId,'away')
 			output_speech = "Setting Nest to away"
 			output_type = "PlainText"
 
