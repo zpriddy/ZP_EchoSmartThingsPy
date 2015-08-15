@@ -517,14 +517,13 @@ nest_page_body='''
 		  	<p>
 		  	<p>Please consider helping me out so that I can keep supporting this and other Open Source projects! I run all of this out of my pocket and it doesnt all come free.. Please consider helping me out so that I can keep everything running!
 		  	</p>
-	    	<table>
-			<td>
+	    	<div class="row">
+			<div class="col-xs-6 col-sm-4">
 				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
-			</td>
-			<td>
-				&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-			</td>
-			<td>
+			</div>
+			<div class="col-xs-6 col-sm-4">
+			</div>
+			<div class="col-xs-6 col-sm-4">
 				<p>
 					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 					<input type="hidden" name="cmd" value="_donations">
@@ -538,8 +537,8 @@ nest_page_body='''
 					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 					</form>
 				</p>
-			</td>
-		</table>
+			</div>
+		</div>
 
 		</div>
 		</div>
