@@ -127,7 +127,9 @@ def authcode(alexaId):
 def st_static_files(path):
 	return send_from_directory('st_static', path)
 
-
+@app.route(settings.url_root + "/smartthings/setup",methods = ['GET'])
+def nest_setup():
+	return echopy_doc.st_setup_page.format(settings.full_root_url)
 
 @app.route(settings.url_root + "/samples",methods = ['GET','POST'])
 def samples():
