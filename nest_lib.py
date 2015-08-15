@@ -81,7 +81,7 @@ def getStructures(userId):
 	structures_uri = "https://developer-api.nest.com/structures?auth=" + access_token
 
 	structures_raw = requests.get(structures_uri).json()
-	clientInfo['structures'] = NestStructures(structures_raw)
+	clientInfo['structures'] = NestStructure(structures_raw)
 
 	print clientInfo['structures']
 
