@@ -409,9 +409,16 @@ nest_page_body='''
 			<h3 class="panel-title">Setting up Alexa with your Nest</h3>
 		</div>
     <div class="panel-body">
+    <p>To setup Alexa to talk to your Nest, Please follow the instructions: <a class="btn btn-warning" href="{0}/nest/setup" role="button">Nest Setup Instructions</a></p>
+    <p>
+    Supported Functions:
+    <ul>
+    	<li> Set Temperature - Sets all Nests to the given temperature in F. 'Alexa, tell Nest to set temperature to 74'</li>
+    	<li> Chnage Temperature by 2 degrees - 'Alexa, tell Nest that I'm a little warm' </li>
+    	<li> Set Mode - Sets all structurs to selected mode. 'Alexa, tell Nest goodbye', 'Alexa, tell Nest to set mode to Home' </li>
+    </ul>
 
-	Comming Soon
-
+    </p>
 
     
 	</div>
