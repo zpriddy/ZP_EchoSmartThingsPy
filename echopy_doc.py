@@ -189,7 +189,7 @@ auth_page_body='''
 					<input type="hidden" name="no_note" value="0">
 					<input type="hidden" name="currency_code" value="USD">
 					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-					<input type="image" name="submit"  class="btn btn-success" value="Authorize">
+					<input name="submit"  class="btn btn-success" value="Authorize">
 					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 					</form>
 				</p>
