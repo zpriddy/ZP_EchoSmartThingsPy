@@ -280,7 +280,7 @@ class NestStructure:
 		return ids
 
 	def getStructures(self):
-		retunr self._structures
+		return self._structures
 
 class NestThermostats:
 	def __init__(self,rawData):
