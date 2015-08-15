@@ -20,20 +20,21 @@
 
 import json
 import requests
-import pickle
 import smartthings_settings as settings
 import sampleUtterances_generator as sampleGen
 import logger
-import os.path
 import pymongo
 from pymongo import MongoClient
 
 from urllib import quote
 
 debug = settings.debug
-loadSettings = settings.smartthings_load_pickle
+
 initUserData = settings.init_user_data
-picklefile = 'smartthings_settings.pickle'
+
+
+
+
 
 
 

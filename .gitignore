@@ -1,4 +1,5 @@
 *.pyc
 smartthings_settings.py
+echopy_settings.py
 *.pickle
 logs/*.log

@@ -112,6 +112,9 @@ def page_generator(pageName,pageBody):
 
 main_page_body='''
 <div class="container">
+	<div class="alert alert-info" role="alert">
+		We currently have STCOUNT users.
+	</div>
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
@@ -153,6 +156,11 @@ main_page_body='''
 
 auth_page_body='''
 <div class="container">
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees! </p> 
+		<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+	</div>
 	<form action="auth" method="post">
 		<div class="form-group required">
 			<label for="AlexaID">Alexa ID</label>
@@ -174,6 +182,31 @@ auth_page_body='''
 	</form>
 </div>
 '''
+
+nest_auth_page_body='''
+<div class="container">
+	<div class="alert alert-info" role="alert">
+		Currently we can only support 1000 Nest users. We currently have NESTCOUNT users.
+	</div>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees! </p> 
+		<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+	</div>
+	<form action="auth" method="post">
+		<div class="form-group required">
+			<label for="AlexaID">Alexa ID</label>
+			<input id="AlexaID" name="AlexaID" type="text" class="form-control" title="Alexa ID. This is a required field" required="required">
+		</div>
+		<div class="form-group required">
+		  <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
+		  <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field" required="required">
+		</div>
+		<input type="submit" value="Authorize" class="btn btn-default">
+	</form>
+</div>
+'''
+
 
 nest_page='''
 <!DOCTYPE html>
@@ -443,10 +476,14 @@ alexa@zpriddy.com</p>
 # PAGES 
 ###############################################################################
 
-main_page = page_generator('Home',main_page_body)
+#main_page = page_generator('Home',main_page_body)
 auth_page = page_generator('Auth',auth_page_body)
 samples_page = page_generator('Request Samples',samples_page_body)
 samples_results = page_generator('Sample Results',samples_results_body)
 privacy_policy = page_generator('Privacy Policy',html_privacy_policy_body)
+def main_page(count):
+	return page_generator('Home',main_page_body).replace('STCOUNT', str(count))
+def nest_auth_page(count):
+	return page_generator('Auth',nest_auth_page_body).replace('NESTCOUNT',str(count))
 
 NotNestUser = {"outputSpeech": {"type":"PlainText","text":"Current user is not a valid nest user. Please look for help"},"card":{"type":"Simple","title":"Nest Control Error","content":"Current user is not a valid nest user. Please look for help"},'shouldEndSession':True}

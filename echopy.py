@@ -1,8 +1,32 @@
-import os
+#! /usr/bin/python
+#################################################
+#			EchoPy Alexa API					#
+#################################################
+# Zachary Priddy - 2015 						#
+# me@zpriddy.com 								#
+#												#
+# Features: 									#
+#									 			#
+#												#
+#################################################
+#################################################
+
+
+#################################################
+# TO DO:
+# Move smartthings_settings to echopy_settings
+# chage myApp to stApp and add nestApp
+
+###############################################################################
+# IMPORTS
+###############################################################################
+
 import echopy_app
 import echopy_doc
 import echopy_smartthings as myApp
+import echopy_nest as nestApp
 import smartthings_lib as st
+import nest_lib as nest
 import smartthings_settings as settings
 import logger
 from flask import Flask, render_template, Response, send_from_directory, request, current_app, redirect, jsonify, json
@@ -22,18 +46,23 @@ app.config.update(
 	)
 mail=Mail(app)
 
+
+###############################################################################
+# BASE PAGES
+###############################################################################
+
 @app.route("/")
 def home():
-	return echopy_doc.main_page.format(settings.full_root_url)
+	count = myApp.get_st_user_count()
+	return echopy_doc.main_page(count).format(settings.full_root_url)
 
 
 @app.route(settings.url_root)
 def main():
-	return echopy_doc.main_page.format(settings.full_root_url)
+	count = myApp.get_st_user_count()
+	return echopy_doc.main_page(count).format(settings.full_root_url)
 
-@app.route("/nest/")
-def nest():
-	return echopy_doc.nest_page.format(settings.full_root_url)
+
 
 @app.route(settings.url_root + "/privacy")
 def privacy():
@@ -50,6 +79,10 @@ def email():
 	mail.send(msg)
 	return redirect(settings.url_root)
 
+
+###############################################################################
+# SMARTTHINGS PAGES
+###############################################################################
 
 @app.route(settings.url_root + "/EchoPyAPI",methods = ['POST'])
 def apicalls():
@@ -107,6 +140,53 @@ def samples():
 			return echopy_doc.samples_results.replace('RESULTS',"AN ERROR HAS ACCRUED").format(settings.full_root_url)
 
 
+###############################################################################
+# NEST PAGES
+###############################################################################
+
+@app.route("/nest/")
+def nest_page():
+	return echopy_doc.nest_page.format(settings.full_root_url)
+
+@app.route(settings.url_root + "/nest/EchoPyAPI",methods = ['POST'])
+def nest_apicalls():
+	if request.method == 'POST':
+		data = request.get_json()
+		print "POST"
+		sessionId = nestApp.data_handler(data)
+		return sessionId + "\n"
+
+@app.route(settings.url_root + "/nest/auth",methods = ['GET','POST'])
+def nest_auth():
+	if request.method == 'GET':
+		return echopy_doc.nest_auth_page(nestApp.get_nest_user_count())
+
+	if request.method == 'POST':
+		alexaId=request.form['AlexaID'].replace(' ','')
+		clientEmail=request.form['Email'].replace(' ','')
+
+		auth_uri = nestApp.nestAuth(alexaId)
+		#auth_uri = myApp.STAlexaAuth(alexaId,clientId,clientSecret,clientEmail)
+		return redirect(auth_uri)
+		
+@app.route(settings.url_root + "/nest/oauth2",methods = ['GET'])
+def nest_authcode():
+	alexaId = request.args.get('state')
+	code = request.args.get('code')
+
+	print alexaId, code
+
+	if nestApp.nestToken(alexaId,code):
+		print "authed.."
+		userId = nestApp.getUserIdFromAlexaId(alexaId)
+		nestApp.genNewAlexaId(userId,100)
+
+	return redirect(settings.url_root)
+
+
+###############################################################################
+# OTHER
+###############################################################################
 
 def sendWelcomeEmail(userId):
 	userEmail = myApp.getUserEmail(userId)
@@ -132,6 +212,8 @@ def run_echopy_app():
 
 if __name__ == "__main__":
 	st.smartThingsMongoDBInit()
+	nest.nestDBInit()
 	logger.init_logging()
 	myApp.data_init()
+	nestApp.data_init()
 	run_echopy_app()
