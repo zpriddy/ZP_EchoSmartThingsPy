@@ -68,8 +68,9 @@ def nestToken(alexaId,authCode):
 	getStructures(userId)
 	getThermostats(userId)
 
-	clientInfo['authenticated'] = True
 
+	clientInfo = mongoNEST.find_one({'alexaId':alexaId})
+	clientInfo['authenticated'] = True
 	mongoNEST.update({'nest_amazonEchoID':userId},clientInfo,True)
 
 	return True
