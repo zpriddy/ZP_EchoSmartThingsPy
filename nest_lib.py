@@ -147,8 +147,6 @@ def setTurnDownTemperatureAll(userId):
 
 	access_token = clientInfo['nest_usertoken']
 	commandSucessfull = True
-
-	#setTemperatureTargetAll(userId, int(getAvgTargetTemp(userId))-2)
 	
 	getThermostats(userId)
 	thermostats = dataToObject(clientInfo['thermostats']).getThermostats()
@@ -173,32 +171,34 @@ def setTurnDownTemperatureAll(userId):
 # THIS IS WHERE I LEFT OFF
 ###############################################################################
 
-'''
+
 def setTurnUpTemperatureAll(userId):
-	print "Turn Up Temp"
-	global nestData
-	currentUser = nestData.getUser(userId)
-	thermostats = currentUser.getThermostats()
-	token = currentUser.getToken()
+	global mongoNEST
+	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
+	access_token = clientInfo['nest_usertoken']
 	commandSucessfull = True
-
-
-	#setTemperatureTargetAll(userId, int(getAvgTargetTemp(userId))+2)
 	
 	getThermostats(userId)
+	thermostats = dataToObject(clientInfo['thermostats']).getThermostats()
+
+	temps = []
+
 	for device in thermostats:
+		print "Setting Temp for: " + device
 		currentTemp = thermostats[device]['status']['target_temperature_f']
 		deviceId = thermostats[device]['id']
+		temps.append(int(currentTemp)+2)
 		command = {"target_temperature_f":int(currentTemp)+2}
-		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + deviceId + "?auth=" + token
+		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + deviceId + "?auth=" + access_token
 		response = requests.put(url=command_uri, data=command, json=command)
 		if response.status_code != 200:
 			commandSucessfull = False
-	
-	return commandSucessfull
-	
+			return False
 
+	return sum(temps)/len(temps)
+	
+'''
 
 def setModeAll(userId,mode):
 	print "SET Away"
