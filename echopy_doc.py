@@ -229,7 +229,7 @@ nest_page_body='''
 <div class="container">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Setting up Nest with your SmartThings</h3>
+			<h3 class="panel-title">Setting up Alexa with your Nest</h3>
 		</div>
     <div class="panel-body">
 
