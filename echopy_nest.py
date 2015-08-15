@@ -143,6 +143,7 @@ def launch_request(session, userId, request):
 
 def intent_request(session, userId, request):
 	print "intent_request"
+	print request
 
 	if not nest.isValidNestUser(userId):
 		alexaId = genNewAlexaId(userId,10)
