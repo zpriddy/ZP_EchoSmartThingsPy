@@ -143,7 +143,7 @@ def samples():
 ###############################################################################
 
 @app.route("/nest/")
-def nest():
+def nest_page():
 	return echopy_doc.nest_page.format(settings.full_root_url)
 
 @app.route(settings.url_root + "/nest/EchoPyAPI",methods = ['POST'])
