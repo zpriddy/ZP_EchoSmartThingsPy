@@ -429,8 +429,7 @@ nest_page_body='''
 		</div>
 	<div class="panel-body">
 
-		<a class="btn btn-success" href="https://alexa.zpriddy.com/alexa/auth" role="button">SmartThings Alexa Auth</a>
-		<a class="btn btn-info" href="https://alexa.zpriddy.com/alexa/samples" role="button">SmartThings Alexa Smaples</a>
+		<a class="btn btn-success" href="{0}/nest/auth" role="button">SmartThings Alexa Auth</a>
 	</div>
 </div>
 
