@@ -224,9 +224,9 @@ def intent_request(session, userId, request):
 def genNewAlexaId(userId,size):
 	global mongoNEST
 	currentUser = mongoNEST.find_one({'nest_amazonEchoID':userId})
-	newAlexaId = alexaIdGenerator(size)
+	newAlexaId = utils.alexaIdGenerator(size)
 	while len([a for a in mongoNEST.find({'alexaId':newAlexaId})]) > 0:
-			newAlexaId = alexaIdGenerator(size)
+			newAlexaId = utils.alexaIdGenerator(size)
 	currentUser['alexaId'] = newAlexaId
 	mongoNEST.update({'nest_amazonEchoID':userId},currentUser,True)
 	return newAlexaId
