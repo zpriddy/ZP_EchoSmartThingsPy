@@ -174,7 +174,9 @@ def intent_request(session, userId, request):
 			if int(nestTempValue) <= 90:
 				nest.setTemperatureTargetAll(userId,int(nestTempValue))
 
-			return response
+				return response
+			else:
+				return nest.generateError('Temperature out of range','Set Temp')
 
 
 		elif request['intent']['name'] ==  "NestCoolDownIntent":
@@ -190,6 +192,8 @@ def intent_request(session, userId, request):
 				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
 				return response
+			else:
+				return nest.generateError('Unknown Error','Cool Down')
 
 
 
@@ -205,6 +209,9 @@ def intent_request(session, userId, request):
 
 				response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 				return response
+
+			else:
+				return nest.generateError('Unknown Error','Warm Up')
 
 
 		elif request['intent']['name'] ==  "NestSetAway":
