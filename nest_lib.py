@@ -51,7 +51,7 @@ def nestAuth(alexaId):
 
 def nestToken(alexaId,authCode):
 	global mongoNEST
-	clientInfo = mongoNEST.find_one({'nest_alexaId':alexaId})
+	clientInfo = mongoNEST.find_one({'alexaId':alexaId})
 	clientInfo['nest_authcode'] = authCode
 	userId = clientInfo['nest_amazonEchoID']
 

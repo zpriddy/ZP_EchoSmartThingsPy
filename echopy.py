@@ -172,6 +172,8 @@ def nest_authcode():
 	alexaId = request.args.get('state')
 	code = request.args.get('code')
 
+	print alexaId, code
+
 	if nestApp.nestToken(alexaId,code):
 		print "authed.."
 		userId = nestApp.getUserIdFromAlexaId(alexaId)
