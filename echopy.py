@@ -185,13 +185,30 @@ def nest_authcode():
 		userId = nestApp.getUserIdFromAlexaId(alexaId)
 		nestApp.genNewAlexaId(userId,100)
 
-	return redirect(settings.url_root)
+	sendNestWelcomeEmail(userId)
+	return redirect(settings.url_root + '/nest')
 
 
 
 @app.route(settings.url_root + "/nest/static/<path:path>",methods = ['GET'])
 def nest_static_files(path):
 	return send_from_directory('nest_static', path)
+
+def sendNestWelcomeEmail(userId):
+	userEmail = myApp.getUserEmail(userId)
+	msg = Message(
+			  'ZPriddy - Alexa Support',
+		   sender='alexa@zpriddy.com',
+		   recipients=
+			   [userEmail])
+	msg.body = '''
+	Welcome to ZPriddy Alexa Nest! This is a conformation that your account has been created and is linked to your Nest account! 
+
+	If you need help with anything, please respond to this message and I will get back to you ASAP. 
+
+	Comming Soon: Better Support! :) 
+	'''
+	mail.send(msg)
 
 
 ###############################################################################
