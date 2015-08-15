@@ -117,7 +117,7 @@ def setTemperatureTargetAll(userId,temp):
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
 	access_token = clientInfo['nest_usertoken']
-	thermostats = clientInfo['thermostats'].getThermostatIds()
+	thermostats = dataToObject(clientInfo['thermostats']).getThermostatIds()
 
 	command = {"target_temperature_f":int(temp)}
 
