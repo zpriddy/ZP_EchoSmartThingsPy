@@ -171,6 +171,7 @@ def intent_request(session, userId, request):
 
 			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 
+			print nestTempValue
 			if int(nestTempValue) <= 90:
 				nest.setTemperatureTargetAll(userId,int(nestTempValue))
 
