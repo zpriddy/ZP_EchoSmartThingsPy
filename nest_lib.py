@@ -65,6 +65,8 @@ def nestToken(alexaId,authCode):
 	getStructures(userId)
 	getThermostats(userId)
 
+	clientInfo['authenticated'] = True
+
 	return True
 
 ###############################################################################
@@ -81,6 +83,8 @@ def getStructures(userId):
 	structures_raw = requests.get(structures_uri).json()
 	clientInfo['structures'] = NestStructures(structures_raw)
 
+	print clientInfo['structures']
+
 	mongoNEST.update({'nest_amazonEchoID':userId},clientInfo,True)
 
 
@@ -93,6 +97,8 @@ def getThermostats(userId):
 
 	thermostats_raw = requests.get(thermostats_uri).json()
 	clientInfo['thermostats'] = NestThermostats(thermostats_raw)
+
+	print clientInfo['thermostats']
 
 	mongoNEST.update({'nest_amazonEchoID':userId},clientInfo,True)
 
