@@ -328,7 +328,7 @@ nest_setup_page_body='''
 			<li class="list-group-item">Fill out the first form:<br>-Name: Anything you want it to be - I use Nest Control<br>-Invocation Name: The hotword to call the app - I have gotten it working with Nest<br>-Version: 1.0 <- This is hard-coded for now<br>-Endpoint: https://alexa.zpriddy.com/alexa/nest/EchoPyAPI</li>
 			<li class="list-group-item">Click on Next</li>
 			<li class="list-group-item">Copy the content of <a href="{0}/nest/static/intentSchema.json">this page</a> into the Intent Schema</li>
-			<li class="list-group-item">Copy the content of <a href="{0}/alexa/nest/static/sampleUtterances.txt">this page</a> into the Sample Utterances</li>
+			<li class="list-group-item">Copy the content of <a href="{0}/nest/static/sampleUtterances.txt">this page</a> into the Sample Utterances</li>
 			<li class="list-group-item">Click on Next</li>
 			<li class="list-group-item">Click on 'My development endpoint has a certificate from a trusted certificate authority (required for certification)'</li>
 			<li class="list-group-item">Click on Next</li>
