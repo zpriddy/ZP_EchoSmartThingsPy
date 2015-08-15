@@ -48,8 +48,12 @@ def nestDBInit():
 # NEST AUTH
 ###############################################################################
 
-def nestAuth(alexaId):
+def nestAuth(alexaId, clientEmail):
+	global mongoNEST
+	clientInfo = mongoNEST.find_one({'alexaId':alexaId})
+	clientInfo['nest_clientEmail'] = clientEmail
 	auth_uri = settings.nest_auth_uri_1.replace('STATE',alexaId)
+	mongoNEST.update({'nest_amazonEchoID':userId},clientInfo,True)
 	return auth_uri
 
 def nestToken(alexaId,authCode):
