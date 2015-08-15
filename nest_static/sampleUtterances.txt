@@ -77,3 +77,11 @@ HelpIntent what do you do
 HelpIntent how do I use you
 HelpIntent how can I use you
 HelpIntent what can you tell me
+
+NestSetAway to set mode to away
+NestSetAway set home to away
+NestSetAway goodbye
+
+NestSetHome to set mode to home
+NestSetHome set home to home
+NestSetHome I'm Home

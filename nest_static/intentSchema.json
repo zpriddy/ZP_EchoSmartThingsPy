@@ -9,6 +9,10 @@
       "slots": []
     },
     {
+      "intent": "NestSetHome",
+      "slots": []
+    },
+    {
       "intent": "NestCoolDownIntent",
       "slots": []
     },

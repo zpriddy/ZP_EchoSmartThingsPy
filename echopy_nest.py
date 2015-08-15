@@ -219,6 +219,17 @@ def intent_request(session, userId, request):
 			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
 			return response
 
+		elif request['intent']['name'] ==  "NestSetHome":
+			setTemp = nest.setModeAll(userId,'home')
+			output_speech = "Setting Nest to home"
+			output_type = "PlainText"
+
+			card_type = "Simple"
+			card_title = "Nest Control - Setting Nest To Home"
+			card_content = "Setting Nest to away mode."
+
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+			return response
 
 		else:
 			return launch_request(session, userId, request) ##Just do the same thing as launch request
