@@ -68,6 +68,10 @@ def main():
 def privacy():
 	return echopy_doc.privacy_policy.format(settings.full_root_url)
 
+@app.route(settings.url_root + "/tos")
+def tos():
+	return echopy_doc.terms_of_service.format(settings.full_root_url)
+
 @app.route(settings.url_root + "/email_test")
 def email():
 	msg = Message(
