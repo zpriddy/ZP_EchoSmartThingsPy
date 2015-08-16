@@ -59,6 +59,7 @@ html_footer='''
   <div class="container">
     <span class="navbar-text">
       <a href="''' + settings.full_root_url + '/privacy' + '''">Privacy Policy</a>
+      &nbsp; &nbsp; &nbsp;
       <a href="''' + settings.full_root_url + '/tos' + '''">Terms Of Service</a>
     </span>
   </div>
@@ -738,6 +739,7 @@ alexa@zpriddy.com</p>
 
 
 terms_of_service_body='''
+<div class="container">
 <h2>
 	Web Site Terms and Conditions of Use
 </h2>
@@ -865,7 +867,8 @@ terms_of_service_body='''
 
 <p>
 	We are committed to conducting our business in accordance with these principles in order to ensure that the confidentiality of personal information is protected and maintained. 
-</p>		
+</p>	
+</div>	
 '''
 
 
