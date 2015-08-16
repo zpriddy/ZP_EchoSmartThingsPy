@@ -156,7 +156,7 @@ main_page_body='''
 			Supported Functions:
 			<ul>
 			<li> HelloHome - Executes HelloHome Action. 'Alexa, tell Smart Things to say I'm Home'</li>
-			<li> Switches - 'Alexa, tell Smart Things to tuen off kitchen lights' </li>
+			<li> Switches - 'Alexa, tell Smart Things to turn off kitchen lights' </li>
 			<li> Set Mode - 'Alexa, tell Smart Things to chnage Mode to movie' </li>
 			</ul>
 	    </p>
@@ -172,7 +172,7 @@ main_page_body='''
 		<div class="panel-body">
 
 			<a class="btn btn-success" href="{0}/auth" role="button">SmartThings Alexa Auth</a>
-			<a class="btn btn-info" href="{0}/samples" role="button">SmartThings Alexa Smaples</a>
+			<a class="btn btn-info" href="{0}/samples" role="button">SmartThings Alexa Samples</a>
 		</div>
 	</div>
 </div>
