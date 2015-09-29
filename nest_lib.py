@@ -38,10 +38,12 @@ import echopy_settings as settings
 
 def nestDBInit():
 	global mongoNEST
+	global mongoTHERMO
 	mongoClient = MongoClient()
 	mongoClient = MongoClient('localhost', 27017)
 	mongoDB = mongoClient['AlexaNestDB']
 	mongoNEST = mongoDB['NEST']
+	mongoTHERMO = mongoDB['THERMO']
 
 
 ###############################################################################
@@ -101,6 +103,7 @@ def getStructures(userId):
 
 def getThermostats(userId):
 	global mongoNEST
+	global mongoTHERMO
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
 	access_token = clientInfo['nest_usertoken']
@@ -108,6 +111,18 @@ def getThermostats(userId):
 
 	thermostats_raw = requests.get(thermostats_uri).json()
 	clientInfo['thermostats'] = objectToData(NestThermostats(thermostats_raw))
+	clientInfo['thermostatIds'] = [a for a in thermostats_raw]
+
+	for thermostat in clientInfo['thermostatIds']:
+		thermoInfo = mongoTHERMOS.find_one({'thermoID':thermostat})
+		thermoInfo['thermoID'] = thermostat
+		thermoInfo['nest_amazonEchoID'] = userId
+		thermoInfo['nest_name'] = thermostats_raw[thermostat]['name']
+
+		print thermoInfo
+		mongoTHERMO.update({'thermoID':thermostat},thermoInfo,True)
+
+
 
 	print dataToObject(clientInfo['thermostats'])._thermostats
 
@@ -119,6 +134,8 @@ def getThermostats(userId):
 
 def setTemperatureTargetAll(userId,temp):
 	global mongoNEST
+
+	getThermostats(userId)
 	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
 
 	if(int(temp) > 100):
