@@ -112,6 +112,238 @@ def page_generator(pageName,pageBody):
 # Page Bodies  
 ###############################################################################
 
+home_page_body='''
+<div class="container">
+	<div class="alert alert-info" role="alert">
+		We currently have STCOUNT SmartThings users and NESTCOUNT Nest Users.
+	</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+'''
+
+###############################################################################
+# NEST PAGES
+###############################################################################
+
+nest_auth_page_body='''
+<div class="container">
+	<div class="alert alert-info" role="alert">
+		Currently we can only support 1000 Nest users. We currently have NESTCOUNT users.
+	</div>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees or on PayPal</p> 
+		<table>
+			<td>
+				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+			</td>
+			<td>
+				&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+			</td>
+			<td>
+				<p>
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_donations">
+					<input type="hidden" name="business" value="paypal@zpriddy.com">
+					<input type="hidden" name="lc" value="US">
+					<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
+					<input type="hidden" name="no_note" value="0">
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+					<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+					</form>
+				</p>
+			</td>
+		</table>
+	</div>
+	<form action="auth" method="post">
+		<div class="form-group required">
+			<label for="AlexaID">Alexa ID</label>
+			<input id="AlexaID" name="AlexaID" type="text" class="form-control" title="Alexa ID. This is a required field" required="required">
+		</div>
+		<div class="form-group required">
+		  <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
+		  <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field" required="required">
+		</div>
+		<input type="submit" value="Authorize" class="btn btn-default">
+	</form>
+</div>
+'''
+
+
+nest_setup_page_body='''
+<div class="container">
+	<div class="alert alert-info" role="alert">
+		Currently we can only support 1000 Nest users. We currently have NESTCOUNT users.
+	</div>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees or on PayPal</p> 
+		<table>
+			<td>
+				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+			</td>
+			<td>
+				&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+			</td>
+			<td>
+				<p>
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_donations">
+					<input type="hidden" name="business" value="paypal@zpriddy.com">
+					<input type="hidden" name="lc" value="US">
+					<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
+					<input type="hidden" name="no_note" value="0">
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+					<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+					</form>
+				</p>
+			</td>
+		</table>
+	</div>
+
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Step 1: Amazon Echo Setup</div>
+		<div class="panel-body">
+	    <p>At this point in time you will need to create an Amazon developer account with the same Amazon account that is used for your Amazon Echo. Follow the steps below to do so.</p>
+		</div>
+
+		<!-- List group -->
+		<ul class="list-group">
+			<li class="list-group-item">Go to the Amazon developer portal: <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit"> Amazon Alexa Portal</a></li>
+			<li class="list-group-item">At the top of the page click on 'SIGN IN or CREATE FREE ACCOUNT'</li>
+			<li class="list-group-item">Login with youe Amazon ID</li>
+			<li class="list-group-item">Go to Apps & Services at the top of the page</li>
+			<li class="list-group-item">Click on Alexa</li>
+			<li class="list-group-item">Click on Alexa Skills Kit</li>
+			<li class="list-group-item">Click Add New Skill</li>
+			<li class="list-group-item">Fill out the first form:<br>-Name: Anything you want it to be - I use Nest Control<br>-Invocation Name: The hotword to call the app - I have gotten it working with Nest<br>-Version: 1.0 <- This is hard-coded for now<br>-Endpoint: https://alexa.zpriddy.com/alexa/nest/EchoPyAPI</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">Copy the content of <a href="{0}/nest/static/intentSchema.json">this page</a> into the Intent Schema</li>
+			<li class="list-group-item">Copy the content of <a href="{0}/nest/static/sampleUtterances.txt">this page</a> into the Sample Utterances</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">Click on 'My development endpoint has a certificate from a trusted certificate authority (required for certification)'</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">Make sure that the skill is enabled</li>
+			<li class="list-group-item">Click on Next</li>
+			<li class="list-group-item">At this point you can close the amazon developer portal. DO NOT Submit for Certification</li>
+		</ul>
+	</div>
+
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Step 2: Link your Nest to Alexa</div>
+		<div class="panel-body">
+	    <p>Follow the steps below to connect your nest thermostat to your Amazon Echo</p>
+		</div>
+
+		<!-- List group -->
+		<ul class="list-group">
+			<li class="list-group-item">Ask your Alexa to talk to Nest by saying: 'Alexa, Talk to Nest' (If you didnt use Nest as your invocation name, you will have to replace Nest with the invocation name you used)</li>
+			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only.</li>
+			<li class="list-group-item">Go to the <a href="{0}/nest/auth">Nest Auth Page</a></li>
+			<li class="list-group-item">Enter your Alexa ID and your Email address</li>
+			<li class="list-group-item">Click on Authorize</li>
+			<li class="list-group-item">You will be asked to log in to your Nest account. Confirm that you are wanting to link the app to your Nest</li>
+			<li class="list-group-item">Done!</li>
+		</ul>
+	</div>
+
+
+</div>
+'''
+
+nest_page_body='''
+<div class="container">
+	<div class="alert alert-info" role="alert">
+			We currently have NESTCOUNT Nest users.
+	</div>
+
+
+
+			<div class="jumbotron">
+		    	<h2> Help Me Out!</h2>
+		  	
+		  	<p>
+		  	<p>Please consider helping me out so that I can keep supporting this and other Open Source projects! I run all of this out of my pocket and it doesnt all come free.. Please consider helping me out so that I can keep everything running!
+		  	</p>
+	    	<div class="row">
+				<div class="col-xs-6 col-sm-4">
+					<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
+				</div>
+				<div class="col-xs-6 col-sm-4">
+				</div>
+				<div class="col-xs-6 col-sm-4">
+						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+						<input type="hidden" name="cmd" value="_donations">
+						<input type="hidden" name="business" value="paypal@zpriddy.com">
+						<input type="hidden" name="lc" value="US">
+						<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
+						<input type="hidden" name="no_note" value="0">
+						<input type="hidden" name="currency_code" value="USD">
+						<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+						<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
+						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+						</form>
+				</div>
+			</div>
+
+		</div>
+		</div>
+
+
+
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Setting up Alexa with your Nest</h3>
+		</div>
+    <div class="panel-body">
+    <p>To setup Alexa to talk to your Nest, Please follow the instructions: <a class="btn btn-warning" href="{0}/nest/setup" role="button">Nest Setup Instructions</a></p>
+    <p>
+    Supported Functions:
+    <ul>
+    	<li> Set Temperature - Sets all Nests to the given temperature in F. 'Alexa, tell Nest to set temperature to 74'</li>
+    	<li> Chnage Temperature by 2 degrees - 'Alexa, tell Nest that I'm a little warm' </li>
+    	<li> Set Mode - Sets all structurs to selected mode. 'Alexa, tell Nest goodbye', 'Alexa, tell Nest to set mode to Home' </li>
+    </ul>
+
+    </p>
+
+    
+	</div>
+</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Quick Links</h3>
+		</div>
+	<div class="panel-body">
+
+		<a class="btn btn-success" href="{0}/nest/auth" role="button">Nest Alexa Auth</a>
+	</div>
+</div>
+
+
+
+'''
+
+###############################################################################
+# SMARTTHINGS PAGES
+###############################################################################
+
 main_page_body='''
 <div class="container">
 	<div class="alert alert-info" role="alert">
@@ -365,213 +597,6 @@ auth_page_body='''
 </div>
 '''
 
-nest_auth_page_body='''
-<div class="container">
-	<div class="alert alert-info" role="alert">
-		Currently we can only support 1000 Nest users. We currently have NESTCOUNT users.
-	</div>
-	<div class="alert alert-danger alert-dismissible" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees or on PayPal</p> 
-		<table>
-			<td>
-				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
-			</td>
-			<td>
-				&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-			</td>
-			<td>
-				<p>
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-					<input type="hidden" name="cmd" value="_donations">
-					<input type="hidden" name="business" value="paypal@zpriddy.com">
-					<input type="hidden" name="lc" value="US">
-					<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
-					<input type="hidden" name="no_note" value="0">
-					<input type="hidden" name="currency_code" value="USD">
-					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-					<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
-					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-					</form>
-				</p>
-			</td>
-		</table>
-	</div>
-	<form action="auth" method="post">
-		<div class="form-group required">
-			<label for="AlexaID">Alexa ID</label>
-			<input id="AlexaID" name="AlexaID" type="text" class="form-control" title="Alexa ID. This is a required field" required="required">
-		</div>
-		<div class="form-group required">
-		  <label for="SmartThingsClientSecret">Email Address - This is used for notication and support only! </label>
-		  <input id="Email" name="Email" type="email" class="form-control" title="Email Address - This is used for notication and support only! . This is a required field" required="required">
-		</div>
-		<input type="submit" value="Authorize" class="btn btn-default">
-	</form>
-</div>
-'''
-
-
-nest_setup_page_body='''
-<div class="container">
-	<div class="alert alert-info" role="alert">
-		Currently we can only support 1000 Nest users. We currently have NESTCOUNT users.
-	</div>
-	<div class="alert alert-danger alert-dismissible" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<p><strong>Please consider supporting this project!</strong> Donations can be made in any amount via Square Cash with no fees or on PayPal</p> 
-		<table>
-			<td>
-				<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
-			</td>
-			<td>
-				&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-			</td>
-			<td>
-				<p>
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-					<input type="hidden" name="cmd" value="_donations">
-					<input type="hidden" name="business" value="paypal@zpriddy.com">
-					<input type="hidden" name="lc" value="US">
-					<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
-					<input type="hidden" name="no_note" value="0">
-					<input type="hidden" name="currency_code" value="USD">
-					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-					<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
-					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-					</form>
-				</p>
-			</td>
-		</table>
-	</div>
-
-	<div class="panel panel-default">
-		<!-- Default panel contents -->
-		<div class="panel-heading">Step 1: Amazon Echo Setup</div>
-		<div class="panel-body">
-	    <p>At this point in time you will need to create an Amazon developer account with the same Amazon account that is used for your Amazon Echo. Follow the steps below to do so.</p>
-		</div>
-
-		<!-- List group -->
-		<ul class="list-group">
-			<li class="list-group-item">Go to the Amazon developer portal: <a href="https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit"> Amazon Alexa Portal</a></li>
-			<li class="list-group-item">At the top of the page click on 'SIGN IN or CREATE FREE ACCOUNT'</li>
-			<li class="list-group-item">Login with youe Amazon ID</li>
-			<li class="list-group-item">Go to Apps & Services at the top of the page</li>
-			<li class="list-group-item">Click on Alexa</li>
-			<li class="list-group-item">Click on Alexa Skills Kit</li>
-			<li class="list-group-item">Click Add New Skill</li>
-			<li class="list-group-item">Fill out the first form:<br>-Name: Anything you want it to be - I use Nest Control<br>-Invocation Name: The hotword to call the app - I have gotten it working with Nest<br>-Version: 1.0 <- This is hard-coded for now<br>-Endpoint: https://alexa.zpriddy.com/alexa/nest/EchoPyAPI</li>
-			<li class="list-group-item">Click on Next</li>
-			<li class="list-group-item">Copy the content of <a href="{0}/nest/static/intentSchema.json">this page</a> into the Intent Schema</li>
-			<li class="list-group-item">Copy the content of <a href="{0}/nest/static/sampleUtterances.txt">this page</a> into the Sample Utterances</li>
-			<li class="list-group-item">Click on Next</li>
-			<li class="list-group-item">Click on 'My development endpoint has a certificate from a trusted certificate authority (required for certification)'</li>
-			<li class="list-group-item">Click on Next</li>
-			<li class="list-group-item">Make sure that the skill is enabled</li>
-			<li class="list-group-item">Click on Next</li>
-			<li class="list-group-item">At this point you can close the amazon developer portal. DO NOT Submit for Certification</li>
-		</ul>
-	</div>
-
-	<div class="panel panel-default">
-		<!-- Default panel contents -->
-		<div class="panel-heading">Step 2: Link your Nest to Alexa</div>
-		<div class="panel-body">
-	    <p>Follow the steps below to connect your nest thermostat to your Amazon Echo</p>
-		</div>
-
-		<!-- List group -->
-		<ul class="list-group">
-			<li class="list-group-item">Ask your Alexa to talk to Nest by saying: 'Alexa, Talk to Nest' (If you didnt use Nest as your invocation name, you will have to replace Nest with the invocation name you used)</li>
-			<li class="list-group-item">Open the Echo app in your phone, You should see a 10 digit Alexa ID. This ID is One Time Use Only.</li>
-			<li class="list-group-item">Go to the <a href="{0}/nest/auth">Nest Auth Page</a></li>
-			<li class="list-group-item">Enter your Alexa ID and your Email address</li>
-			<li class="list-group-item">Click on Authorize</li>
-			<li class="list-group-item">You will be asked to log in to your Nest account. Confirm that you are wanting to link the app to your Nest</li>
-			<li class="list-group-item">Done!</li>
-		</ul>
-	</div>
-
-
-</div>
-'''
-
-nest_page_body='''
-<div class="container">
-	<div class="alert alert-info" role="alert">
-			We currently have NESTCOUNT Nest users.
-	</div>
-
-
-
-			<div class="jumbotron">
-		    	<h2> Help Me Out!</h2>
-		  	
-		  	<p>
-		  	<p>Please consider helping me out so that I can keep supporting this and other Open Source projects! I run all of this out of my pocket and it doesnt all come free.. Please consider helping me out so that I can keep everything running!
-		  	</p>
-	    	<div class="row">
-				<div class="col-xs-6 col-sm-4">
-					<a class="btn btn-success" href="https://cash.me/$ZPriddy" >Support this project on Square Cash</a>
-				</div>
-				<div class="col-xs-6 col-sm-4">
-				</div>
-				<div class="col-xs-6 col-sm-4">
-						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-						<input type="hidden" name="cmd" value="_donations">
-						<input type="hidden" name="business" value="paypal@zpriddy.com">
-						<input type="hidden" name="lc" value="US">
-						<input type="hidden" name="item_name" value="ZPriddy Alexa Projects">
-						<input type="hidden" name="no_note" value="0">
-						<input type="hidden" name="currency_code" value="USD">
-						<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-						<input type="submit" name="submit"  class="btn btn-success" value="Support this project on PayPal">
-						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-						</form>
-				</div>
-			</div>
-
-		</div>
-		</div>
-
-
-
-<div class="container">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Setting up Alexa with your Nest</h3>
-		</div>
-    <div class="panel-body">
-    <p>To setup Alexa to talk to your Nest, Please follow the instructions: <a class="btn btn-warning" href="{0}/nest/setup" role="button">Nest Setup Instructions</a></p>
-    <p>
-    Supported Functions:
-    <ul>
-    	<li> Set Temperature - Sets all Nests to the given temperature in F. 'Alexa, tell Nest to set temperature to 74'</li>
-    	<li> Chnage Temperature by 2 degrees - 'Alexa, tell Nest that I'm a little warm' </li>
-    	<li> Set Mode - Sets all structurs to selected mode. 'Alexa, tell Nest goodbye', 'Alexa, tell Nest to set mode to Home' </li>
-    </ul>
-
-    </p>
-
-    
-	</div>
-</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Quick Links</h3>
-		</div>
-	<div class="panel-body">
-
-		<a class="btn btn-success" href="{0}/nest/auth" role="button">Nest Alexa Auth</a>
-	</div>
-</div>
-
-
-
-'''
-
-
 samples_page_body='''
 <div class="container">
 	<div class="alert alert-danger alert-dismissible" role="alert">
@@ -600,6 +625,9 @@ samples_results_body='''
 </div>
 '''
 
+###############################################################################
+# Privacy Policy 
+###############################################################################
 
 html_privacy_policy_body='''
 <div class="container">
@@ -737,6 +765,10 @@ alexa@zpriddy.com</p>
 </div>
 '''
 
+
+###############################################################################
+# TERMS OF SERVICE
+###############################################################################
 
 terms_of_service_body='''
 <div class="container">

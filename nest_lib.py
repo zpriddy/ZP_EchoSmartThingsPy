@@ -133,6 +133,7 @@ def setTemperatureTargetAll(userId,temp):
 
 	for device in thermostats:
 		print "Device:" + device
+		print thermostats[device]
 		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + device + "?auth=" + access_token
 		print command_uri
 		response = requests.put(url=command_uri, data=command, json=command)
