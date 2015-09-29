@@ -112,6 +112,24 @@ def page_generator(pageName,pageBody):
 # Page Bodies  
 ###############################################################################
 
+home_page_body='''
+<div class="container">
+	<div class="alert alert-info" role="alert">
+		We currently have STCOUNT SmartThings users and NESTCOUNT Nest Users.
+	</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+'''
+
 ###############################################################################
 # NEST PAGES
 ###############################################################################
