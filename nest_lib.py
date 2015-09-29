@@ -115,6 +115,7 @@ def getThermostats(userId):
 
 	for thermostat in clientInfo['thermostatIds']:
 		thermoInfo = mongoTHERMO.find_one({'thermoID':thermostat})
+		thermoInfo = {}
 		thermoInfo['thermoID'] = thermostat
 		thermoInfo['nest_amazonEchoID'] = userId
 		thermoInfo['nest_name'] = thermostats_raw[thermostat]['name']
