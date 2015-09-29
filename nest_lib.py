@@ -129,7 +129,7 @@ def setTemperatureTargetAll(userId,temp):
 
 	thermos_test = dataToObject(clientInfo['thermostats'])
 	for device in thermos_test._thermostats:
-		for item in device:
+		for item in thermos_test._thermostats[device]:
 			print item
 
 	command = {"target_temperature_f":int(temp)}
