@@ -127,13 +127,18 @@ def setTemperatureTargetAll(userId,temp):
 	access_token = clientInfo['nest_usertoken']
 	thermostats = dataToObject(clientInfo['thermostats']).getThermostatIds()
 
+	thermos_test = dataToObject(clientInfo['thermostats'])
+	for device in thermos_test:
+		for item in device:
+			print device['item']
+
 	command = {"target_temperature_f":int(temp)}
 
 	commandSucessfull = True
 
 	for device in thermostats:
 		print "Device:" + device
-		
+
 		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + device + "?auth=" + access_token
 		print command_uri
 		response = requests.put(url=command_uri, data=command, json=command)
