@@ -118,11 +118,14 @@ def getThermostats(userId):
 		thermoInfo = {}
 		thermoInfo['thermoID'] = thermostat
 		thermoInfo['nest_amazonEchoID'] = userId
-		thermoInfo['nest_name'] = thermostats_raw[thermostat]['name']
-		thermoInfo['ambient_temperature_f'] = thermostats_raw[thermostat]['ambient_temperature_f']
-		thermoInfo['status'] = thermostats_raw[thermostat]['status']
-		thermoInfo['humidity'] = thermostats_raw[thermostat]['humidity']
-		thermoInfo['target_temperature_f'] = thermostats_raw[thermostat]['target_temperature_f']
+		#thermoInfo['nest_name'] = thermostats_raw[thermostat]['name']
+		#thermoInfo['ambient_temperature_f'] = thermostats_raw[thermostat]['ambient_temperature_f']
+		#thermoInfo['status'] = thermostats_raw[thermostat]['status']
+		#thermoInfo['humidity'] = thermostats_raw[thermostat]['humidity']
+		#thermoInfo['target_temperature_f'] = thermostats_raw[thermostat]['target_temperature_f']
+		for item in thermostats_raw[thermostat]:
+			thermoInfo[item] = thermostats_raw[thermostat][item]
+
 
 		print thermoInfo
 		mongoTHERMO.update({'thermoID':thermostat},thermoInfo,True)
