@@ -189,7 +189,7 @@ def intent_request(session, userId, request):
 			nestTempValue = request['intent']['slots']['temp']['value']
 			nestThermoName = request['intent']['slots']['thermo']['value']
 
-			output_speech = "Setting " + str(thermo) + " to " + str(nestTempValue) + " degrees fahrenheit"
+			output_speech = "Setting " + str(nestThermoName) + " to " + str(nestTempValue) + " degrees fahrenheit"
 			output_type = "PlainText"
 
 			card_type = "Simple"
