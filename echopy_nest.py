@@ -185,7 +185,7 @@ def intent_request(session, userId, request):
 			else:
 				return nest.generateError('Temperature out of range','Set Temp')
 
-		elif request['intent']['name'] ==  "NestSetTempOnrIntent":
+		elif request['intent']['name'] ==  "NestSetTempOneIntent":
 			nestTempValue = request['intent']['slots']['temp']['value']
 			nestThermoName = request['intent']['slots']['thermo']['value']
 
