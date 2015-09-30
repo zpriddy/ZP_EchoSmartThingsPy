@@ -185,6 +185,27 @@ def intent_request(session, userId, request):
 			else:
 				return nest.generateError('Temperature out of range','Set Temp')
 
+		elif request['intent']['name'] ==  "NestSetTempOnrIntent":
+			nestTempValue = request['intent']['slots']['temp']['value']
+			nestThermoName = request['intent']['slots']['thermo']['value']
+
+			output_speech = "Setting " + str(thermo) + " to " + str(nestTempValue) + " degrees fahrenheit"
+			output_type = "PlainText"
+
+			card_type = "Simple"
+			card_title = "Nest Control - Setting Nest Temp"
+			card_content = "Telling Nest to set to " + str(nestTempValue) + " degrees fahrenheit."
+
+			response = {"outputSpeech": {"type":output_type,"text":output_speech},"card":{"type":card_type,"title":card_title,"content":card_content},'shouldEndSession':True}
+
+			print nestTempValue
+			if int(nestTempValue) <= 90:
+				nest.setTemperatureTargetOne(userId,int(nestTempValue),str(nestThermoName))
+
+				return response
+			else:
+				return nest.generateError('Temperature out of range','Set Temp')
+
 
 		elif request['intent']['name'] ==  "NestCoolDownIntent":
 			setTemp = nest.setTurnDownTemperatureAll(userId)

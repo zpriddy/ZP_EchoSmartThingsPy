@@ -178,6 +178,50 @@ def setTemperatureTargetAll(userId,temp):
 
 	return commandSucessfull
 
+def setTemperatureTargetOne(userId,temp,thermostatName):
+	global mongoNEST
+
+	getThermostats(userId)
+	clientInfo = mongoNEST.find_one({'nest_amazonEchoID':userId})
+	clientThermo = mongoTHERMO.find({'nest_amazonEchoID':userId})
+
+	for thermo in clientThermo:
+		print thermo
+		if clientThermo[thermo]['name'].lower() == thermostatName.lower():
+			print 'Found Thermostat'
+
+	'''
+	if(int(temp) > 100):
+		return False
+
+	access_token = clientInfo['nest_usertoken']
+	thermostats = dataToObject(clientInfo['thermostats']).getThermostatIds()
+
+	thermos_test = dataToObject(clientInfo['thermostats'])
+	for device in thermos_test._thermostats:
+		print device
+		for item in thermos_test._thermostats[device]:
+			print item
+			if item != 'id':
+				for a in thermos_test._thermostats[device][item]:
+					print a
+
+	command = {"target_temperature_f":int(temp)}
+
+	commandSucessfull = True
+
+	for device in thermostats:
+		print "Device:" + device
+
+		command_uri = 'https://developer-api.nest.com/devices/thermostats/' + device + "?auth=" + access_token
+		print command_uri
+		response = requests.put(url=command_uri, data=command, json=command)
+		print response
+		print response.text
+		if response.status_code != 200:
+			commandSucessfull = False
+	'''
+	return commandSucessfull
 
 ###############################################################################
 # Turn down temp by 2 degress
