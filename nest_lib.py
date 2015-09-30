@@ -187,6 +187,7 @@ def setTemperatureTargetOne(userId,temp,thermostatName):
 
 	for thermo in clientThermo:
 		print thermo
+		print thermo['name']
 		#if clientThermo[thermo]['name'].lower() == thermostatName.lower():
 		#	print 'Found Thermostat'
 
@@ -221,6 +222,7 @@ def setTemperatureTargetOne(userId,temp,thermostatName):
 		if response.status_code != 200:
 			commandSucessfull = False
 	'''
+	commandSucessfull = True
 	return commandSucessfull
 
 ###############################################################################
