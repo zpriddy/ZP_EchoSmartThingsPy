@@ -191,7 +191,7 @@ def setTemperatureTargetOne(userId,temp,thermostatName):
 		if thermo['name'].lower() == thermostatName.lower():
 			print 'Found Thermostat'
 			print thermo['name']
-			print thermoInfo['thermoID']
+			print thermo['thermoID']
 
 	'''
 	if(int(temp) > 100):
