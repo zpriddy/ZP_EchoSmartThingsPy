@@ -187,8 +187,8 @@ def setTemperatureTargetOne(userId,temp,thermostatName):
 
 	for thermo in clientThermo:
 		print thermo
-		if clientThermo[thermo]['name'].lower() == thermostatName.lower():
-			print 'Found Thermostat'
+		#if clientThermo[thermo]['name'].lower() == thermostatName.lower():
+		#	print 'Found Thermostat'
 
 	'''
 	if(int(temp) > 100):
