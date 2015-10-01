@@ -142,7 +142,7 @@ def intent_request(sessionId, userId, request):
 		if request['intent']['name'] ==  "STSetMode":
 			mode = request['intent']['slots']['mode']['value']
 			#output_speech = "Setting Smart Things to " + mode + " mode"
-			output_speechm = "Ok"
+			output_speech = "Ok"
 			output_type = "PlainText"
 
 			card_type = "Simple"
@@ -162,7 +162,7 @@ def intent_request(sessionId, userId, request):
 			genNewAlexaId(userId,100)
 			phrase = request['intent']['slots']['phrase']['value']
 			#output_speech = "Telling Smart Things to say " + phrase 
-			output_speechm = "Ok"
+			output_speech = "Ok"
 			output_type = "PlainText"
 
 			card_type = "Simple"
@@ -186,7 +186,7 @@ def intent_request(sessionId, userId, request):
 			result = st.st_switch(userId, switchId, switchState)
 
 			#output_speech = "Telling " + switchId + " to turn " + result
-			output_speechm = "Ok"
+			output_speech = "Ok"
 			output_type = "PlainText"
 
 			card_type = "Simple"
