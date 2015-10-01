@@ -125,7 +125,7 @@ def intent_request(sessionId, userId, request):
 	if not st.isValidStUser(userId):
 		genNewAlexaId(userId,10)
 		alexaId = getAlexaIdFormUserID(userId)
-		output_speech = "This application has been updated and requires you to reconfigure your Smart Things tokens. Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
+		output_speech = "Current user is not a valid smart things user. Please look at the Echo app for help. New Alexa ID has been generated."
 		output_type = "PlainText"
 
 		card_type = "Simple"
@@ -141,7 +141,8 @@ def intent_request(sessionId, userId, request):
 
 		if request['intent']['name'] ==  "STSetMode":
 			mode = request['intent']['slots']['mode']['value']
-			output_speech = "Setting Smart Things to " + mode + " mode"
+			#output_speech = "Setting Smart Things to " + mode + " mode"
+			output_speechm = "Ok"
 			output_type = "PlainText"
 
 			card_type = "Simple"
@@ -160,7 +161,8 @@ def intent_request(sessionId, userId, request):
 		elif request['intent']['name'] ==  "STPhrase":
 			genNewAlexaId(userId,100)
 			phrase = request['intent']['slots']['phrase']['value']
-			output_speech = "Telling Smart Things to say " + phrase 
+			#output_speech = "Telling Smart Things to say " + phrase 
+			output_speechm = "Ok"
 			output_type = "PlainText"
 
 			card_type = "Simple"
@@ -183,7 +185,8 @@ def intent_request(sessionId, userId, request):
 
 			result = st.st_switch(userId, switchId, switchState)
 
-			output_speech = "Telling " + switchId + " to turn " + result
+			#output_speech = "Telling " + switchId + " to turn " + result
+			output_speechm = "Ok"
 			output_type = "PlainText"
 
 			card_type = "Simple"
